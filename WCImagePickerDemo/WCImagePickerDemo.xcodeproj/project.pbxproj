@@ -14,6 +14,7 @@
 		7F7B9DCE1FE112F1004AC945 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F7B9DCC1FE112F1004AC945 /* LaunchScreen.storyboard */; };
 		7F7B9DD11FE112F2004AC945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DD01FE112F2004AC945 /* main.m */; };
 		7F7B9DF41FE11B3C004AC945 /* WCImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */; };
+		7FBCD0831FE1710100D1E51F /* WCImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WCImagePicker.xcodeproj; path = ../WCImagePicker.xcodeproj; sourceTree = "<group>"; };
 		7F7B9DF21FE11B3C004AC945 /* WCImagePickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCImagePickerController.h; sourceTree = "<group>"; };
 		7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCImagePickerController.m; sourceTree = "<group>"; };
+		7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCImagePickerController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			children = (
 				7F7B9DF21FE11B3C004AC945 /* WCImagePickerController.h */,
 				7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */,
+				7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */,
 			);
 			path = WCImagePicker;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				7F7B9DCE1FE112F1004AC945 /* LaunchScreen.storyboard in Resources */,
 				7F7B9DCB1FE112F1004AC945 /* Assets.xcassets in Resources */,
 				7F7B9DC91FE112F1004AC945 /* Main.storyboard in Resources */,
+				7FBCD0831FE1710100D1E51F /* WCImagePickerController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +335,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8UJ7FM5C7D;
 				INFOPLIST_FILE = WCImagePickerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = WangChao.WCImagePickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -345,6 +350,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8UJ7FM5C7D;
 				INFOPLIST_FILE = WCImagePickerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = WangChao.WCImagePickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

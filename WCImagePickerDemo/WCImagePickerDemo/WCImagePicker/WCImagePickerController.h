@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) BOOL allowMultipleSelections;
 @property (nonatomic, assign) NSInteger maximumNumberOfSelections;
 @property (nonatomic, assign) NSInteger minimumNumberOfSelections;
-
+@property (nonatomic, assign) CGFloat minimumItemSpacing;
 @property (nonatomic, assign) NSInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSInteger numberOfColumnsInLandscape;
 
