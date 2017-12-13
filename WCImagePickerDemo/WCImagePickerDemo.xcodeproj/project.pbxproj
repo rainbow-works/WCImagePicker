@@ -1,0 +1,379 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F7B9DC31FE112F1004AC945 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DC21FE112F1004AC945 /* AppDelegate.m */; };
+		7F7B9DC61FE112F1004AC945 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DC51FE112F1004AC945 /* ViewController.m */; };
+		7F7B9DC91FE112F1004AC945 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F7B9DC71FE112F1004AC945 /* Main.storyboard */; };
+		7F7B9DCB1FE112F1004AC945 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F7B9DCA1FE112F1004AC945 /* Assets.xcassets */; };
+		7F7B9DCE1FE112F1004AC945 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F7B9DCC1FE112F1004AC945 /* LaunchScreen.storyboard */; };
+		7F7B9DD11FE112F2004AC945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DD01FE112F2004AC945 /* main.m */; };
+		7F7B9DF41FE11B3C004AC945 /* WCImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F7B9DE11FE11398004AC945 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7F7B9DAA1FE112A8004AC945;
+			remoteInfo = WCImagePicker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7F7B9DBE1FE112F1004AC945 /* WCImagePickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WCImagePickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F7B9DC11FE112F1004AC945 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7F7B9DC21FE112F1004AC945 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7F7B9DC41FE112F1004AC945 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		7F7B9DC51FE112F1004AC945 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7F7B9DC81FE112F1004AC945 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7F7B9DCA1FE112F1004AC945 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7F7B9DCD1FE112F1004AC945 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7F7B9DCF1FE112F2004AC945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F7B9DD01FE112F2004AC945 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WCImagePicker.xcodeproj; path = ../WCImagePicker.xcodeproj; sourceTree = "<group>"; };
+		7F7B9DF21FE11B3C004AC945 /* WCImagePickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCImagePickerController.h; sourceTree = "<group>"; };
+		7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCImagePickerController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7F7B9DBB1FE112F1004AC945 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7F7B9DB51FE112F1004AC945 = {
+			isa = PBXGroup;
+			children = (
+				7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */,
+				7F7B9DC01FE112F1004AC945 /* WCImagePickerDemo */,
+				7F7B9DBF1FE112F1004AC945 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7F7B9DBF1FE112F1004AC945 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F7B9DBE1FE112F1004AC945 /* WCImagePickerDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F7B9DC01FE112F1004AC945 /* WCImagePickerDemo */ = {
+			isa = PBXGroup;
+			children = (
+				7F7B9DEE1FE11AFC004AC945 /* WCImagePicker */,
+				7F7B9DC11FE112F1004AC945 /* AppDelegate.h */,
+				7F7B9DC21FE112F1004AC945 /* AppDelegate.m */,
+				7F7B9DC41FE112F1004AC945 /* ViewController.h */,
+				7F7B9DC51FE112F1004AC945 /* ViewController.m */,
+				7F7B9DC71FE112F1004AC945 /* Main.storyboard */,
+				7F7B9DCA1FE112F1004AC945 /* Assets.xcassets */,
+				7F7B9DCC1FE112F1004AC945 /* LaunchScreen.storyboard */,
+				7F7B9DCF1FE112F2004AC945 /* Info.plist */,
+				7F7B9DD01FE112F2004AC945 /* main.m */,
+			);
+			path = WCImagePickerDemo;
+			sourceTree = "<group>";
+		};
+		7F7B9DDE1FE11397004AC945 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F7B9DE21FE11398004AC945 /* WCImagePicker.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F7B9DEE1FE11AFC004AC945 /* WCImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				7F7B9DF21FE11B3C004AC945 /* WCImagePickerController.h */,
+				7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */,
+			);
+			path = WCImagePicker;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7F7B9DBD1FE112F1004AC945 /* WCImagePickerDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F7B9DD41FE112F2004AC945 /* Build configuration list for PBXNativeTarget "WCImagePickerDemo" */;
+			buildPhases = (
+				7F7B9DBA1FE112F1004AC945 /* Sources */,
+				7F7B9DBB1FE112F1004AC945 /* Frameworks */,
+				7F7B9DBC1FE112F1004AC945 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WCImagePickerDemo;
+			productName = WCImagePickerDemo;
+			productReference = 7F7B9DBE1FE112F1004AC945 /* WCImagePickerDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7F7B9DB61FE112F1004AC945 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "王超";
+				TargetAttributes = {
+					7F7B9DBD1FE112F1004AC945 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 7F7B9DB91FE112F1004AC945 /* Build configuration list for PBXProject "WCImagePickerDemo" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7F7B9DB51FE112F1004AC945;
+			productRefGroup = 7F7B9DBF1FE112F1004AC945 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7F7B9DDE1FE11397004AC945 /* Products */;
+					ProjectRef = 7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				7F7B9DBD1FE112F1004AC945 /* WCImagePickerDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7F7B9DE21FE11398004AC945 /* WCImagePicker.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WCImagePicker.framework;
+			remoteRef = 7F7B9DE11FE11398004AC945 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7F7B9DBC1FE112F1004AC945 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F7B9DCE1FE112F1004AC945 /* LaunchScreen.storyboard in Resources */,
+				7F7B9DCB1FE112F1004AC945 /* Assets.xcassets in Resources */,
+				7F7B9DC91FE112F1004AC945 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7F7B9DBA1FE112F1004AC945 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F7B9DC61FE112F1004AC945 /* ViewController.m in Sources */,
+				7F7B9DF41FE11B3C004AC945 /* WCImagePickerController.m in Sources */,
+				7F7B9DD11FE112F2004AC945 /* main.m in Sources */,
+				7F7B9DC31FE112F1004AC945 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7F7B9DC71FE112F1004AC945 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F7B9DC81FE112F1004AC945 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7F7B9DCC1FE112F1004AC945 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F7B9DCD1FE112F1004AC945 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7F7B9DD21FE112F2004AC945 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7F7B9DD31FE112F2004AC945 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7F7B9DD51FE112F2004AC945 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8UJ7FM5C7D;
+				INFOPLIST_FILE = WCImagePickerDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = WangChao.WCImagePickerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7F7B9DD61FE112F2004AC945 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8UJ7FM5C7D;
+				INFOPLIST_FILE = WCImagePickerDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = WangChao.WCImagePickerDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7F7B9DB91FE112F1004AC945 /* Build configuration list for PBXProject "WCImagePickerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F7B9DD21FE112F2004AC945 /* Debug */,
+				7F7B9DD31FE112F2004AC945 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7F7B9DD41FE112F2004AC945 /* Build configuration list for PBXNativeTarget "WCImagePickerDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F7B9DD51FE112F2004AC945 /* Debug */,
+				7F7B9DD61FE112F2004AC945 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7F7B9DB61FE112F1004AC945 /* Project object */;
+}
