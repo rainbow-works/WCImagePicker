@@ -10,6 +10,12 @@
 #import <Photos/Photos.h>
 @class WCImagePickerController;
 
+@interface UICollectionView (WCExtension)
+
+- (NSArray<NSIndexPath *> *)wc_indexPathsForElementsInRect:(CGRect)rect;
+
+@end
+
 @protocol WCImagePickerControllerDelegate <NSObject>
 
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingAssets:(NSArray<PHAsset *> *)assets;
@@ -24,7 +30,10 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
     WCImagePickerImageTypeVideo
 };
 
+
 @interface WCImagePickerController : UIViewController
+
+@property (nonatomic, strong) PHAssetCollection *assetCollection;
 
 @property (nonatomic, assign) WCImagePickerImageType mediaType;
 @property (nonatomic, assign) BOOL allowMultipleSelections;

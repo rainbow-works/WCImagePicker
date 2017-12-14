@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "WCImagePickerController.h"
 
 @interface ViewController ()
 
@@ -25,5 +26,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)buttonDidClicked:(UIButton *)sender {
+    WCImagePickerController *imagePicker = [[WCImagePickerController alloc] init];
+    [self presentViewController:imagePicker animated:YES completion:nil];
+    
+}
 
 @end

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="com.meetday.WCImagePickerAssetCell" id="gTV-IL-0wX" customClass="WCAssetCell">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3Y-qI-bMQ" userLabel="Content View">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iEK-QR-qll" userLabel="Asset Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iEK-QR-qll" firstAttribute="top" secondItem="T3Y-qI-bMQ" secondAttribute="top" id="R1u-80-YBn"/>
+                            <constraint firstItem="iEK-QR-qll" firstAttribute="leading" secondItem="T3Y-qI-bMQ" secondAttribute="leading" id="Sdt-et-jE5"/>
+                            <constraint firstAttribute="bottom" secondItem="iEK-QR-qll" secondAttribute="bottom" id="mR3-k0-KLm"/>
+                            <constraint firstAttribute="trailing" secondItem="iEK-QR-qll" secondAttribute="trailing" id="pyV-fG-KmW"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="SEy-5g-ep8" firstAttribute="bottom" secondItem="T3Y-qI-bMQ" secondAttribute="bottom" id="6PU-IQ-Bw9"/>
+                <constraint firstItem="SEy-5g-ep8" firstAttribute="leading" secondItem="T3Y-qI-bMQ" secondAttribute="leading" id="96I-qg-dr4"/>
+                <constraint firstItem="T3Y-qI-bMQ" firstAttribute="top" secondItem="SEy-5g-ep8" secondAttribute="top" id="ALj-Ke-wYc"/>
+                <constraint firstItem="T3Y-qI-bMQ" firstAttribute="trailing" secondItem="SEy-5g-ep8" secondAttribute="trailing" id="P5t-tz-lqg"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <connections>
+                <outlet property="assetImageView" destination="iEK-QR-qll" id="U2M-MY-KPF"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>
