@@ -43,4 +43,6 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) NSInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSInteger numberOfColumnsInLandscape;
 
+@property (nonatomic, strong) UIColor *navigationBarBackgroundColor;
+
 @end

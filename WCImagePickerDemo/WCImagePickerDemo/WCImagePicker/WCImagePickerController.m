@@ -37,6 +37,9 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, assign) CGRect previousPreheatRect;
 @property(nonatomic, assign) CGSize thumbnailSize;
+
+
+@property (weak, nonatomic) IBOutlet UIView *navigationBarView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
@@ -50,8 +53,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         _maximumNumberOfSelections = 1;
         _minimumNumberOfSelections = 1;
         _minimumItemSpacing = 1;
-        _numberOfColumnsInPortrait = 4;
-        _numberOfColumnsInLandscape = 7;
+        _numberOfColumnsInPortrait = 3;
+        _numberOfColumnsInLandscape = 5;
     }
     return self;
 }
@@ -71,6 +74,10 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateItemSize];
@@ -80,6 +87,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [super viewWillLayoutSubviews];
     [self updateItemSize];
 }
+
+#pragma mark - UI
 
 - (void)setupCollectionView {
     [self.collectionView setCollectionViewLayout:self.flowLayout];
@@ -125,9 +134,10 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)updateItemSize {
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    NSInteger numberOfColumns = orientation == UIDeviceOrientationPortrait ? self.numberOfColumnsInPortrait : self.numberOfColumnsInLandscape;
-    CGFloat itemWidth = floor((SCREEN_WIDTH - (numberOfColumns - 1) * self.minimumItemSpacing) / numberOfColumns);
+    BOOL isPortrait = UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]);
+    NSInteger numberOfColumns = isPortrait ? self.numberOfColumnsInPortrait : self.numberOfColumnsInLandscape;
+    CGFloat collectionViewWidth = self.collectionView.bounds.size.width;
+    CGFloat itemWidth = floor((collectionViewWidth - (numberOfColumns - 1) * self.minimumItemSpacing) / numberOfColumns);
     self.thumbnailSize = CGSizeMake(itemWidth * SCALE, itemWidth * SCALE);
     self.flowLayout.itemSize = CGSizeMake(itemWidth, itemWidth);
     [self.flowLayout invalidateLayout];
@@ -208,7 +218,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (void)setAssetCollection:(PHAssetCollection *)assetCollection {
     _assetCollection = assetCollection;
-    
+    [self updateFetchResult];
     [self.collectionView reloadData];
 }
 
@@ -226,6 +236,12 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         _flowLayout.minimumInteritemSpacing = _minimumItemSpacing;
     }
     return _flowLayout;
+}
+
+- (void)setNavigationBarBackgroundColor:(UIColor *)navigationBarBackgroundColor {
+    _navigationBarBackgroundColor = navigationBarBackgroundColor;
+    self.view.backgroundColor = navigationBarBackgroundColor;
+    self.navigationBarView.backgroundColor = navigationBarBackgroundColor;
 }
 
 @end

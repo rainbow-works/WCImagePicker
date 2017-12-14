@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WCImagePickerController">
             <connections>
                 <outlet property="collectionView" destination="4g2-a7-o79" id="sEQ-Je-0Jr"/>
+                <outlet property="navigationBarView" destination="zp6-wk-wap" id="2BW-PE-xzE"/>
                 <outlet property="view" destination="iN0-l3-epB" id="BsC-SD-5os"/>
             </connections>
         </placeholder>
