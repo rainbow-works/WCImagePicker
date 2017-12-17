@@ -16,6 +16,15 @@
 		7F7B9DF41FE11B3C004AC945 /* WCImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */; };
 		7FA9438B1FE25F1400E807DD /* WCAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943891FE25F1400E807DD /* WCAssetCell.m */; };
 		7FA9438C1FE25F1400E807DD /* WCAssetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9438A1FE25F1400E807DD /* WCAssetCell.xib */; };
+		7FA943941FE2C64C00E807DD /* WCCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943931FE2C64C00E807DD /* WCCustomButton.m */; };
+		7FA9439C1FE3446B00E807DD /* ImagePicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9439B1FE3446B00E807DD /* ImagePicker.xcassets */; };
+		7FA9439F1FE351A000E807DD /* WCCollectionPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9439E1FE351A000E807DD /* WCCollectionPickerController.m */; };
+		7FA943A31FE35F3500E807DD /* WCCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943A11FE35F3500E807DD /* WCCollectionCell.m */; };
+		7FA943A41FE35F3500E807DD /* WCCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA943A21FE35F3500E807DD /* WCCollectionCell.xib */; };
+		7FA943A71FE367DF00E807DD /* WCAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943A61FE367DF00E807DD /* WCAlbum.m */; };
+		7FA943AA1FE5157600E807DD /* WCCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943A91FE5157600E807DD /* WCCoverView.m */; };
+		7FA943AC1FE5158E00E807DD /* WCCoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA943AB1FE5158E00E807DD /* WCCoverView.xib */; };
+		7FA943B01FE546A100E807DD /* UIView+WCExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943AF1FE546A100E807DD /* UIView+WCExtension.m */; };
 		7FBCD0831FE1710100D1E51F /* WCImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +55,23 @@
 		7FA943881FE25F1400E807DD /* WCAssetCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCAssetCell.h; sourceTree = "<group>"; };
 		7FA943891FE25F1400E807DD /* WCAssetCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCAssetCell.m; sourceTree = "<group>"; };
 		7FA9438A1FE25F1400E807DD /* WCAssetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCAssetCell.xib; sourceTree = "<group>"; };
+		7FA943921FE2C64C00E807DD /* WCCustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCCustomButton.h; sourceTree = "<group>"; };
+		7FA943931FE2C64C00E807DD /* WCCustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCCustomButton.m; sourceTree = "<group>"; };
+		7FA943971FE3442D00E807DD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = WCImagePicker.strings; sourceTree = "<group>"; };
+		7FA9439A1FE3443400E807DD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = WCImagepicker.strings; sourceTree = "<group>"; };
+		7FA9439B1FE3446B00E807DD /* ImagePicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagePicker.xcassets; sourceTree = "<group>"; };
+		7FA9439D1FE351A000E807DD /* WCCollectionPickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCCollectionPickerController.h; sourceTree = "<group>"; };
+		7FA9439E1FE351A000E807DD /* WCCollectionPickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCCollectionPickerController.m; sourceTree = "<group>"; };
+		7FA943A01FE35F3500E807DD /* WCCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCCollectionCell.h; sourceTree = "<group>"; };
+		7FA943A11FE35F3500E807DD /* WCCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCCollectionCell.m; sourceTree = "<group>"; };
+		7FA943A21FE35F3500E807DD /* WCCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCCollectionCell.xib; sourceTree = "<group>"; };
+		7FA943A51FE367DF00E807DD /* WCAlbum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCAlbum.h; sourceTree = "<group>"; };
+		7FA943A61FE367DF00E807DD /* WCAlbum.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCAlbum.m; sourceTree = "<group>"; };
+		7FA943A81FE5157600E807DD /* WCCoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCCoverView.h; sourceTree = "<group>"; };
+		7FA943A91FE5157600E807DD /* WCCoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCCoverView.m; sourceTree = "<group>"; };
+		7FA943AB1FE5158E00E807DD /* WCCoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCCoverView.xib; sourceTree = "<group>"; };
+		7FA943AE1FE546A100E807DD /* UIView+WCExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+WCExtension.h"; sourceTree = "<group>"; };
+		7FA943AF1FE546A100E807DD /* UIView+WCExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+WCExtension.m"; sourceTree = "<group>"; };
 		7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCImagePickerController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,14 +131,47 @@
 		7F7B9DEE1FE11AFC004AC945 /* WCImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				7FA9439B1FE3446B00E807DD /* ImagePicker.xcassets */,
+				7FA943951FE3442D00E807DD /* en.lproj */,
+				7FA943981FE3443400E807DD /* zh-Hans.lproj */,
 				7F7B9DF21FE11B3C004AC945 /* WCImagePickerController.h */,
 				7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */,
 				7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */,
 				7FA943881FE25F1400E807DD /* WCAssetCell.h */,
 				7FA943891FE25F1400E807DD /* WCAssetCell.m */,
 				7FA9438A1FE25F1400E807DD /* WCAssetCell.xib */,
+				7FA9439D1FE351A000E807DD /* WCCollectionPickerController.h */,
+				7FA9439E1FE351A000E807DD /* WCCollectionPickerController.m */,
+				7FA943A01FE35F3500E807DD /* WCCollectionCell.h */,
+				7FA943A11FE35F3500E807DD /* WCCollectionCell.m */,
+				7FA943A21FE35F3500E807DD /* WCCollectionCell.xib */,
+				7FA943921FE2C64C00E807DD /* WCCustomButton.h */,
+				7FA943931FE2C64C00E807DD /* WCCustomButton.m */,
+				7FA943A51FE367DF00E807DD /* WCAlbum.h */,
+				7FA943A61FE367DF00E807DD /* WCAlbum.m */,
+				7FA943A81FE5157600E807DD /* WCCoverView.h */,
+				7FA943A91FE5157600E807DD /* WCCoverView.m */,
+				7FA943AB1FE5158E00E807DD /* WCCoverView.xib */,
+				7FA943AE1FE546A100E807DD /* UIView+WCExtension.h */,
+				7FA943AF1FE546A100E807DD /* UIView+WCExtension.m */,
 			);
 			path = WCImagePicker;
+			sourceTree = "<group>";
+		};
+		7FA943951FE3442D00E807DD /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				7FA943961FE3442D00E807DD /* WCImagePicker.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		7FA943981FE3443400E807DD /* zh-Hans.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				7FA943991FE3443400E807DD /* WCImagepicker.strings */,
+			);
+			path = "zh-Hans.lproj";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +216,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 7F7B9DB51FE112F1004AC945;
 			productRefGroup = 7F7B9DBF1FE112F1004AC945 /* Products */;
@@ -193,6 +253,9 @@
 				7FA9438C1FE25F1400E807DD /* WCAssetCell.xib in Resources */,
 				7F7B9DCB1FE112F1004AC945 /* Assets.xcassets in Resources */,
 				7F7B9DC91FE112F1004AC945 /* Main.storyboard in Resources */,
+				7FA943AC1FE5158E00E807DD /* WCCoverView.xib in Resources */,
+				7FA943A41FE35F3500E807DD /* WCCollectionCell.xib in Resources */,
+				7FA9439C1FE3446B00E807DD /* ImagePicker.xcassets in Resources */,
 				7FBCD0831FE1710100D1E51F /* WCImagePickerController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,10 +267,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FA943941FE2C64C00E807DD /* WCCustomButton.m in Sources */,
 				7F7B9DC61FE112F1004AC945 /* ViewController.m in Sources */,
+				7FA9439F1FE351A000E807DD /* WCCollectionPickerController.m in Sources */,
+				7FA943A31FE35F3500E807DD /* WCCollectionCell.m in Sources */,
 				7F7B9DF41FE11B3C004AC945 /* WCImagePickerController.m in Sources */,
 				7F7B9DD11FE112F2004AC945 /* main.m in Sources */,
+				7FA943B01FE546A100E807DD /* UIView+WCExtension.m in Sources */,
+				7FA943AA1FE5157600E807DD /* WCCoverView.m in Sources */,
 				7F7B9DC31FE112F1004AC945 /* AppDelegate.m in Sources */,
+				7FA943A71FE367DF00E807DD /* WCAlbum.m in Sources */,
 				7FA9438B1FE25F1400E807DD /* WCAssetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,6 +298,22 @@
 				7F7B9DCD1FE112F1004AC945 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		7FA943961FE3442D00E807DD /* WCImagePicker.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7FA943971FE3442D00E807DD /* en */,
+			);
+			name = WCImagePicker.strings;
+			sourceTree = "<group>";
+		};
+		7FA943991FE3443400E807DD /* WCImagepicker.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7FA9439A1FE3443400E807DD /* zh-Hans */,
+			);
+			name = WCImagepicker.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

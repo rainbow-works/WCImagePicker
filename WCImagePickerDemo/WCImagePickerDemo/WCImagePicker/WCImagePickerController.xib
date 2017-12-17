@@ -6,14 +6,23 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="PingFang.ttc">
+            <string>PingFangSC-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WCImagePickerController">
             <connections>
+                <outlet property="assetCollectionTitleButton" destination="rco-3I-gS8" id="1Wn-u1-zRO"/>
+                <outlet property="cancelButton" destination="eqH-HS-LE6" id="GrF-o8-s9V"/>
+                <outlet property="collectionBaseView" destination="mpX-a7-mSi" id="A0s-b8-qqo"/>
                 <outlet property="collectionView" destination="4g2-a7-o79" id="sEQ-Je-0Jr"/>
+                <outlet property="contentView" destination="Aud-NO-Vff" id="P22-s0-2UM"/>
+                <outlet property="finishedButton" destination="LMu-zB-SRc" id="Gqy-Pd-Low"/>
                 <outlet property="navigationBarView" destination="zp6-wk-wap" id="2BW-PE-xzE"/>
                 <outlet property="view" destination="iN0-l3-epB" id="BsC-SD-5os"/>
             </connections>
@@ -23,39 +32,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aud-NO-Vff" userLabel="Content View">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aud-NO-Vff" userLabel="Content View">
                     <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zp6-wk-wap" userLabel="Navigation Bar View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LMu-zB-SRc" userLabel="Finished Button">
-                                    <rect key="frame" x="321" y="8" width="46" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Button"/>
-                                    <connections>
-                                        <action selector="finishedButtonDidClicked:" destination="-1" eventType="touchUpInside" id="aVA-aZ-VJT"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqH-HS-LE6" userLabel="Cancel Button">
-                                    <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="eqH-HS-LE6" secondAttribute="height" multiplier="1:1" id="iSN-p4-fUR"/>
-                                    </constraints>
-                                    <state key="normal" title="取消"/>
-                                    <connections>
-                                        <action selector="cancelButtonDidClicked:" destination="-1" eventType="touchUpInside" id="h55-sE-Kar"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" red="1" green="0.52924899589999996" blue="0.5356604841" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="eqH-HS-LE6" secondAttribute="bottom" id="KG8-Mb-Kh1"/>
-                                <constraint firstAttribute="height" constant="44" id="Q4E-Iv-tZb"/>
-                                <constraint firstItem="eqH-HS-LE6" firstAttribute="leading" secondItem="zp6-wk-wap" secondAttribute="leading" id="gUR-3n-p8V"/>
-                                <constraint firstItem="eqH-HS-LE6" firstAttribute="top" secondItem="zp6-wk-wap" secondAttribute="top" id="u8d-7l-QMX"/>
-                            </constraints>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mpX-a7-mSi" userLabel="Collection Base View">
                             <rect key="frame" x="0.0" y="44" width="375" height="690"/>
                             <subviews>
@@ -82,8 +61,47 @@
                                 <constraint firstItem="4g2-a7-o79" firstAttribute="leading" secondItem="mpX-a7-mSi" secondAttribute="leading" id="tlC-MB-LE5"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zp6-wk-wap" userLabel="Navigation Bar View">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqH-HS-LE6" userLabel="Cancel Button">
+                                    <rect key="frame" x="8" y="0.0" width="31" height="44"/>
+                                    <state key="normal" title="取消"/>
+                                    <connections>
+                                        <action selector="cancelButtonDidClicked:" destination="-1" eventType="touchUpInside" id="h55-sE-Kar"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rco-3I-gS8" userLabel="Asset Collection Title" customClass="WCCustomButton">
+                                    <rect key="frame" x="159" y="6" width="56" height="32"/>
+                                    <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="14"/>
+                                    <state key="normal" title="相机胶卷"/>
+                                    <connections>
+                                        <action selector="assetCollectionTitleButtonDidClicked:" destination="-1" eventType="touchUpInside" id="2mP-pG-tdG"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LMu-zB-SRc" userLabel="Finished Button">
+                                    <rect key="frame" x="330" y="0.0" width="37" height="44"/>
+                                    <state key="normal" title="完成"/>
+                                    <connections>
+                                        <action selector="finishedButtonDidClicked:" destination="-1" eventType="touchUpInside" id="aVA-aZ-VJT"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="eqH-HS-LE6" secondAttribute="bottom" id="KG8-Mb-Kh1"/>
+                                <constraint firstAttribute="height" constant="44" id="Q4E-Iv-tZb"/>
+                                <constraint firstAttribute="bottom" secondItem="LMu-zB-SRc" secondAttribute="bottom" id="RAn-Em-Vg3"/>
+                                <constraint firstItem="rco-3I-gS8" firstAttribute="centerX" secondItem="zp6-wk-wap" secondAttribute="centerX" id="XH3-wf-bde"/>
+                                <constraint firstItem="LMu-zB-SRc" firstAttribute="top" secondItem="zp6-wk-wap" secondAttribute="top" id="ZSM-0p-zjq"/>
+                                <constraint firstAttribute="trailing" secondItem="LMu-zB-SRc" secondAttribute="trailing" constant="8" id="a0m-UE-XhG"/>
+                                <constraint firstItem="eqH-HS-LE6" firstAttribute="leading" secondItem="zp6-wk-wap" secondAttribute="leading" constant="8" id="gUR-3n-p8V"/>
+                                <constraint firstItem="rco-3I-gS8" firstAttribute="centerY" secondItem="zp6-wk-wap" secondAttribute="centerY" id="izX-eh-Rdq"/>
+                                <constraint firstItem="eqH-HS-LE6" firstAttribute="top" secondItem="zp6-wk-wap" secondAttribute="top" id="u8d-7l-QMX"/>
+                            </constraints>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="0.70163584369999998" blue="0.087095782570000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="zp6-wk-wap" secondAttribute="trailing" id="228-ud-hOH"/>
                         <constraint firstAttribute="trailing" secondItem="mpX-a7-mSi" secondAttribute="trailing" id="6fU-E8-AZx"/>
@@ -95,7 +113,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Aud-NO-Vff" secondAttribute="trailing" id="0UP-0E-xRE"/>
                 <constraint firstItem="Aud-NO-Vff" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="7jy-Dd-CgR"/>

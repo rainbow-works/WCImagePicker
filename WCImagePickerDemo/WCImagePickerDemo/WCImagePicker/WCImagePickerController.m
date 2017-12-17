@@ -7,7 +7,10 @@
 //
 
 #import "WCImagePickerController.h"
+#import "WCCollectionPickerController.h"
+#import "WCCustomButton.h"
 #import "WCAssetCell.h"
+#import "UIView+WCExtension.h"
 
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
@@ -32,15 +35,24 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @interface WCImagePickerController () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
 
 @property(nonatomic, strong) PHCachingImageManager *imageManager;
+@property (nonatomic, strong) PHAssetCollection *assetCollection;
 @property (nonatomic, strong) PHFetchResult *fetchResult;
+@property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
+@property (nonatomic, strong) NSBundle *assetBundle;
 
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, assign) CGRect previousPreheatRect;
 @property(nonatomic, assign) CGSize thumbnailSize;
 
-
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIView *navigationBarView;
+@property (weak, nonatomic) IBOutlet WCCustomButton *assetCollectionTitleButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *finishedButton;
+@property (weak, nonatomic) IBOutlet UIView *collectionBaseView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+
+@property (nonatomic, strong) WCCollectionPickerController *collectionPicker;
 
 @end
 
@@ -49,10 +61,13 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (instancetype)init {
     if (self = [super init]) {
         _mediaType = WCImagePickerImageTypeImage;
-        _allowMultipleSelections = YES;
-        _maximumNumberOfSelections = 1;
-        _minimumNumberOfSelections = 1;
-        _minimumItemSpacing = 1;
+        _allowsMultipleSelection = YES;
+        _maximumNumberOfSelectionPhoto = 1;
+        _minimumNumberOfSelectionPhoto = 1;
+        _maximumNumberOfSelectionVideo = 1;
+        _minimumNumberOfSelectionVideo = 1;
+        
+        _minimumItemSpacing = 2.0;
         _numberOfColumnsInPortrait = 3;
         _numberOfColumnsInLandscape = 5;
     }
@@ -62,20 +77,16 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-    self.fetchResult = [PHAsset fetchAssetsWithOptions:options];
+    [self handleAssetPath];
+    [self setupNavigationBarView];
     [self setupCollectionView];
+    
+    [self requestUserAuthorization];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc {
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,14 +96,69 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
+    [self.view layoutIfNeeded];
     [self updateItemSize];
 }
 
 #pragma mark - UI
 
+- (void)requestUserAuthorization {
+    void (^authorizationStatusAuthrizedBlock)(void) = ^() {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.fetchResult == nil) {
+                PHFetchOptions *options = [PHFetchOptions new];
+                options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+                if (self.mediaType == WCImagePickerImageTypeImage) {
+                    options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+                } else if (self.mediaType == WCImagePickerImageTypeVideo){
+                    options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+                }
+                self.fetchResult = [PHAsset fetchAssetsWithOptions:options];
+            }
+            [self.collectionView reloadData];
+        });
+    };
+    void (^authrizationStatusDeniedBlock)(void) = ^() {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionBaseView wc_showCoverViewForState:WCImagePickerCoverViewDenied];
+        });
+    };
+    
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusNotDetermined) {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            if (status == PHAuthorizationStatusAuthorized) {
+                authorizationStatusAuthrizedBlock();
+            } else {
+                authrizationStatusDeniedBlock();
+            }
+        }];
+    } else if (status == PHAuthorizationStatusAuthorized) {
+        authorizationStatusAuthrizedBlock();
+    } else {
+        authrizationStatusDeniedBlock();
+    }
+}
+
+- (void)handleAssetPath {
+    self.assetBundle = [NSBundle bundleForClass:[self class]];
+    NSString *bundlePath = [self.assetBundle pathForResource:@"WCImagePicker" ofType:@"bunlde"];
+    if (bundlePath) {
+        self.assetBundle = [NSBundle bundleWithPath:bundlePath];
+    }
+}
+
+- (void)setupNavigationBarView {
+    self.navigationBarView.backgroundColor = self.navigationBarBackgroundColor;
+    self.view.backgroundColor = self.navigationBarBackgroundColor;
+    UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:self.assetBundle compatibleWithTraitCollection:nil];
+    [self.assetCollectionTitleButton wc_setImage:triangle];
+}
+
 - (void)setupCollectionView {
-    [self.collectionView setCollectionViewLayout:self.flowLayout];
     [self.collectionView registerNib:[UINib nibWithNibName:@"WCAssetCell" bundle:nil] forCellWithReuseIdentifier:WCImagePickerAssetsCellIdentifier];
+    self.collectionView.allowsMultipleSelection = self.allowsMultipleSelection;
+    [self.collectionView setCollectionViewLayout:self.flowLayout];
 }
 
 #pragma mark - ScrollView Delegate
@@ -119,6 +185,14 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     return assetCell;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 - (void)updateFetchResult {
     if (self.assetCollection) {
         PHFetchOptions *options = [PHFetchOptions new];
@@ -140,7 +214,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     CGFloat itemWidth = floor((collectionViewWidth - (numberOfColumns - 1) * self.minimumItemSpacing) / numberOfColumns);
     self.thumbnailSize = CGSizeMake(itemWidth * SCALE, itemWidth * SCALE);
     self.flowLayout.itemSize = CGSizeMake(itemWidth, itemWidth);
-    [self.flowLayout invalidateLayout];
 }
 
 - (void)resetCachedAssets {
@@ -212,6 +285,12 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (IBAction)finishedButtonDidClicked:(UIButton *)sender {
+    [self.contentView wc_showCoverViewForState:WCImagePickerCoverViewLoading];
+}
+
+- (IBAction)assetCollectionTitleButtonDidClicked:(UIButton *)sender {
+    [self.collectionPicker collectionPickerTrigger];
+    [sender setSelected:self.collectionPicker.isVisible];
 }
 
 #pragma mark - getter and setter
@@ -238,10 +317,20 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     return _flowLayout;
 }
 
-- (void)setNavigationBarBackgroundColor:(UIColor *)navigationBarBackgroundColor {
-    _navigationBarBackgroundColor = navigationBarBackgroundColor;
-    self.view.backgroundColor = navigationBarBackgroundColor;
-    self.navigationBarView.backgroundColor = navigationBarBackgroundColor;
+- (WCCollectionPickerController *)collectionPicker {
+    if (_collectionPicker == nil) {
+        _collectionPicker = [[WCCollectionPickerController alloc] init];
+        _collectionPicker.view.hidden = YES;
+        _collectionPicker.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addChildViewController:_collectionPicker];
+        [self.view insertSubview:_collectionPicker.view belowSubview:self.navigationBarView];
+        NSLayoutConstraint *topCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
+        NSLayoutConstraint *bottomCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+        NSLayoutConstraint *leadingCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
+        NSLayoutConstraint *trailingCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
+        [NSLayoutConstraint activateConstraints:@[topCons, bottomCons, leadingCons, trailingCons]];
+    }
+    return _collectionPicker;
 }
 
 @end

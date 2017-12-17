@@ -10,6 +10,12 @@
 #import <Photos/Photos.h>
 @class WCImagePickerController;
 
+@interface UIImage (WCExtension)
+
++ (UIImage *)wc_imageNamed:( NSString *)name bundle:(NSString *)bundleName;
+
+@end
+
 @interface UICollectionView (WCExtension)
 
 - (NSArray<NSIndexPath *> *)wc_indexPathsForElementsInRect:(CGRect)rect;
@@ -22,6 +28,8 @@
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingImages:(NSArray<UIImage *> *)images;
 - (void)wc_imagePickerControllerDidCancel:(WCImagePickerController *)imagePicker;
 
+- (BOOL)wc_imagePickerController:(WCImagePickerController *)imagePicker shouldSelectAsset:(PHAsset *)asset;
+
 @end
 
 typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
@@ -30,19 +38,21 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
     WCImagePickerImageTypeVideo
 };
 
-
 @interface WCImagePickerController : UIViewController
 
-@property (nonatomic, strong) PHAssetCollection *assetCollection;
+@property (nonatomic, weak) id<WCImagePickerControllerDelegate> delegate;
 
 @property (nonatomic, assign) WCImagePickerImageType mediaType;
-@property (nonatomic, assign) BOOL allowMultipleSelections;
-@property (nonatomic, assign) NSInteger maximumNumberOfSelections;
-@property (nonatomic, assign) NSInteger minimumNumberOfSelections;
+@property (nonatomic, strong) UIColor *navigationBarBackgroundColor;
+
+@property (nonatomic, assign) BOOL allowsMultipleSelection;
+@property (nonatomic, assign) NSInteger maximumNumberOfSelectionPhoto;
+@property (nonatomic, assign) NSInteger minimumNumberOfSelectionPhoto;
+@property (nonatomic, assign) NSInteger maximumNumberOfSelectionVideo;
+@property (nonatomic, assign) NSInteger minimumNumberOfSelectionVideo;
+
 @property (nonatomic, assign) CGFloat minimumItemSpacing;
 @property (nonatomic, assign) NSInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSInteger numberOfColumnsInLandscape;
-
-@property (nonatomic, strong) UIColor *navigationBarBackgroundColor;
 
 @end
