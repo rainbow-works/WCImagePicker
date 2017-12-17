@@ -16,7 +16,7 @@
     CGRect imageViewFrame = self.imageView.frame;
     CGRect titleLabelFrame = self.titleLabel.frame;
     titleLabelFrame.origin.x = imageViewFrame.origin.x;
-    imageViewFrame.origin.x = titleLabelFrame.size.width + adjustOffset;
+    imageViewFrame.origin.x = titleLabelFrame.origin.x + titleLabelFrame.size.width + adjustOffset;
     self.imageView.frame = imageViewFrame;
     self.titleLabel.frame = titleLabelFrame;
 }

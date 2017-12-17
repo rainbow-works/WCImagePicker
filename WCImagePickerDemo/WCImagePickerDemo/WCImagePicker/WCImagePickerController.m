@@ -68,8 +68,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         _minimumNumberOfSelectionVideo = 1;
         
         _minimumItemSpacing = 2.0;
-        _numberOfColumnsInPortrait = 3;
-        _numberOfColumnsInLandscape = 5;
+        _numberOfColumnsInPortrait = 4;
+        _numberOfColumnsInLandscape = 6;
     }
     return self;
 }
@@ -289,6 +289,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (IBAction)assetCollectionTitleButtonDidClicked:(UIButton *)sender {
+    self.collectionPicker.imagePickerController = self;
     [self.collectionPicker collectionPickerTrigger];
     [sender setSelected:self.collectionPicker.isVisible];
 }
@@ -320,9 +321,9 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (WCCollectionPickerController *)collectionPicker {
     if (_collectionPicker == nil) {
         _collectionPicker = [[WCCollectionPickerController alloc] init];
+        [self addChildViewController:_collectionPicker];
         _collectionPicker.view.hidden = YES;
         _collectionPicker.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self addChildViewController:_collectionPicker];
         [self.view insertSubview:_collectionPicker.view belowSubview:self.navigationBarView];
         NSLayoutConstraint *topCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
         NSLayoutConstraint *bottomCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
