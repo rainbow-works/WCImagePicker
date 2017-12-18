@@ -35,9 +35,10 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @interface WCImagePickerController () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
 
 @property(nonatomic, strong) PHCachingImageManager *imageManager;
-@property (nonatomic, strong) PHAssetCollection *assetCollection;
 @property (nonatomic, strong) PHFetchResult *fetchResult;
 @property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
+@property (nonatomic, strong) NSIndexPath *previousSelectedItemIndexPath;
+
 @property (nonatomic, strong) NSBundle *assetBundle;
 
 @property (nonatomic, assign) CGRect previousPreheatRect;
@@ -60,16 +61,17 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (instancetype)init {
     if (self = [super init]) {
-        _mediaType = WCImagePickerImageTypeImage;
+        _previousSelectedItemIndexPath = nil;
         _allowsMultipleSelection = YES;
-        _maximumNumberOfSelectionPhoto = 1;
-        _minimumNumberOfSelectionPhoto = 1;
-        _maximumNumberOfSelectionVideo = 1;
-        _minimumNumberOfSelectionVideo = 1;
-        
+        _mediaType = WCImagePickerImageTypeImage;
+        _maximumNumberOfSelectionAsset = 1;
+        _maximumNumberOfSelectionAsset = 1;
+
         _minimumItemSpacing = 2.0;
         _numberOfColumnsInPortrait = 4;
         _numberOfColumnsInLandscape = 6;
+        
+        _showNumberOfSelectedAssets = YES;
     }
     return self;
 }
@@ -161,10 +163,15 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self.collectionView setCollectionViewLayout:self.flowLayout];
 }
 
-#pragma mark - ScrollView Delegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self updateCachedAssets];
+- (void)updateFinishedButtonAppearance {
+    self.finishedButton.enabled = [self minimumNumberOfSelectionFulfilled];
+    if (self.showNumberOfSelectedAssets) {
+        if (self.selectedAssets.count > 0) {
+            [self.finishedButton setTitle:[NSString stringWithFormat:@"完成(%td)", self.selectedAssets.count] forState:UIControlStateNormal];
+        } else {
+            
+        }
+    }
 }
 
 #pragma mark - Collection View Data Source
@@ -186,26 +193,66 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:shouldSelectAsset:)]) {
+        return [self.delegate wc_imagePickerController:self shouldSelectAsset:[self.fetchResult objectAtIndex:indexPath.item]];
+    }
+    if ([self autoDeselectEnabled]) return YES;
+    return ![self maximumNumberOfSelectionReached];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
-- (void)updateFetchResult {
-    if (self.assetCollection) {
-        PHFetchOptions *options = [PHFetchOptions new];
-        if (self.mediaType == WCImagePickerImageTypeImage) {
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
-        } else if (self.mediaType == WCImagePickerImageTypeVideo) {
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+    PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
+    if (self.allowsMultipleSelection) {
+        if ([self autoDeselectEnabled] && self.selectedAssets.count > 0) {
+            [self.selectedAssets removeObjectAtIndex:0];
+            if (self.previousSelectedItemIndexPath) {
+                [collectionView deselectItemAtIndexPath:self.previousSelectedItemIndexPath animated:NO];
+            }
         }
-        self.fetchResult = [PHAsset fetchAssetsInAssetCollection:self.assetCollection options:options];
-    } else {
-        self.fetchResult = nil;
+        [self.selectedAssets addObject:asset];
+        self.previousSelectedItemIndexPath = indexPath;
+        [self updateFinishedButtonAppearance];
     }
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (!self.allowsMultipleSelection) return;
+    PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
+    [self.selectedAssets removeObject:asset];
+    self.previousSelectedItemIndexPath = nil;
+    [self updateFinishedButtonAppearance];
+}
+
+#pragma mark -
+
+- (BOOL)minimumNumberOfSelectionFulfilled {
+    NSUInteger minimumNumberOfSelection = MAX(1, self.minimumNumberOfSelectionAsset);
+    return (minimumNumberOfSelection <= self.selectedAssets.count);
+}
+
+- (BOOL)maximumNumberOfSelectionReached {
+    NSUInteger minimumNumberOfSelection = MAX(1, self.minimumNumberOfSelectionAsset);
+    if (self.maximumNumberOfSelectionAsset < minimumNumberOfSelection) {
+        if (self.maximumNumberOfSelectionAsset > 0) {
+            self.minimumNumberOfSelectionAsset = self.maximumNumberOfSelectionAsset;
+        } else {
+            self.maximumNumberOfSelectionAsset = minimumNumberOfSelection;
+        }
+    }
+    return (self.maximumNumberOfSelectionAsset <= self.selectedAssets.count);
+}
+
+- (BOOL)autoDeselectEnabled {
+    return (self.maximumNumberOfSelectionAsset == 1 && self.minimumNumberOfSelectionAsset <= self.maximumNumberOfSelectionAsset);
+}
+
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self updateCachedAssets];
+}
+
+#pragma mark Assets
 
 - (void)updateItemSize {
     BOOL isPortrait = UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]);
@@ -304,10 +351,11 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 #pragma mark - getter and setter
 
-- (void)setAssetCollection:(PHAssetCollection *)assetCollection {
-    _assetCollection = assetCollection;
-    [self updateFetchResult];
-    [self.collectionView reloadData];
+- (NSMutableOrderedSet *)selectedAssets {
+    if (_selectedAssets == nil) {
+        _selectedAssets = [NSMutableOrderedSet orderedSet];
+    }
+    return _selectedAssets;
 }
 
 - (PHCachingImageManager *)imageManager {

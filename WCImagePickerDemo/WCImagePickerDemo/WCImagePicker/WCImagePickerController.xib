@@ -84,8 +84,11 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LMu-zB-SRc" userLabel="Finished Button">
-                                    <rect key="frame" x="330" y="0.0" width="37" height="44"/>
-                                    <state key="normal" title="完成"/>
+                                    <rect key="frame" x="293" y="7" width="74" height="30"/>
+                                    <color key="backgroundColor" red="1" green="0.70163584369999998" blue="0.087095782570000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                    <state key="normal" title="完成(0)"/>
                                     <connections>
                                         <action selector="finishedButtonDidClicked:" destination="-1" eventType="touchUpInside" id="aVA-aZ-VJT"/>
                                     </connections>
@@ -95,9 +98,9 @@
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="eqH-HS-LE6" secondAttribute="bottom" id="KG8-Mb-Kh1"/>
                                 <constraint firstAttribute="height" constant="44" id="Q4E-Iv-tZb"/>
-                                <constraint firstAttribute="bottom" secondItem="LMu-zB-SRc" secondAttribute="bottom" id="RAn-Em-Vg3"/>
+                                <constraint firstAttribute="bottom" secondItem="LMu-zB-SRc" secondAttribute="bottom" constant="7" id="RAn-Em-Vg3"/>
                                 <constraint firstItem="rco-3I-gS8" firstAttribute="centerX" secondItem="zp6-wk-wap" secondAttribute="centerX" id="XH3-wf-bde"/>
-                                <constraint firstItem="LMu-zB-SRc" firstAttribute="top" secondItem="zp6-wk-wap" secondAttribute="top" id="ZSM-0p-zjq"/>
+                                <constraint firstItem="LMu-zB-SRc" firstAttribute="top" secondItem="zp6-wk-wap" secondAttribute="top" constant="7" id="ZSM-0p-zjq"/>
                                 <constraint firstAttribute="trailing" secondItem="LMu-zB-SRc" secondAttribute="trailing" constant="8" id="a0m-UE-XhG"/>
                                 <constraint firstItem="eqH-HS-LE6" firstAttribute="leading" secondItem="zp6-wk-wap" secondAttribute="leading" constant="8" id="gUR-3n-p8V"/>
                                 <constraint firstItem="rco-3I-gS8" firstAttribute="centerY" secondItem="zp6-wk-wap" secondAttribute="centerY" id="izX-eh-Rdq"/>

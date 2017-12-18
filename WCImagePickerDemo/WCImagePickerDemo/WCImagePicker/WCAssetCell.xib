@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,13 +26,24 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iEK-QR-qll" userLabel="Asset Image View">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98C-G4-fm7" userLabel="Check Button">
+                                <rect key="frame" x="174" y="2" width="24" height="24"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="Taj-1s-y4u"/>
+                                    <constraint firstAttribute="width" secondItem="98C-G4-fm7" secondAttribute="height" multiplier="1:1" id="f2A-3w-lZt"/>
+                                </constraints>
+                                <state key="normal" image="imagepicker_asset_check"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="98C-G4-fm7" secondAttribute="trailing" constant="2" id="Prz-Ed-2Bi"/>
                             <constraint firstItem="iEK-QR-qll" firstAttribute="top" secondItem="T3Y-qI-bMQ" secondAttribute="top" id="R1u-80-YBn"/>
                             <constraint firstItem="iEK-QR-qll" firstAttribute="leading" secondItem="T3Y-qI-bMQ" secondAttribute="leading" id="Sdt-et-jE5"/>
                             <constraint firstAttribute="bottom" secondItem="iEK-QR-qll" secondAttribute="bottom" id="mR3-k0-KLm"/>
                             <constraint firstAttribute="trailing" secondItem="iEK-QR-qll" secondAttribute="trailing" id="pyV-fG-KmW"/>
+                            <constraint firstItem="98C-G4-fm7" firstAttribute="top" secondItem="T3Y-qI-bMQ" secondAttribute="top" constant="2" id="ua4-Pu-z9v"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -46,6 +58,10 @@
             <connections>
                 <outlet property="assetImageView" destination="iEK-QR-qll" id="U2M-MY-KPF"/>
             </connections>
+            <point key="canvasLocation" x="43" y="-17"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="imagepicker_asset_check" width="24" height="24"/>
+    </resources>
 </document>

@@ -42,17 +42,21 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 
 @property (nonatomic, weak) id<WCImagePickerControllerDelegate> delegate;
 
-@property (nonatomic, assign) WCImagePickerImageType mediaType;
 @property (nonatomic, strong) UIColor *navigationBarBackgroundColor;
 
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
-@property (nonatomic, assign) NSInteger maximumNumberOfSelectionPhoto;
-@property (nonatomic, assign) NSInteger minimumNumberOfSelectionPhoto;
-@property (nonatomic, assign) NSInteger maximumNumberOfSelectionVideo;
-@property (nonatomic, assign) NSInteger minimumNumberOfSelectionVideo;
+@property (nonatomic, assign) WCImagePickerImageType mediaType;
+@property (nonatomic, assign) NSUInteger maximumNumberOfSelectionAsset;
+@property (nonatomic, assign) NSUInteger minimumNumberOfSelectionAsset;
+//@property (nonatomic, assign) NSUInteger maximumNumberOfSelectionPhoto;
+//@property (nonatomic, assign) NSUInteger minimumNumberOfSelectionPhoto;
+//@property (nonatomic, assign) NSUInteger maximumNumberOfSelectionVideo;
+//@property (nonatomic, assign) NSUInteger minimumNumberOfSelectionVideo;
 
 @property (nonatomic, assign) CGFloat minimumItemSpacing;
-@property (nonatomic, assign) NSInteger numberOfColumnsInPortrait;
-@property (nonatomic, assign) NSInteger numberOfColumnsInLandscape;
+@property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
+@property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
+
+@property (nonatomic, assign) BOOL showNumberOfSelectedAssets;
 
 @end

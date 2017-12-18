@@ -70,7 +70,7 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
                       initWithFrame:CGRectMake(0, -COLLECTION_PICKER_HEIGHT, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT)
                       style:UITableViewStylePlain];
     [self.tableView registerNib:[UINib nibWithNibName:@"WCCollectionCell" bundle:nil] forCellReuseIdentifier:WCImagePickerCollectionCellIdentifier];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.contentInset = UIEdgeInsetsZero;
     self.tableView.scrollsToTop = NO;
     self.tableView.dataSource = self;

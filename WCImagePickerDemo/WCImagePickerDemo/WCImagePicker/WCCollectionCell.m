@@ -28,8 +28,18 @@
         assetBundle = [NSBundle bundleWithPath:bundlePath];
     }
     
+    [self.arrowImageView setImage:[UIImage imageNamed:@"imagepicker_arrow_right"]];
+    
 //    NSString *collectionCountFormat = NSLocalizedStringFromTableInBundle(@"imagepicker.collectionpicker.collectioncount", @"WCImagePicker", assetBundle, nil);
 //    [self.assetCollectionCount setText:[NSString stringWithFormat:collectionCountFormat, 120]];
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.assetImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.assetImageView.image = nil;
+    self.assetCollectionTitle.text = nil;
+    self.assetCollectionCount.text = [NSString stringWithFormat:@"(0)"];
 }
 
 - (void)setAlbum:(WCAlbum *)album {
@@ -43,6 +53,9 @@
                 [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(60, 60) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                     [self.assetImageView setImage:result];
                 }];
+            } else {
+                self.assetImageView.contentMode = UIViewContentModeScaleAspectFit;
+                [self.assetImageView setImage:[UIImage imageNamed:@"imagepicker_image_placeholder"]];
             }
         });
     }
