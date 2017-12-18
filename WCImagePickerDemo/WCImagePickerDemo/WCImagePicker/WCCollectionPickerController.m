@@ -86,7 +86,7 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
         [fetchResult enumerateObjectsUsingBlock:^(PHCollection *collection, NSUInteger idx, BOOL * _Nonnull stop) {
             PHAssetCollection *assetCollection = (PHAssetCollection *)collection;
             PHFetchOptions *options = [PHFetchOptions new];
-            options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+            options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
             if (weakSelf.imagePickerController.mediaType == WCImagePickerImageTypeImage) {
                 options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
             } else if (weakSelf.imagePickerController.mediaType == WCImagePickerImageTypeVideo) {

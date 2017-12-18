@@ -43,7 +43,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @property (nonatomic, assign) CGRect previousPreheatRect;
 @property(nonatomic, assign) CGSize thumbnailSize;
 
-@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIView *navigationBarView;
 @property (weak, nonatomic) IBOutlet UIView *navigationBarBackgroundView;
 
@@ -92,9 +91,12 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateItemSize];
+    CGPoint bottomOffset = CGPointMake(0, self.collectionView.contentSize.height - self.collectionView.bounds.size.height);
+    NSLog(@"%f -- %f -- %@", self.collectionView.contentSize.height, self.collectionView.bounds.size.height, NSStringFromCGPoint(bottomOffset));
+    [self.collectionView setContentOffset:bottomOffset];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -125,7 +127,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         dispatch_async(dispatch_get_main_queue(), ^{
             if (self.fetchResult == nil) {
                 PHFetchOptions *options = [PHFetchOptions new];
-                options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+                options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
                 if (self.mediaType == WCImagePickerImageTypeImage) {
                     options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
                 } else if (self.mediaType == WCImagePickerImageTypeVideo){
@@ -172,7 +174,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     if (imagePickerAppearance.navigationBarBackgroundColor) {
         self.navigationBarBackgroundView.backgroundColor = imagePickerAppearance.navigationBarBackgroundColor;
     } else {
-        self.navigationBarBackgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:.7];
+        self.navigationBarBackgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:.8];
     }
     
     if (imagePickerAppearance.finishedButtonDisableBackgroundColor) {
@@ -195,6 +197,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)setupCollectionView {
+    self.collectionView.contentInset = UIEdgeInsetsMake(44.0, 0, 0, 0);
     [self.collectionView registerNib:[UINib nibWithNibName:@"WCAssetCell" bundle:nil] forCellWithReuseIdentifier:WCImagePickerAssetsCellIdentifier];
     self.collectionView.allowsMultipleSelection = self.allowsMultipleSelection;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
@@ -432,7 +435,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         _collectionPicker.view.hidden = YES;
         _collectionPicker.view.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view insertSubview:_collectionPicker.view belowSubview:self.navigationBarView];
-        NSLayoutConstraint *topCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.collectionView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
+        NSLayoutConstraint *topCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.navigationBarView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
         NSLayoutConstraint *bottomCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
         NSLayoutConstraint *leadingCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
         NSLayoutConstraint *trailingCons = [NSLayoutConstraint constraintWithItem:_collectionPicker.view attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
