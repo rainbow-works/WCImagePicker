@@ -14,7 +14,6 @@
 
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
-#define SCALE ([[UIScreen mainScreen] scale])
 
 @implementation UICollectionView (WCExtension)
 
@@ -46,6 +45,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIView *navigationBarView;
+@property (weak, nonatomic) IBOutlet UIView *navigationBarBackgroundView;
+
 @property (weak, nonatomic) IBOutlet WCCustomButton *assetCollectionTitleButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *finishedButton;
@@ -107,11 +108,15 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance {
     WCImagePickerAppearance *appearance = [WCImagePickerAppearance sharedAppearance];
     appearance.navigationBarBackgroundColor = imagePickerAppearance.navigationBarBackgroundColor;
+    
     appearance.cancelButtonText = imagePickerAppearance.cancelButtonText;
     appearance.cancelButtonTextColor = imagePickerAppearance.cancelButtonTextColor;
     appearance.cancelButtonBackgroundColor = imagePickerAppearance.cancelButtonBackgroundColor;
+    
     appearance.finishedButtonTextColor = imagePickerAppearance.finishedButtonTextColor;
-    appearance.finishedButtonBackgroundColor = imagePickerAppearance.finishedButtonBackgroundColor;
+    appearance.finishedButtonEnableBackgroundColor = imagePickerAppearance.finishedButtonEnableBackgroundColor;
+    appearance.finishedButtonDisableBackgroundColor = imagePickerAppearance.finishedButtonDisableBackgroundColor;
+    
     appearance.assetCollectionButtonTextColor = imagePickerAppearance.assetCollectionButtonTextColor;
 }
 
@@ -162,12 +167,31 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)setupNavigationBarView {
-    self.navigationBarView.backgroundColor = self.navigationBarBackgroundColor;
-    self.view.backgroundColor = self.navigationBarBackgroundColor;
+    
+    WCImagePickerAppearance *imagePickerAppearance = [WCImagePickerAppearance sharedAppearance];
+    if (imagePickerAppearance.navigationBarBackgroundColor) {
+        self.navigationBarBackgroundView.backgroundColor = imagePickerAppearance.navigationBarBackgroundColor;
+    } else {
+        self.navigationBarBackgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:.7];
+    }
+    
+    if (imagePickerAppearance.finishedButtonDisableBackgroundColor) {
+        self.finishedButton.backgroundColor = imagePickerAppearance.finishedButtonDisableBackgroundColor;
+    } else {
+        self.finishedButton.backgroundColor = WCUIColorFromHexValue(0xDCDCDC);
+    }
+    
+    
     UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:self.assetBundle compatibleWithTraitCollection:nil];
     [self.assetCollectionTitleButton wc_setImage:triangle];
     
+    
     [self.finishedButton setTitle:@"完成(0)" forState:UIControlStateNormal];
+    if (imagePickerAppearance.finishedButtonTextColor) {
+        [self.finishedButton.titleLabel setTextColor:imagePickerAppearance.finishedButtonTextColor];
+    } else {
+        [self.finishedButton.titleLabel setTextColor:[UIColor whiteColor]];
+    }
 }
 
 - (void)setupCollectionView {
@@ -177,13 +201,25 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)updateFinishedButtonAppearance {
+    WCImagePickerAppearance *imagePickerAppearance = [WCImagePickerAppearance sharedAppearance];
     self.finishedButton.enabled = [self minimumNumberOfSelectionFulfilled];
-    self.finishedButton.backgroundColor = [self minimumNumberOfSelectionFulfilled] ? [UIColor blueColor] : [UIColor lightGrayColor];
+    if ([self minimumNumberOfSelectionFulfilled]) {
+        if (imagePickerAppearance.finishedButtonEnableBackgroundColor) {
+            self.finishedButton.backgroundColor = imagePickerAppearance.finishedButtonEnableBackgroundColor;
+        } else {
+            self.finishedButton.backgroundColor = WCUIColorFromHexValue(0x1EB400);
+        }
+    } else {
+        if (imagePickerAppearance.finishedButtonDisableBackgroundColor) {
+            self.finishedButton.backgroundColor = imagePickerAppearance.finishedButtonDisableBackgroundColor;
+        } else {
+            self.finishedButton.backgroundColor = WCUIColorFromHexValue(0xDCDCDC);
+        }
+    }
+    
     if (self.showNumberOfSelectedAssets) {
         if (self.selectedAssets.count > 0) {
             [self.finishedButton setTitle:[NSString stringWithFormat:@"完成(%td)", self.selectedAssets.count] forState:UIControlStateNormal];
-        } else {
-            
         }
     }
 }
@@ -197,6 +233,9 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     WCAssetCell *assetCell = [collectionView dequeueReusableCellWithReuseIdentifier:WCImagePickerAssetsCellIdentifier forIndexPath:indexPath];
     PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.row];
+    
+    if ([self.selectedAssets containsObject:asset]) {
+    }
     assetCell.representedAssetIdentifier = asset.localIdentifier;
     [self.imageManager requestImageForAsset:asset targetSize:self.thumbnailSize contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if ([assetCell.representedAssetIdentifier isEqualToString:asset.localIdentifier]) {
@@ -270,7 +309,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     NSInteger numberOfColumns = isPortrait ? self.numberOfColumnsInPortrait : self.numberOfColumnsInLandscape;
     CGFloat collectionViewWidth = self.collectionView.bounds.size.width;
     CGFloat itemWidth = floor((collectionViewWidth - (numberOfColumns - 1) * self.minimumItemSpacing) / numberOfColumns);
-    self.thumbnailSize = CGSizeMake(itemWidth * SCALE, itemWidth * SCALE);
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    self.thumbnailSize = CGSizeMake(itemWidth*scale, itemWidth*scale);
     self.flowLayout.itemSize = CGSizeMake(itemWidth, itemWidth);
 }
 
@@ -343,7 +383,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (IBAction)finishedButtonDidClicked:(UIButton *)sender {
-    [self.contentView wc_showCoverViewForState:WCImagePickerCoverViewLoading];
+//    [self.contentView wc_showCoverViewForState:WCImagePickerCoverViewLoading];
 }
 
 - (IBAction)assetCollectionTitleButtonDidClicked:(UIButton *)sender {

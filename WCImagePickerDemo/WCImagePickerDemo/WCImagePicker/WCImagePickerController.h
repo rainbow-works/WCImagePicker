@@ -10,6 +10,12 @@
 #import <Photos/Photos.h>
 @class WCImagePickerController, WCImagePickerAppearance;
 
+#define WCUIColorFromHexValue(hexValue) \
+[UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 \
+                green:((float)((hexValue & 0x00FF00) >> 8))/255.0 \
+                 blue:((float)((hexValue & 0x0000FF) >> 0))/255.0 \
+                alpha:1.0]
+
 @interface UIImage (WCExtension)
 
 + (UIImage *)wc_imageNamed:( NSString *)name bundle:(NSString *)bundleName;
@@ -42,8 +48,6 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 
 @property (nonatomic, weak) id<WCImagePickerControllerDelegate> delegate;
 
-@property (nonatomic, strong) UIColor *navigationBarBackgroundColor;
-
 @property (nonatomic, assign) BOOL allowsMultipleSelection;
 @property (nonatomic, assign) WCImagePickerImageType mediaType;
 @property (nonatomic, assign) NSUInteger maximumNumberOfSelectionAsset;
@@ -62,11 +66,15 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @interface WCImagePickerAppearance : NSObject
 
 @property (nonatomic, strong) UIColor *navigationBarBackgroundColor;
+
 @property (nonatomic, copy) NSString *cancelButtonText;
 @property (nonatomic, strong) UIColor *cancelButtonTextColor;
 @property (nonatomic, strong) UIColor *cancelButtonBackgroundColor;
+
 @property (nonatomic, strong) UIColor *finishedButtonTextColor;
-@property (nonatomic, strong) UIColor *finishedButtonBackgroundColor;
+@property (nonatomic, strong) UIColor *finishedButtonEnableBackgroundColor;
+@property (nonatomic, strong) UIColor *finishedButtonDisableBackgroundColor;
+
 @property (nonatomic, strong) UIColor *assetCollectionButtonTextColor;
 
 + (instancetype)sharedAppearance;
