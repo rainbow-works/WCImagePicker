@@ -7,11 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Photos/Photos.h>
+@class WCImagePickerController;
 
 @interface WCCollectionPickerController : UIViewController
 
-@property (nonatomic, assign, readonly) BOOL isVisible;
+//@property (nonatomic, assign, readonly) BOOL isVisible;
+@property (nonatomic, weak) WCImagePickerController *imagePickerController;
 
-- (void)collectionPickerTrigger;
+- (void)collectionPickerTriggerWithCompletionBlock:(void(^)(BOOL isCollectionPickerVisible))completion;
+
+@end
+
+@interface WCAlbum : NSObject
+
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, strong) PHAssetCollection *assetCollection;
+@property (nonatomic, strong) PHFetchResult *fetchResult;
+
+- (instancetype)initWithTitle:(NSString *)title
+              assetCollection:(PHAssetCollection *)assetCollection
+                  fetchResult:(PHFetchResult *)fetchResult;
 
 @end

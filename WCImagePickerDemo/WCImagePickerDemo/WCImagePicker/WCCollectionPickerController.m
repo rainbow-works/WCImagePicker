@@ -7,10 +7,8 @@
 //
 
 #import "WCCollectionPickerController.h"
-#import <Photos/Photos.h>
+#import "WCImagePickerController.h"
 #import "WCCollectionCell.h"
-#import "WCAlbum.h"
-#import "UIView+WCExtension.h"
 
 static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WCImagePickerCollectionCell";
 static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
@@ -37,6 +35,7 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
     self.isAnimating = NO;
     [self setupTableView];
     [self getAllAssetCollection];
+    [UIView animateWithDuration:<#(NSTimeInterval)#> animations:<#^(void)animations#> completion:<#^(BOOL finished)completion#>]
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,18 +71,29 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
     __weak typeof(self) weakSelf = self;
     void (^convertAssetCollectionToAlbumInfo)(PHFetchResult *) = ^(PHFetchResult *fetchResult) {
         [fetchResult enumerateObjectsUsingBlock:^(PHCollection *collection, NSUInteger idx, BOOL * _Nonnull stop) {
-            [weakSelf.albums addObject:[[WCAlbum alloc] initWithTitle:collection.localizedTitle assetCollection:(PHAssetCollection *)collection]];
+            PHAssetCollection *assetCollection = (PHAssetCollection *)collection;
+            PHFetchOptions *options = [PHFetchOptions new];
+            options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+            if (weakSelf.imagePickerController.mediaType == WCImagePickerImageTypeImage) {
+                options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+            } else if (weakSelf.imagePickerController.mediaType == WCImagePickerImageTypeVideo) {
+                options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
+            }
+            PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
+            WCAlbum *album = [[WCAlbum alloc] initWithTitle:assetCollection.localizedTitle assetCollection:assetCollection fetchResult:fetchResult];
+            [weakSelf.albums addObject:album];
         }];
     };
     
-    [self.view wc_showCoverViewForState:WCImagePickerCoverViewLoading];
     dispatch_async(dispatch_get_main_queue(), ^{
         PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
         convertAssetCollectionToAlbumInfo(smartAlbums);
         PHFetchResult *userAlbums = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
         convertAssetCollectionToAlbumInfo(userAlbums);
+        [self.albums sortUsingComparator:^NSComparisonResult(WCAlbum *obj1, WCAlbum *obj2) {
+            return obj1.fetchResult.count < obj2.fetchResult.count;
+        }];
         [self.tableView reloadData];
-        [self.view wc_removeCoverView];
     });
 }
 
@@ -97,13 +107,18 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
     return collectionCell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.imagePickerController setValue:[self.albums objectAtIndex:indexPath.row].assetCollection forKey:@"assetCollection"];
+    [self dismissCollectionPicker];
+}
+
 - (void)showCollectionPicker {
     self.isVisible = YES;
     self.isAnimating = YES;
     self.view.hidden = NO;
     [UIView animateWithDuration:.6 delay:0.0 usingSpringWithDamping:.85 initialSpringVelocity:10 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.tableView.frame = CGRectMake(0, 0, WCCOLLECTION_PICKER_WIDTH, WCCOLLECTION_PICKER_HEIGHT);
-        self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:.2];
+        self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:.4];
     } completion:^(BOOL finished) {
         self.isAnimating = NO;
     }];
@@ -138,6 +153,10 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
     }
 }
 
+- (void)collectionPickerTriggerWithCompletionBlock:(void (^)(BOOL))completion {
+    
+}
+
 #pragma mark getter and setter
 
 - (NSMutableArray<WCAlbum *> *)albums {
@@ -148,3 +167,17 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
 }
 
 @end
+
+@implementation WCAlbum
+
+- (instancetype)initWithTitle:(NSString *)title assetCollection:(PHAssetCollection *)assetCollection fetchResult:(PHFetchResult *)fetchResult {
+    if (self = [super init]) {
+        _title = title;
+        _assetCollection = assetCollection;
+        _fetchResult = fetchResult;
+    }
+    return self;
+}
+
+@end
+

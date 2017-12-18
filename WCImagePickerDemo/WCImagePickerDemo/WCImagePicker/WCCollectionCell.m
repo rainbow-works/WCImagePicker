@@ -7,7 +7,7 @@
 //
 
 #import "WCCollectionCell.h"
-#import "WCAlbum.h"
+#import "WCCollectionPickerController.h"
 
 @interface WCCollectionCell ()
 
@@ -37,12 +37,9 @@
     if (_album) {
         [self.assetCollectionTitle setText:album.title];
         dispatch_async(dispatch_get_main_queue(), ^{
-            PHFetchOptions *options = [PHFetchOptions new];
-            options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-            PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:album.assetCollection options:options];
-            [self.assetCollectionCount setText:[NSString stringWithFormat:@"(%td)", fetchResult.count]];
-            if (fetchResult.count > 0) {
-                PHAsset *asset = [fetchResult objectAtIndex:0];
+            [self.assetCollectionCount setText:[NSString stringWithFormat:@"(%td)", album.fetchResult.count]];
+            if (album.fetchResult.count > 0) {
+                PHAsset *asset = [album.fetchResult objectAtIndex:0];
                 [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(60, 60) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                     [self.assetImageView setImage:result];
                 }];
