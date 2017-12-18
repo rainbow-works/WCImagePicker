@@ -12,10 +12,11 @@
 
 @interface WCCollectionPickerController : UIViewController
 
-//@property (nonatomic, assign, readonly) BOOL isVisible;
 @property (nonatomic, weak) WCImagePickerController *imagePickerController;
 
-- (void)collectionPickerTriggerWithCompletionBlock:(void(^)(BOOL isCollectionPickerVisible))completion;
+- (void)showCollectionPicker:(void(^)(BOOL willShowCollectionPicker))showCollectionPicker
+     dismissCollectionPicker:(void(^)(BOOL willDismissCollectionPicker))dismissCollectionPicker
+                  completion:(void(^)(NSString *assetCollectionTitle, PHFetchResult *fetchResult))completion;
 
 @end
 

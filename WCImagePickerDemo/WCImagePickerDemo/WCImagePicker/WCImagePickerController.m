@@ -290,8 +290,16 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (IBAction)assetCollectionTitleButtonDidClicked:(UIButton *)sender {
     self.collectionPicker.imagePickerController = self;
-    [self.collectionPicker collectionPickerTrigger];
-    [sender setSelected:self.collectionPicker.isVisible];
+    __weak typeof(self)weakSelf = self;
+    [self.collectionPicker showCollectionPicker:^(BOOL willShowCollectionPicker) {
+        [sender setSelected:willShowCollectionPicker];
+    } dismissCollectionPicker:^(BOOL willDismissCollectionPicker) {
+        [sender setSelected:!willDismissCollectionPicker];
+    } completion:^(NSString *assetCollectionTitle, PHFetchResult *fetchResult) {
+        [weakSelf.assetCollectionTitleButton setTitle:assetCollectionTitle forState:UIControlStateNormal];
+        weakSelf.fetchResult = fetchResult;
+        [weakSelf.collectionView reloadData];
+    }];
 }
 
 #pragma mark - getter and setter

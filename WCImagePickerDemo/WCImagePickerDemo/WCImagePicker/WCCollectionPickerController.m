@@ -10,32 +10,41 @@
 #import "WCImagePickerController.h"
 #import "WCCollectionCell.h"
 
+#define COLLECTION_PICKER_WIDTH (self.view.bounds.size.width)
+#define COLLECTION_PICKER_HEIGHT (self.view.bounds.size.height * 2/3.0)
 static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WCImagePickerCollectionCell";
-static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
-#define WCCOLLECTION_PICKER_OFFSET (8.0)
-#define WCCOLLECTION_PICKER_WIDTH (self.view.bounds.size.width)
-#define WCCOLLECTION_PICKER_HEIGHT (self.view.bounds.size.height * 2/3.0)
 
-@interface WCCollectionPickerController () <UITableViewDataSource, UITableViewDelegate>
+@interface WCCollectionPickerController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
-@property (nonatomic, assign, readwrite) BOOL isVisible;
+@property (nonatomic, copy) void(^showCollectionPickerBlock)(BOOL willShowCollectionPicker);
+@property (nonatomic, copy) void(^dismissCollectionPickerBlock)(BOOL willDismissCollectionPicker);
+@property (nonatomic, copy) void(^completionBlock)(NSString *assetCollectionTitle, PHFetchResult * fetchResult);
+
 @property (nonatomic, assign) BOOL isAnimating;
 @property (nonatomic, strong) UITableView *tableView;
-
 @property (nonatomic, strong) NSMutableArray<WCAlbum *> *albums;
+
 @end
 
 @implementation WCCollectionPickerController
+
+- (instancetype)init {
+    if (self = [super init]) {
+        _isAnimating = NO;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.clipsToBounds = YES;
     self.view.backgroundColor = [UIColor clearColor];
-    self.isAnimating = NO;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.delegate = self;
+    [self.view addGestureRecognizer:tapGesture];
     [self setupTableView];
     [self getAllAssetCollection];
-    [UIView animateWithDuration:<#(NSTimeInterval)#> animations:<#^(void)animations#> completion:<#^(BOOL finished)completion#>]
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,14 +56,18 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
     [super viewWillLayoutSubviews];
     [self.view layoutIfNeeded];
     CGRect tableViewFrame = self.tableView.frame;
-    tableViewFrame.size.width = WCCOLLECTION_PICKER_WIDTH;
-    tableViewFrame.size.height = WCCOLLECTION_PICKER_HEIGHT;
+    tableViewFrame.size.width = COLLECTION_PICKER_WIDTH;
+    tableViewFrame.size.height = COLLECTION_PICKER_HEIGHT;
     self.tableView.frame = tableViewFrame;
+}
+
+- (void)handleTapGesture:(UIGestureRecognizer *)gesture {
+    [self dismissCollectionPicker];
 }
 
 - (void)setupTableView {
     self.tableView = [[UITableView alloc]
-                      initWithFrame:CGRectMake(0, -WCCOLLECTION_PICKER_HEIGHT, WCCOLLECTION_PICKER_WIDTH, WCCOLLECTION_PICKER_HEIGHT)
+                      initWithFrame:CGRectMake(0, -COLLECTION_PICKER_HEIGHT, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT)
                       style:UITableViewStylePlain];
     [self.tableView registerNib:[UINib nibWithNibName:@"WCCollectionCell" bundle:nil] forCellReuseIdentifier:WCImagePickerCollectionCellIdentifier];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -62,7 +75,7 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
     self.tableView.scrollsToTop = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.rowHeight = WCImagePickerCollectionCellRowHeight;    
+    self.tableView.rowHeight = 60.0;
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tableView];
 }
@@ -97,6 +110,14 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
     });
 }
 
+#pragma mark - TapGesture Delegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return !CGRectContainsPoint(self.tableView.bounds, [touch locationInView:self.tableView]);
+}
+
+#pragma mark - TableView DataSource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.albums.count;
 }
@@ -108,44 +129,16 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.imagePickerController setValue:[self.albums objectAtIndex:indexPath.row].assetCollection forKey:@"assetCollection"];
     [self dismissCollectionPicker];
+    WCAlbum *album = [self.albums objectAtIndex:indexPath.row];
+    self.completionBlock(album.title, album.fetchResult);
 }
 
-- (void)showCollectionPicker {
-    self.isVisible = YES;
-    self.isAnimating = YES;
-    self.view.hidden = NO;
-    [UIView animateWithDuration:.6 delay:0.0 usingSpringWithDamping:.85 initialSpringVelocity:10 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.tableView.frame = CGRectMake(0, 0, WCCOLLECTION_PICKER_WIDTH, WCCOLLECTION_PICKER_HEIGHT);
-        self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:.4];
-    } completion:^(BOOL finished) {
-        self.isAnimating = NO;
-    }];
-}
-
-- (void)dismissCollectionPicker {
-    self.isVisible = NO;
-    self.isAnimating = YES;
-    [UIView animateWithDuration:0.2 animations:^{
-        self.tableView.frame = CGRectMake(0, WCCOLLECTION_PICKER_OFFSET, WCCOLLECTION_PICKER_WIDTH, WCCOLLECTION_PICKER_HEIGHT);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.4 animations:^{
-            self.tableView.frame = CGRectMake(0, -WCCOLLECTION_PICKER_HEIGHT, WCCOLLECTION_PICKER_WIDTH, WCCOLLECTION_PICKER_HEIGHT);
-        } completion:^(BOOL finished) {
-            self.isAnimating = NO;
-        }];
-    }];
-    
-    [UIView animateWithDuration:0.8 animations:^{
-        self.view.backgroundColor = [UIColor clearColor];
-    } completion:^(BOOL finished) {
-        self.view.hidden = YES;
-    }];
-}
-
-- (void)collectionPickerTrigger {
+- (void)showCollectionPicker:(void (^)(BOOL))showCollectionPicker dismissCollectionPicker:(void (^)(BOOL))dismissCollectionPicker completion:(void (^)(NSString *assetCollectionTitle, PHFetchResult *fetchResult))completion {
     if (self.isAnimating) return;
+    self.showCollectionPickerBlock = showCollectionPicker;
+    self.dismissCollectionPickerBlock = dismissCollectionPicker;
+    self.completionBlock = completion;
     if (self.tableView.frame.origin.y < 0) {
         [self showCollectionPicker];
     } else {
@@ -153,8 +146,39 @@ static const CGFloat WCImagePickerCollectionCellRowHeight = 60.0;
     }
 }
 
-- (void)collectionPickerTriggerWithCompletionBlock:(void (^)(BOOL))completion {
+- (void)showCollectionPicker {
+    if (self.showCollectionPickerBlock) {
+        self.showCollectionPickerBlock(YES);
+    }
+    self.view.hidden = NO;
+    self.isAnimating = !self.isAnimating;
+    [UIView animateWithDuration:.6 delay:0.0 usingSpringWithDamping:.85 initialSpringVelocity:10 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.tableView.frame = CGRectMake(0, 0, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT);
+        self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:.4];
+    } completion:^(BOOL finished) {
+        self.isAnimating = !self.isAnimating;
+    }];
+}
+
+- (void)dismissCollectionPicker {
+    if (self.dismissCollectionPickerBlock) {
+        self.dismissCollectionPickerBlock(YES);
+    }
+    [UIView animateWithDuration:0.2 animations:^{
+        self.tableView.frame = CGRectMake(0, 8.0, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.4 animations:^{
+            self.tableView.frame = CGRectMake(0, -COLLECTION_PICKER_HEIGHT, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT);
+        }];
+    }];
     
+    self.isAnimating = !self.isAnimating;
+    [UIView animateWithDuration:0.6 animations:^{
+        self.view.backgroundColor = [UIColor clearColor];
+    } completion:^(BOOL finished) {
+        self.view.hidden = YES;
+        self.isAnimating = !self.isAnimating;
+    }];
 }
 
 #pragma mark getter and setter
