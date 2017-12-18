@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
-@class WCImagePickerController;
+@class WCImagePickerController, WCImagePickerAppearance;
 
 @interface UIImage (WCExtension)
 
@@ -48,15 +48,27 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) WCImagePickerImageType mediaType;
 @property (nonatomic, assign) NSUInteger maximumNumberOfSelectionAsset;
 @property (nonatomic, assign) NSUInteger minimumNumberOfSelectionAsset;
-//@property (nonatomic, assign) NSUInteger maximumNumberOfSelectionPhoto;
-//@property (nonatomic, assign) NSUInteger minimumNumberOfSelectionPhoto;
-//@property (nonatomic, assign) NSUInteger maximumNumberOfSelectionVideo;
-//@property (nonatomic, assign) NSUInteger minimumNumberOfSelectionVideo;
 
 @property (nonatomic, assign) CGFloat minimumItemSpacing;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
 
 @property (nonatomic, assign) BOOL showNumberOfSelectedAssets;
+
++ (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance;
+
+@end
+
+@interface WCImagePickerAppearance : NSObject
+
+@property (nonatomic, strong) UIColor *navigationBarBackgroundColor;
+@property (nonatomic, copy) NSString *cancelButtonText;
+@property (nonatomic, strong) UIColor *cancelButtonTextColor;
+@property (nonatomic, strong) UIColor *cancelButtonBackgroundColor;
+@property (nonatomic, strong) UIColor *finishedButtonTextColor;
+@property (nonatomic, strong) UIColor *finishedButtonBackgroundColor;
+@property (nonatomic, strong) UIColor *assetCollectionButtonTextColor;
+
++ (instancetype)sharedAppearance;
 
 @end

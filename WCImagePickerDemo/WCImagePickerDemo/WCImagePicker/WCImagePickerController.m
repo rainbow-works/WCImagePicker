@@ -104,6 +104,17 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 #pragma mark - UI
 
++ (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance {
+    WCImagePickerAppearance *appearance = [WCImagePickerAppearance sharedAppearance];
+    appearance.navigationBarBackgroundColor = imagePickerAppearance.navigationBarBackgroundColor;
+    appearance.cancelButtonText = imagePickerAppearance.cancelButtonText;
+    appearance.cancelButtonTextColor = imagePickerAppearance.cancelButtonTextColor;
+    appearance.cancelButtonBackgroundColor = imagePickerAppearance.cancelButtonBackgroundColor;
+    appearance.finishedButtonTextColor = imagePickerAppearance.finishedButtonTextColor;
+    appearance.finishedButtonBackgroundColor = imagePickerAppearance.finishedButtonBackgroundColor;
+    appearance.assetCollectionButtonTextColor = imagePickerAppearance.assetCollectionButtonTextColor;
+}
+
 - (void)requestUserAuthorization {
     void (^authorizationStatusAuthrizedBlock)(void) = ^() {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -155,6 +166,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     self.view.backgroundColor = self.navigationBarBackgroundColor;
     UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:self.assetBundle compatibleWithTraitCollection:nil];
     [self.assetCollectionTitleButton wc_setImage:triangle];
+    
+    [self.finishedButton setTitle:@"完成(0)" forState:UIControlStateNormal];
 }
 
 - (void)setupCollectionView {
@@ -165,6 +178,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (void)updateFinishedButtonAppearance {
     self.finishedButton.enabled = [self minimumNumberOfSelectionFulfilled];
+    self.finishedButton.backgroundColor = [self minimumNumberOfSelectionFulfilled] ? [UIColor blueColor] : [UIColor lightGrayColor];
     if (self.showNumberOfSelectedAssets) {
         if (self.selectedAssets.count > 0) {
             [self.finishedButton setTitle:[NSString stringWithFormat:@"完成(%td)", self.selectedAssets.count] forState:UIControlStateNormal];
@@ -231,13 +245,10 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (BOOL)maximumNumberOfSelectionReached {
-    NSUInteger minimumNumberOfSelection = MAX(1, self.minimumNumberOfSelectionAsset);
-    if (self.maximumNumberOfSelectionAsset < minimumNumberOfSelection) {
-        if (self.maximumNumberOfSelectionAsset > 0) {
-            self.minimumNumberOfSelectionAsset = self.maximumNumberOfSelectionAsset;
-        } else {
-            self.maximumNumberOfSelectionAsset = minimumNumberOfSelection;
-        }
+    self.minimumNumberOfSelectionAsset = MAX(1, self.minimumNumberOfSelectionAsset);
+    self.maximumNumberOfSelectionAsset = MAX(1, self.maximumNumberOfSelectionAsset);
+    if (self.maximumNumberOfSelectionAsset < self.minimumNumberOfSelectionAsset) {
+        self.minimumNumberOfSelectionAsset = self.maximumNumberOfSelectionAsset;
     }
     return (self.maximumNumberOfSelectionAsset <= self.selectedAssets.count);
 }
@@ -388,6 +399,19 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         [NSLayoutConstraint activateConstraints:@[topCons, bottomCons, leadingCons, trailingCons]];
     }
     return _collectionPicker;
+}
+
+@end
+
+@implementation WCImagePickerAppearance
+
++ (instancetype)sharedAppearance {
+    static WCImagePickerAppearance *sharedAppearance;
+    static dispatch_once_t token;
+    dispatch_once(&token, ^{
+        sharedAppearance = [[WCImagePickerAppearance alloc] init];
+    });
+    return sharedAppearance;
 }
 
 @end
