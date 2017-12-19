@@ -16,12 +16,6 @@
                  blue:((float)((hexValue & 0x0000FF) >> 0))/255.0 \
                 alpha:1.0]
 
-@interface UIImage (WCExtension)
-
-+ (UIImage *)wc_imageNamed:( NSString *)name bundle:(NSString *)bundleName;
-
-@end
-
 @interface UICollectionView (WCExtension)
 
 - (NSArray<NSIndexPath *> *)wc_indexPathsForElementsInRect:(CGRect)rect;
@@ -33,7 +27,6 @@
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingAssets:(NSArray<PHAsset *> *)assets;
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingImages:(NSArray<UIImage *> *)images;
 - (void)wc_imagePickerControllerDidCancel:(WCImagePickerController *)imagePicker;
-
 - (BOOL)wc_imagePickerController:(WCImagePickerController *)imagePicker shouldSelectAsset:(PHAsset *)asset;
 
 @end
@@ -57,8 +50,9 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
 
-@property (nonatomic, assign) BOOL showAssetMaskWhenMaximumNumberOfSelectionLimitReached;
-@property (nonatomic, assign) BOOL showWarningAlertWhenMaximumNumberOfSelectionLimitReached;
+@property (nonatomic, assign) BOOL showAssetMaskWhenMaximumLimitReached;
+@property (nonatomic, assign) BOOL showWarningAlertWhenMaximumLimitReached;
+@property (nonatomic, assign) BOOL showPhotoAlbumWithoutAssetResources;
 
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance;
 

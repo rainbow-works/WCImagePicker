@@ -34,18 +34,16 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @interface WCImagePickerController () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
 
 @property(nonatomic, strong) PHCachingImageManager *imageManager;
+@property (nonatomic, assign) CGRect previousPreheatRect;
 @property (nonatomic, strong) PHFetchResult *fetchResult;
 @property (nonatomic, strong) NSMutableOrderedSet<PHAsset *> *selectedAssets;
 @property (nonatomic, strong) NSIndexPath *previousSelectedItemIndexPath;
+@property(nonatomic, assign) CGSize thumbnailSize;
 
 @property (nonatomic, strong) NSBundle *assetBundle;
 
-@property (nonatomic, assign) CGRect previousPreheatRect;
-@property(nonatomic, assign) CGSize thumbnailSize;
-
 @property (weak, nonatomic) IBOutlet UIView *navigationBarView;
 @property (weak, nonatomic) IBOutlet UIView *navigationBarBackgroundView;
-
 @property (weak, nonatomic) IBOutlet WCCustomButton *assetCollectionTitleButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *finishedButton;
@@ -71,8 +69,9 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         _numberOfColumnsInPortrait = 4;
         _numberOfColumnsInLandscape = 6;
         
-        _showAssetMaskWhenMaximumNumberOfSelectionLimitReached = YES;
-        _showWarningAlertWhenMaximumNumberOfSelectionLimitReached = YES;
+        _showAssetMaskWhenMaximumLimitReached = YES;
+        _showWarningAlertWhenMaximumLimitReached = YES;
+        _showPhotoAlbumWithoutAssetResources = NO;
     }
     return self;
 }
@@ -234,7 +233,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)showImagePickerWarningAlertWhenLimitReached {
-    if (self.showWarningAlertWhenMaximumNumberOfSelectionLimitReached) {
+    if (self.showWarningAlertWhenMaximumLimitReached) {
         NSString *title = [NSString stringWithFormat:@"你最多只能选择 %td 张图片", self.maximumNumberOfSelectionAsset];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleCancel handler:nil];;
@@ -277,7 +276,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         assetCell.shouldAnimationWhenSelectedOrderNumberUpdate = NO;
         [assetCell updateAssetCellAppearanceIfNeeded];
     } else {
-        if (self.showAssetMaskWhenMaximumNumberOfSelectionLimitReached && ![self autoDeselectEnabled]) {
+        if (self.showAssetMaskWhenMaximumLimitReached && ![self autoDeselectEnabled]) {
             [assetCell shouldShowAssetCoverView:[self maximumNumberOfSelectionReached]];
         }
     }

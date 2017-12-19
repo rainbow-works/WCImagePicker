@@ -10,34 +10,28 @@
 #import "WCImagePickerController.h"
 #import "WCCollectionCell.h"
 
-#define COLLECTION_PICKER_WIDTH (self.view.bounds.size.width)
-#define COLLECTION_PICKER_HEIGHT (self.view.bounds.size.height * 2/3.0)
+#define PICKER_WIDTH (self.view.bounds.size.width)
+#define PICKER_HEIGHT (self.view.bounds.size.height * 2/3.0)
 static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WCImagePickerCollectionCell";
 
 @interface WCCollectionPickerController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
-@property (nonatomic, copy) void(^showCollectionPickerBlock)(BOOL willShowCollectionPicker);
-@property (nonatomic, copy) void(^dismissCollectionPickerBlock)(BOOL willDismissCollectionPicker);
-@property (nonatomic, copy) void(^completionBlock)(NSString *assetCollectionTitle, PHFetchResult * fetchResult);
-
 @property (nonatomic, assign) BOOL isAnimating;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<WCAlbum *> *albums;
+@property (nonatomic, copy) void(^showCollectionPickerBlock)(BOOL willShowCollectionPicker);
+@property (nonatomic, copy) void(^dismissCollectionPickerBlock)(BOOL willDismissCollectionPicker);
+@property (nonatomic, copy) void(^completionBlock)(NSString *assetCollectionTitle, PHFetchResult * fetchResult);
 
 @end
 
 @implementation WCCollectionPickerController
 
-- (instancetype)init {
-    if (self = [super init]) {
-        _isAnimating = NO;
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.isAnimating = NO;
+    self.albums = [NSMutableArray<WCAlbum *> array];
     self.view.clipsToBounds = YES;
     self.view.backgroundColor = [UIColor clearColor];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
@@ -56,8 +50,8 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
     [super viewWillLayoutSubviews];
     [self.view layoutIfNeeded];
     CGRect tableViewFrame = self.tableView.frame;
-    tableViewFrame.size.width = COLLECTION_PICKER_WIDTH;
-    tableViewFrame.size.height = COLLECTION_PICKER_HEIGHT;
+    tableViewFrame.size.width = PICKER_WIDTH;
+    tableViewFrame.size.height = PICKER_HEIGHT;
     self.tableView.frame = tableViewFrame;
 }
 
@@ -66,17 +60,17 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
 }
 
 - (void)setupTableView {
-    self.tableView = [[UITableView alloc]
-                      initWithFrame:CGRectMake(0, -COLLECTION_PICKER_HEIGHT, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT)
-                      style:UITableViewStylePlain];
+    CGRect initialTableViewFrame = CGRectMake(0, -PICKER_HEIGHT, PICKER_WIDTH, PICKER_HEIGHT);
+    self.tableView = [[UITableView alloc] initWithFrame:initialTableViewFrame style:UITableViewStylePlain];
     [self.tableView registerNib:[UINib nibWithNibName:@"WCCollectionCell" bundle:nil] forCellReuseIdentifier:WCImagePickerCollectionCellIdentifier];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.contentInset = UIEdgeInsetsZero;
     self.tableView.scrollsToTop = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.rowHeight = 60.0;
-    self.tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tableView];
 }
 
@@ -94,7 +88,11 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
             }
             PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
             WCAlbum *album = [[WCAlbum alloc] initWithTitle:assetCollection.localizedTitle assetCollection:assetCollection fetchResult:fetchResult];
-            [weakSelf.albums addObject:album];
+            if (fetchResult.count > 0) {
+                [weakSelf.albums addObject:album];
+            } else {
+                !weakSelf.imagePickerController.showPhotoAlbumWithoutAssetResources ?: [weakSelf.albums addObject:album];
+            }
         }];
     };
     
@@ -153,7 +151,7 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
     self.view.hidden = NO;
     self.isAnimating = !self.isAnimating;
     [UIView animateWithDuration:.6 delay:0.0 usingSpringWithDamping:.85 initialSpringVelocity:10 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.tableView.frame = CGRectMake(0, 0, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT);
+        self.tableView.frame = CGRectMake(0, 0, PICKER_WIDTH, PICKER_HEIGHT);
         self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:.4];
     } completion:^(BOOL finished) {
         self.isAnimating = !self.isAnimating;
@@ -165,10 +163,10 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
         self.dismissCollectionPickerBlock(YES);
     }
     [UIView animateWithDuration:0.2 animations:^{
-        self.tableView.frame = CGRectMake(0, 8.0, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT);
+        self.tableView.frame = CGRectMake(0, 10.0, PICKER_WIDTH, PICKER_HEIGHT);
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.4 animations:^{
-            self.tableView.frame = CGRectMake(0, -COLLECTION_PICKER_HEIGHT, COLLECTION_PICKER_WIDTH, COLLECTION_PICKER_HEIGHT);
+            self.tableView.frame = CGRectMake(0, -PICKER_HEIGHT, PICKER_WIDTH, PICKER_HEIGHT);
         }];
     }];
     
@@ -179,15 +177,6 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
         self.view.hidden = YES;
         self.isAnimating = !self.isAnimating;
     }];
-}
-
-#pragma mark getter and setter
-
-- (NSMutableArray<WCAlbum *> *)albums {
-    if (_albums == nil) {
-        _albums = [NSMutableArray<WCAlbum *> array];
-    }
-    return _albums;
 }
 
 @end
