@@ -11,6 +11,9 @@
 @interface WCAssetCell : UICollectionViewCell
 
 @property (nonatomic, copy) NSString *representedAssetIdentifier;
+@property (nonatomic, assign) NSUInteger selectedOrderNumber;
+@property (nonatomic, assign) BOOL shouldAnimationWhenSelectedOrderNumberUpdate;
 @property (weak, nonatomic) IBOutlet UIImageView *assetImageView;
 
 @end
+

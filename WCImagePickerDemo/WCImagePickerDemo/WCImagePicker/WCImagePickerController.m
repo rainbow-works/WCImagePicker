@@ -35,7 +35,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 @property(nonatomic, strong) PHCachingImageManager *imageManager;
 @property (nonatomic, strong) PHFetchResult *fetchResult;
-@property (nonatomic, strong) NSMutableOrderedSet *selectedAssets;
+@property (nonatomic, strong) NSMutableOrderedSet<PHAsset *> *selectedAssets;
 @property (nonatomic, strong) NSIndexPath *previousSelectedItemIndexPath;
 
 @property (nonatomic, strong) NSBundle *assetBundle;
@@ -71,7 +71,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         _numberOfColumnsInPortrait = 4;
         _numberOfColumnsInLandscape = 6;
         
-        _showNumberOfSelectedAssets = YES;
+        _showWarningAlertWhenMaximumNumberOfSelectionLimitReached = YES;
     }
     return self;
 }
@@ -94,9 +94,10 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateItemSize];
-    CGPoint bottomOffset = CGPointMake(0, self.collectionView.contentSize.height - self.collectionView.bounds.size.height);
-    NSLog(@"%f -- %f -- %@", self.collectionView.contentSize.height, self.collectionView.bounds.size.height, NSStringFromCGPoint(bottomOffset));
-    [self.collectionView setContentOffset:bottomOffset];
+//    CGPoint bottomOffset = CGPointMake(0, self.collectionView.contentSize.height - self.collectionView.bounds.size.height);
+//    if (bottomOffset.y > 0) {
+//        [self.collectionView setContentOffset:bottomOffset animated:YES];
+//    }
 }
 
 - (void)viewWillLayoutSubviews {
@@ -104,8 +105,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self.view layoutIfNeeded];
     [self updateItemSize];
 }
-
-#pragma mark - UI
 
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance {
     WCImagePickerAppearance *appearance = [WCImagePickerAppearance sharedAppearance];
@@ -121,6 +120,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     
     appearance.assetCollectionButtonTextColor = imagePickerAppearance.assetCollectionButtonTextColor;
 }
+
+#pragma mark - UI
 
 - (void)requestUserAuthorization {
     void (^authorizationStatusAuthrizedBlock)(void) = ^() {
@@ -169,31 +170,30 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)setupNavigationBarView {
-    
     WCImagePickerAppearance *imagePickerAppearance = [WCImagePickerAppearance sharedAppearance];
     if (imagePickerAppearance.navigationBarBackgroundColor) {
         self.navigationBarBackgroundView.backgroundColor = imagePickerAppearance.navigationBarBackgroundColor;
     } else {
-        self.navigationBarBackgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:.8];
+        self.navigationBarBackgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:.85];
     }
-    
     if (imagePickerAppearance.finishedButtonDisableBackgroundColor) {
         self.finishedButton.backgroundColor = imagePickerAppearance.finishedButtonDisableBackgroundColor;
     } else {
         self.finishedButton.backgroundColor = WCUIColorFromHexValue(0xDCDCDC);
     }
-    
-    
-    UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:self.assetBundle compatibleWithTraitCollection:nil];
-    [self.assetCollectionTitleButton wc_setImage:triangle];
-    
-    
-    [self.finishedButton setTitle:@"完成(0)" forState:UIControlStateNormal];
     if (imagePickerAppearance.finishedButtonTextColor) {
         [self.finishedButton.titleLabel setTextColor:imagePickerAppearance.finishedButtonTextColor];
     } else {
         [self.finishedButton.titleLabel setTextColor:[UIColor whiteColor]];
     }
+    
+    UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:self.assetBundle compatibleWithTraitCollection:nil];
+    [self.assetCollectionTitleButton wc_setImage:triangle];
+    
+    self.finishedButton.enabled = (self.selectedAssets.count > 0);
+    self.finishedButton.layer.cornerRadius = 4.0f;
+    self.finishedButton.layer.masksToBounds = YES;
+    [self.finishedButton setTitle:@"完成(0)" forState:UIControlStateNormal];
 }
 
 - (void)setupCollectionView {
@@ -219,10 +219,21 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
             self.finishedButton.backgroundColor = WCUIColorFromHexValue(0xDCDCDC);
         }
     }
-    
-    if (self.showNumberOfSelectedAssets) {
-        if (self.selectedAssets.count > 0) {
-            [self.finishedButton setTitle:[NSString stringWithFormat:@"完成(%td)", self.selectedAssets.count] forState:UIControlStateNormal];
+    [self.finishedButton setTitle:[NSString stringWithFormat:@"完成(%td)", self.selectedAssets.count] forState:UIControlStateNormal];
+}
+
+- (void)showImagePickerWarningAlertWhenLimitReached {
+    if (self.showWarningAlertWhenMaximumNumberOfSelectionLimitReached) {
+        NSString *title = [NSString stringWithFormat:@"你最多只能选择 %td 张图片", self.maximumNumberOfSelectionAsset];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleCancel handler:nil];;
+        [alertController addAction:action];
+        if (self.presentedViewController == nil) {
+            [self presentViewController:alertController animated:YES completion:nil];
+        } else {
+            [self dismissViewControllerAnimated:NO completion:^{
+                [self presentViewController:alertController animated:YES completion:nil];
+            }];
         }
     }
 }
@@ -236,9 +247,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     WCAssetCell *assetCell = [collectionView dequeueReusableCellWithReuseIdentifier:WCImagePickerAssetsCellIdentifier forIndexPath:indexPath];
     PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.row];
-    
-    if ([self.selectedAssets containsObject:asset]) {
-    }
     assetCell.representedAssetIdentifier = asset.localIdentifier;
     [self.imageManager requestImageForAsset:asset targetSize:self.thumbnailSize contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if ([assetCell.representedAssetIdentifier isEqualToString:asset.localIdentifier]) {
@@ -248,12 +256,26 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     return assetCell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
+    if ([self.selectedAssets containsObject:asset]) {
+        WCAssetCell *assetCell = (WCAssetCell *)cell;
+        assetCell.selectedOrderNumber = [self.selectedAssets indexOfObject:asset] + 1;
+        assetCell.shouldAnimationWhenSelectedOrderNumberUpdate = NO;
+        [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+    }
+}
+
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:shouldSelectAsset:)]) {
         return [self.delegate wc_imagePickerController:self shouldSelectAsset:[self.fetchResult objectAtIndex:indexPath.item]];
     }
     if ([self autoDeselectEnabled]) return YES;
-    return ![self maximumNumberOfSelectionReached];
+    BOOL maxmumNumberOfSelectionReached = [self maximumNumberOfSelectionReached];
+    if (maxmumNumberOfSelectionReached) {
+        [self showImagePickerWarningAlertWhenLimitReached];
+    }
+    return !maxmumNumberOfSelectionReached;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -268,6 +290,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         [self.selectedAssets addObject:asset];
         self.previousSelectedItemIndexPath = indexPath;
         [self updateFinishedButtonAppearance];
+        WCAssetCell *assetCell = (WCAssetCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        assetCell.selectedOrderNumber = self.selectedAssets.count;
     }
 }
 
@@ -277,6 +301,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self.selectedAssets removeObject:asset];
     self.previousSelectedItemIndexPath = nil;
     [self updateFinishedButtonAppearance];
+    
+    [collectionView reloadItemsAtIndexPaths:[collectionView indexPathsForSelectedItems]];
 }
 
 #pragma mark -
@@ -382,11 +408,28 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 #pragma mark - IBAction
 
 - (IBAction)cancelButtonDidClicked:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(wc_imagePickerControllerDidCancel:)]) {
+        [self.delegate wc_imagePickerControllerDidCancel:self];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)finishedButtonDidClicked:(UIButton *)sender {
-//    [self.contentView wc_showCoverViewForState:WCImagePickerCoverViewLoading];
+    if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingAssets:)]) {
+        [self.delegate wc_imagePickerController:self didFinishPickingAssets:[self.selectedAssets array]];
+    }
+    if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingImages:)]) {
+        NSMutableArray *images = [NSMutableArray array];
+        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+        options.synchronous = YES;
+        for (PHAsset *asset in self.selectedAssets) {
+            [self.imageManager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                [images addObject:result];
+            }];
+        }
+        [self.delegate wc_imagePickerController:self didFinishPickingImages:[images copy]];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)assetCollectionTitleButtonDidClicked:(UIButton *)sender {
@@ -405,9 +448,9 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 #pragma mark - getter and setter
 
-- (NSMutableOrderedSet *)selectedAssets {
+- (NSMutableOrderedSet<PHAsset *> *)selectedAssets {
     if (_selectedAssets == nil) {
-        _selectedAssets = [NSMutableOrderedSet orderedSet];
+        _selectedAssets = [NSMutableOrderedSet<PHAsset *> orderedSet];
     }
     return _selectedAssets;
 }

@@ -26,6 +26,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iEK-QR-qll" userLabel="Asset Image View">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                             </imageView>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k3f-Gh-7Vp" userLabel="Asset Cover View">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98C-G4-fm7" userLabel="Asset Check Button">
                                 <rect key="frame" x="174" y="2" width="24" height="24"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -38,10 +42,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="k3f-Gh-7Vp" secondAttribute="bottom" id="HcI-nU-EhO"/>
+                            <constraint firstItem="k3f-Gh-7Vp" firstAttribute="leading" secondItem="T3Y-qI-bMQ" secondAttribute="leading" id="I2p-Tt-JFC"/>
                             <constraint firstAttribute="trailing" secondItem="98C-G4-fm7" secondAttribute="trailing" constant="2" id="Prz-Ed-2Bi"/>
                             <constraint firstItem="iEK-QR-qll" firstAttribute="top" secondItem="T3Y-qI-bMQ" secondAttribute="top" id="R1u-80-YBn"/>
                             <constraint firstItem="iEK-QR-qll" firstAttribute="leading" secondItem="T3Y-qI-bMQ" secondAttribute="leading" id="Sdt-et-jE5"/>
+                            <constraint firstItem="k3f-Gh-7Vp" firstAttribute="top" secondItem="T3Y-qI-bMQ" secondAttribute="top" id="jMw-D3-yp0"/>
                             <constraint firstAttribute="bottom" secondItem="iEK-QR-qll" secondAttribute="bottom" id="mR3-k0-KLm"/>
+                            <constraint firstAttribute="trailing" secondItem="k3f-Gh-7Vp" secondAttribute="trailing" id="nrJ-JB-315"/>
                             <constraint firstAttribute="trailing" secondItem="iEK-QR-qll" secondAttribute="trailing" id="pyV-fG-KmW"/>
                             <constraint firstItem="98C-G4-fm7" firstAttribute="top" secondItem="T3Y-qI-bMQ" secondAttribute="top" constant="2" id="ua4-Pu-z9v"/>
                         </constraints>
@@ -56,7 +64,8 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <connections>
-                <outlet property="assetCheckedButton" destination="98C-G4-fm7" id="15c-iA-hdr"/>
+                <outlet property="assetCheckButton" destination="98C-G4-fm7" id="8yM-qi-Wwq"/>
+                <outlet property="assetCoverView" destination="k3f-Gh-7Vp" id="L8m-jA-iOR"/>
                 <outlet property="assetImageView" destination="iEK-QR-qll" id="lAy-u7-hR0"/>
             </connections>
             <point key="canvasLocation" x="43" y="-17"/>
