@@ -21,19 +21,23 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.selectedOrderNumber = 0;
+    self.shouldAnimationWhenSelectedOrderNumberUpdate = YES;
     [self assetCheckButtonNormalAppearance];
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
+    self.selected = NO;
+    self.selectedOrderNumber = 0;
+    self.shouldAnimationWhenSelectedOrderNumberUpdate = YES;
     self.representedAssetIdentifier = nil;
     self.assetImageView.image = nil;
+    self.assetCoverView.hidden = YES;
     [self assetCheckButtonNormalAppearance];
 }
 
 - (void)assetCheckButtonNormalAppearance {
-    self.selectedOrderNumber = 0;
-    self.shouldAnimationWhenSelectedOrderNumberUpdate = YES;
     self.assetCheckButton.backgroundColor = [UIColor clearColor];
     [self.assetCheckButton setBackgroundImage:nil forState:UIControlStateNormal];
     [self.assetCheckButton setImage:[UIImage imageNamed:@"imagepicker_asset_check"] forState:UIControlStateNormal];
@@ -46,9 +50,8 @@
     [self.assetCheckButton setTitle:[NSString stringWithFormat:@"%td", self.selectedOrderNumber] forState:UIControlStateNormal];
 }
 
-- (void)setSelected:(BOOL)selected {
-    [super setSelected:selected];
-    if (selected) {
+- (void)updateAssetCellAppearanceIfNeeded {
+    if (self.selected) {
         [self assetCheckButtonSelectedAppearance];
         if (self.shouldAnimationWhenSelectedOrderNumberUpdate) {
             self.assetCheckButton.transform = CGAffineTransformScale(self.assetCheckButton.transform, 0.3, 0.3);
@@ -61,11 +64,10 @@
     }
 }
 
-- (void)setSelectedOrderNumber:(NSUInteger)selectedOrderNumber {
-    _selectedOrderNumber = selectedOrderNumber;
-    if (selectedOrderNumber > 0) {
-        [self assetCheckButtonSelectedAppearance];
-    }
+- (void)shouldShowAssetCoverView:(BOOL)shouldShowAssetCoverView {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.assetCoverView.hidden = !shouldShowAssetCoverView;
+    }];
 }
 
 @end

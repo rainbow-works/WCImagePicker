@@ -71,6 +71,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         _numberOfColumnsInPortrait = 4;
         _numberOfColumnsInLandscape = 6;
         
+        _showAssetMaskWhenMaximumNumberOfSelectionLimitReached = YES;
         _showWarningAlertWhenMaximumNumberOfSelectionLimitReached = YES;
     }
     return self;
@@ -94,10 +95,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateItemSize];
-//    CGPoint bottomOffset = CGPointMake(0, self.collectionView.contentSize.height - self.collectionView.bounds.size.height);
-//    if (bottomOffset.y > 0) {
-//        [self.collectionView setContentOffset:bottomOffset animated:YES];
-//    }
 }
 
 - (void)viewWillLayoutSubviews {
@@ -128,7 +125,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         dispatch_async(dispatch_get_main_queue(), ^{
             if (self.fetchResult == nil) {
                 PHFetchOptions *options = [PHFetchOptions new];
-                options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+                options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
                 if (self.mediaType == WCImagePickerImageTypeImage) {
                     options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
                 } else if (self.mediaType == WCImagePickerImageTypeVideo){
@@ -222,6 +219,20 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self.finishedButton setTitle:[NSString stringWithFormat:@"完成(%td)", self.selectedAssets.count] forState:UIControlStateNormal];
 }
 
+- (void)updateSelectedAssetCellAppearanceAtIndexpath:(NSIndexPath *)indexPath {
+    WCAssetCell *assetCell = (WCAssetCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    assetCell.selectedOrderNumber = self.selectedAssets.count;
+    assetCell.shouldAnimationWhenSelectedOrderNumberUpdate = YES;
+    [assetCell updateAssetCellAppearanceIfNeeded];
+    
+    if ([self maximumNumberOfSelectionReached]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
+            [self.collectionView layoutIfNeeded];
+        });
+    }
+}
+
 - (void)showImagePickerWarningAlertWhenLimitReached {
     if (self.showWarningAlertWhenMaximumNumberOfSelectionLimitReached) {
         NSString *title = [NSString stringWithFormat:@"你最多只能选择 %td 张图片", self.maximumNumberOfSelectionAsset];
@@ -257,12 +268,18 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    WCAssetCell *assetCell = (WCAssetCell *)cell;
     PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
     if ([self.selectedAssets containsObject:asset]) {
-        WCAssetCell *assetCell = (WCAssetCell *)cell;
+        [assetCell setSelected:YES];
+        [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
         assetCell.selectedOrderNumber = [self.selectedAssets indexOfObject:asset] + 1;
         assetCell.shouldAnimationWhenSelectedOrderNumberUpdate = NO;
-        [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        [assetCell updateAssetCellAppearanceIfNeeded];
+    } else {
+        if (self.showAssetMaskWhenMaximumNumberOfSelectionLimitReached && ![self autoDeselectEnabled]) {
+            [assetCell shouldShowAssetCoverView:[self maximumNumberOfSelectionReached]];
+        }
     }
 }
 
@@ -279,7 +296,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
     if (self.allowsMultipleSelection) {
         if ([self autoDeselectEnabled] && self.selectedAssets.count > 0) {
             [self.selectedAssets removeObjectAtIndex:0];
@@ -287,11 +303,11 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
                 [collectionView deselectItemAtIndexPath:self.previousSelectedItemIndexPath animated:NO];
             }
         }
+        PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
         [self.selectedAssets addObject:asset];
         self.previousSelectedItemIndexPath = indexPath;
         [self updateFinishedButtonAppearance];
-        WCAssetCell *assetCell = (WCAssetCell *)[collectionView cellForItemAtIndexPath:indexPath];
-        assetCell.selectedOrderNumber = self.selectedAssets.count;
+        [self updateSelectedAssetCellAppearanceAtIndexpath:indexPath];
     }
 }
 
@@ -301,8 +317,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self.selectedAssets removeObject:asset];
     self.previousSelectedItemIndexPath = nil;
     [self updateFinishedButtonAppearance];
-    
-    [collectionView reloadItemsAtIndexPaths:[collectionView indexPathsForSelectedItems]];
+    [collectionView reloadItemsAtIndexPaths:collectionView.indexPathsForVisibleItems];
 }
 
 #pragma mark -

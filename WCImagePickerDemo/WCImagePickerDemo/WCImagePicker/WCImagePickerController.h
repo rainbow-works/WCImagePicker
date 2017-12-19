@@ -57,6 +57,7 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) NSUInteger numberOfColumnsInPortrait;
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
 
+@property (nonatomic, assign) BOOL showAssetMaskWhenMaximumNumberOfSelectionLimitReached;
 @property (nonatomic, assign) BOOL showWarningAlertWhenMaximumNumberOfSelectionLimitReached;
 
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance;

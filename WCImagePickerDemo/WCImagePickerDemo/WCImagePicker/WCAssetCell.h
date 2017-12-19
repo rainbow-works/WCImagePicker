@@ -15,5 +15,8 @@
 @property (nonatomic, assign) BOOL shouldAnimationWhenSelectedOrderNumberUpdate;
 @property (weak, nonatomic) IBOutlet UIImageView *assetImageView;
 
+- (void)updateAssetCellAppearanceIfNeeded;
+- (void)shouldShowAssetCoverView:(BOOL)shouldShowAssetCoverView;
+
 @end
 
