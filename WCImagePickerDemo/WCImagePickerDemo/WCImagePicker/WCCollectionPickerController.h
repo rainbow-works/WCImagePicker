@@ -14,7 +14,7 @@
 
 @property (nonatomic, weak) WCImagePickerController *imagePickerController;
 
-
+- (void)dismissCollectionPicker;
 - (void)showCollectionPicker:(void(^)(BOOL willShowCollectionPicker))showCollectionPicker
      dismissCollectionPicker:(void(^)(BOOL willDismissCollectionPicker))dismissCollectionPicker
                   completion:(void(^)(NSString *assetCollectionTitle, PHFetchResult *fetchResult))completion;

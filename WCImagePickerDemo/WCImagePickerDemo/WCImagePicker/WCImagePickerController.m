@@ -52,6 +52,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
 @property (nonatomic, strong) WCCollectionPickerController *collectionPicker;
+@property(nonatomic, assign) BOOL isCollectionPickerVisible;
 
 @end
 
@@ -71,7 +72,10 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         
         _showAssetMaskWhenMaximumLimitReached = YES;
         _showWarningAlertWhenMaximumLimitReached = YES;
-        _showPhotoAlbumWithoutAssetResources = NO;
+        _showPhotoAlbumWithoutAssetResources = YES;
+        
+        _shouldRemoveAllSelectedAssetWhenAlbumChanged = NO;
+        _isCollectionPickerVisible = NO;
     }
     return self;
 }
@@ -114,7 +118,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     appearance.finishedButtonEnableBackgroundColor = imagePickerAppearance.finishedButtonEnableBackgroundColor;
     appearance.finishedButtonDisableBackgroundColor = imagePickerAppearance.finishedButtonDisableBackgroundColor;
     
-    appearance.assetCollectionButtonTextColor = imagePickerAppearance.assetCollectionButtonTextColor;
+    appearance.albumButtonTextColor = imagePickerAppearance.albumButtonTextColor;
+    appearance.albumButtonTextFont = imagePickerAppearance.albumButtonTextFont;
 }
 
 #pragma mark - UI
@@ -179,15 +184,20 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     }
     if (imagePickerAppearance.finishedButtonTextColor) {
         [self.finishedButton.titleLabel setTextColor:imagePickerAppearance.finishedButtonTextColor];
-    } else {
-        [self.finishedButton.titleLabel setTextColor:[UIColor whiteColor]];
+    }
+    
+    if (imagePickerAppearance.albumButtonTextColor) {
+        [self.assetCollectionTitleButton.titleLabel setTextColor:imagePickerAppearance.albumButtonTextColor];
+    }
+    if (imagePickerAppearance.albumButtonTextFont) {
+        [self.assetCollectionTitleButton.titleLabel setFont:imagePickerAppearance.albumButtonTextFont];
     }
     
     UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:self.assetBundle compatibleWithTraitCollection:nil];
     [self.assetCollectionTitleButton wc_setImage:triangle];
     
     self.finishedButton.enabled = (self.selectedAssets.count > 0);
-    self.finishedButton.layer.cornerRadius = 4.0f;
+    self.finishedButton.layer.cornerRadius = 5.0f;
     self.finishedButton.layer.masksToBounds = YES;
     [self.finishedButton setTitle:@"完成(0)" forState:UIControlStateNormal];
 }
@@ -232,7 +242,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     }
 }
 
-- (void)showImagePickerWarningAlertWhenLimitReached {
+- (void)showImagePickerWarningAlertWhenMaximumLimitReached {
     if (self.showWarningAlertWhenMaximumLimitReached) {
         NSString *title = [NSString stringWithFormat:@"你最多只能选择 %td 张图片", self.maximumNumberOfSelectionAsset];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -289,7 +299,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     if ([self autoDeselectEnabled]) return YES;
     BOOL maxmumNumberOfSelectionReached = [self maximumNumberOfSelectionReached];
     if (maxmumNumberOfSelectionReached) {
-        [self showImagePickerWarningAlertWhenLimitReached];
+        [self showImagePickerWarningAlertWhenMaximumLimitReached];
     }
     return !maxmumNumberOfSelectionReached;
 }
@@ -422,28 +432,36 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 #pragma mark - IBAction
 
 - (IBAction)cancelButtonDidClicked:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(wc_imagePickerControllerDidCancel:)]) {
-        [self.delegate wc_imagePickerControllerDidCancel:self];
+    if (self.isCollectionPickerVisible) {
+        [self.collectionPicker dismissCollectionPicker];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(wc_imagePickerControllerDidCancel:)]) {
+            [self.delegate wc_imagePickerControllerDidCancel:self];
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)finishedButtonDidClicked:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingAssets:)]) {
-        [self.delegate wc_imagePickerController:self didFinishPickingAssets:[self.selectedAssets array]];
-    }
-    if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingImages:)]) {
-        NSMutableArray *images = [NSMutableArray array];
-        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-        options.synchronous = YES;
-        for (PHAsset *asset in self.selectedAssets) {
-            [self.imageManager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                [images addObject:result];
-            }];
+    if (self.isCollectionPickerVisible) {
+        [self.collectionPicker dismissCollectionPicker];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingAssets:)]) {
+            [self.delegate wc_imagePickerController:self didFinishPickingAssets:[self.selectedAssets array]];
         }
-        [self.delegate wc_imagePickerController:self didFinishPickingImages:[images copy]];
+        if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingImages:)]) {
+            NSMutableArray *images = [NSMutableArray array];
+            PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+            options.synchronous = YES;
+            for (PHAsset *asset in self.selectedAssets) {
+                [self.imageManager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                    [images addObject:result];
+                }];
+            }
+            [self.delegate wc_imagePickerController:self didFinishPickingImages:[images copy]];
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)assetCollectionTitleButtonDidClicked:(UIButton *)sender {
@@ -451,9 +469,14 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     __weak typeof(self)weakSelf = self;
     [self.collectionPicker showCollectionPicker:^(BOOL willShowCollectionPicker) {
         [sender setSelected:willShowCollectionPicker];
+        weakSelf.isCollectionPickerVisible = YES;
     } dismissCollectionPicker:^(BOOL willDismissCollectionPicker) {
         [sender setSelected:!willDismissCollectionPicker];
+        weakSelf.isCollectionPickerVisible = NO;
     } completion:^(NSString *assetCollectionTitle, PHFetchResult *fetchResult) {
+        if (weakSelf.shouldRemoveAllSelectedAssetWhenAlbumChanged) {
+            [weakSelf.selectedAssets removeAllObjects];
+        }
         [weakSelf.assetCollectionTitleButton setTitle:assetCollectionTitle forState:UIControlStateNormal];
         weakSelf.fetchResult = fetchResult;
         [weakSelf.collectionView reloadData];

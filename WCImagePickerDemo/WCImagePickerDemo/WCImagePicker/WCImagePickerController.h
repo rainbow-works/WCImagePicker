@@ -54,6 +54,8 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) BOOL showWarningAlertWhenMaximumLimitReached;
 @property (nonatomic, assign) BOOL showPhotoAlbumWithoutAssetResources;
 
+@property(nonatomic, assign) BOOL shouldRemoveAllSelectedAssetWhenAlbumChanged;
+
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance;
 
 @end
@@ -70,7 +72,8 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, strong) UIColor *finishedButtonEnableBackgroundColor;
 @property (nonatomic, strong) UIColor *finishedButtonDisableBackgroundColor;
 
-@property (nonatomic, strong) UIColor *assetCollectionButtonTextColor;
+@property (nonatomic, strong) UIColor *albumButtonTextColor;
+@property (nonatomic, strong) UIFont *albumButtonTextFont;
 
 + (instancetype)sharedAppearance;
 
