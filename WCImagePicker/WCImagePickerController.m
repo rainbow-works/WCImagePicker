@@ -12,9 +12,6 @@
 #import "WCAssetCell.h"
 #import "UIView+WCExtension.h"
 
-#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
-#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
-
 @implementation UICollectionView (WCExtension)
 
 - (NSArray<NSIndexPath *> *)wc_indexPathsForElementsInRect:(CGRect)rect {
@@ -522,7 +519,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingAssets:)]) {
             [self.delegate wc_imagePickerController:self didFinishPickingAssets:[self.selectedAssets array]];
         }
-        if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingImages:)]) {
+        if (self.mediaType == WCImagePickerImageTypeImage && [self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingImages:)]) {
             NSMutableArray *images = [NSMutableArray array];
             PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
             options.synchronous = YES;
