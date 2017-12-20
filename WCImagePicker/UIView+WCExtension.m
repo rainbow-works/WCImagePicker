@@ -10,12 +10,10 @@
 #import <objc/runtime.h>
 
 static NSString * const kWCImagePickerCoverView = @"com.meetday.WCImagePickerCoverView";
-static NSString * const kWCImagePickerCoverViewState = @"com.meetday.WCImagePickerCoverViewState";
 
 @interface UIView ()
 
 @property (nonatomic, strong, readwrite) WCCoverView *coverView;
-@property (nonatomic, assign) WCImagePickerCoverViewState coverViewState;
 
 @end
 
@@ -54,13 +52,12 @@ static NSString * const kWCImagePickerCoverViewState = @"com.meetday.WCImagePick
     [self.coverView willMoveToSuperview:self];
     [self addSubview:self.coverView];
     [self.coverView didMoveToSuperview];
-    self.coverViewState = state;
+    [self.coverView setCoverViewState:state];
 }
 
 - (void)wc_removeCoverView {
-    [self.coverView willRemoveFromSuperView];
     [self.coverView removeFromSuperview];
-    [self.coverView didRemoveFromSuperView];
+    self.coverView = nil;
 }
 
 - (WCCoverView *)coverView {
@@ -75,15 +72,6 @@ static NSString * const kWCImagePickerCoverViewState = @"com.meetday.WCImagePick
 
 - (void)setCoverView:(WCCoverView *)coverView {
     objc_setAssociatedObject(self, &kWCImagePickerCoverView, coverView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (WCImagePickerCoverViewState)coverViewState {
-    return [objc_getAssociatedObject(self, &kWCImagePickerCoverViewState) integerValue];
-}
-
-- (void)setCoverViewState:(WCImagePickerCoverViewState)coverViewState {
-    [self.coverView setCurrentState:coverViewState];
-    objc_setAssociatedObject(self, &kWCImagePickerCoverViewState, @(coverViewState), OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end

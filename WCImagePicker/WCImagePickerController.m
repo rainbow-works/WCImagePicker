@@ -66,6 +66,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 @interface WCImagePickerController () <PHPhotoLibraryChangeObserver, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
 
+@property (nonatomic, assign) PHAuthorizationStatus authrizationStatus;
 @property(nonatomic, strong) PHCachingImageManager *imageManager;
 @property (nonatomic, assign) CGRect previousPreheatRect;
 @property (nonatomic, strong) PHFetchResult *fetchResult;
@@ -121,7 +122,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self setupNavigationBarView];
     [self setupCollectionView];
     [self requestUserAuthorization];
-    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -164,6 +164,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (void)requestUserAuthorization {
     void (^authorizationStatusAuthrizedBlock)(void) = ^() {
+        [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+        self.authrizationStatus = PHAuthorizationStatusAuthorized;
         dispatch_async(dispatch_get_main_queue(), ^{
             if (self.fetchResult == nil) {
                 PHFetchOptions *options = [PHFetchOptions new];
@@ -423,7 +425,9 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 #pragma mark - ScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self updateCachedAssets];
+    if (self.authrizationStatus == PHAuthorizationStatusAuthorized) {
+        [self updateCachedAssets];
+    }
 }
 
 #pragma mark Assets
@@ -537,6 +541,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (IBAction)assetCollectionTitleButtonDidClicked:(UIButton *)sender {
+    if (self.authrizationStatus != PHAuthorizationStatusAuthorized) return;
     self.collectionPicker.imagePickerController = self;
     __weak typeof(self)weakSelf = self;
     [self.collectionPicker showCollectionPicker:^(BOOL willShowCollectionPicker) {

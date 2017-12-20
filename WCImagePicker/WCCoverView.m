@@ -7,6 +7,7 @@
 //
 
 #import "WCCoverView.h"
+#import "WCImagePickerController.h"
 
 @interface WCCoverView ()
 
@@ -26,24 +27,17 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _currentState = WCImagePickerCoverViewLoading;
+    self.coverViewState = WCImagePickerCoverViewLoading;
     self.coverLoadingView.hidden = YES;
     self.coverActivityIndicator.hidesWhenStopped = YES;
     self.coverAuthrizationView.hidden = YES;
+    [self.coverOpenAuthrization setTitleColor:WCUIColorFromHexValue(0x1EB400) forState:UIControlStateNormal];
+    self.coverOpenAuthrization.layer.borderWidth = 1.0f;
+    self.coverOpenAuthrization.layer.borderColor = WCUIColorFromHexValue(0x1EB400).CGColor;
 }
 
 + (WCCoverView *)coverView {
     return (WCCoverView *)[[[NSBundle bundleForClass:[self class]] loadNibNamed:@"WCCoverView" owner:nil options:nil] firstObject];
-}
-
-- (void)willRemoveFromSuperView {
-    if (!self.coverLoadingView.hidden && self.coverActivityIndicator.isAnimating) {
-        [self.coverActivityIndicator stopAnimating];
-    }
-}
-
-- (void)didRemoveFromSuperView {
-    
 }
 
 - (IBAction)openAuthrizationButtonDidClicked:(UIButton *)sender {
@@ -57,17 +51,17 @@
     }
 }
 
-- (void)setCurrentState:(WCImagePickerCoverViewState)currentState {
-    _currentState = currentState;
-    if (currentState == WCImagePickerCoverViewLoading) {
+- (void)setCoverViewState:(WCImagePickerCoverViewState)coverViewState {
+    _coverViewState = coverViewState;
+    if (coverViewState == WCImagePickerCoverViewLoading) {
         [self.coverAuthrizationView setHidden:YES];
         [self.coverActivityIndicator startAnimating];
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             [self.coverLoadingView setHidden:NO];
         }];
-    } else if (currentState == WCImagePickerCoverViewDenied) {
+    } else if (coverViewState == WCImagePickerCoverViewDenied) {
         [self.coverLoadingView setHidden:YES];
-        [UIView animateWithDuration:.1 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             [self.coverAuthrizationView setHidden:NO];
         }];
     }

@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -49,23 +50,27 @@
                                 <constraint firstItem="Fnc-LR-YgD" firstAttribute="top" secondItem="sKV-LX-Q6B" secondAttribute="centerY" id="xQS-1m-Jfz"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lln-Si-S6L" userLabel="Cover Authrization View">
+                        <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lln-Si-S6L" userLabel="Cover Authrization View">
                             <rect key="frame" x="0.0" y="102" width="375" height="375"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开启照片权限" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38I-9i-D4f" userLabel="Turn On Photo Authrization">
-                                    <rect key="frame" x="116" y="91" width="144" height="34"/>
-                                    <fontDescription key="fontDescription" name="PingFangSC-Light" family="PingFang SC" pointSize="24"/>
+                                    <rect key="frame" x="116" y="94" width="144" height="34"/>
+                                    <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="24"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未获得照片权限，会导致应用程序无法访问你的手机相册。" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2W-fZ-A5V" userLabel="Description">
-                                    <rect key="frame" x="43.5" y="165" width="288" height="45"/>
-                                    <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="16"/>
+                                    <rect key="frame" x="61.5" y="168" width="252" height="39.5"/>
+                                    <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="14"/>
                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vze-FI-pTv">
-                                    <rect key="frame" x="159" y="270" width="56" height="34"/>
+                                    <rect key="frame" x="94" y="267" width="187.5" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="Qbh-6q-q8C"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="16"/>
                                     <state key="normal" title="去开启">
                                         <color key="titleColor" red="1" green="0.70163584369999998" blue="0.087095782570000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
@@ -77,13 +82,14 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="H2W-fZ-A5V" firstAttribute="centerY" secondItem="Lln-Si-S6L" secondAttribute="centerY" id="AZA-N9-Mox"/>
-                                <constraint firstItem="H2W-fZ-A5V" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Lln-Si-S6L" secondAttribute="leading" constant="40" id="CMQ-bf-wF9"/>
+                                <constraint firstItem="H2W-fZ-A5V" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Lln-Si-S6L" secondAttribute="leading" constant="60" id="CMQ-bf-wF9"/>
                                 <constraint firstItem="vze-FI-pTv" firstAttribute="centerX" secondItem="Lln-Si-S6L" secondAttribute="centerX" id="ELd-My-fO8"/>
-                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="H2W-fZ-A5V" secondAttribute="trailing" constant="40" id="Q3r-fR-Qrn"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="H2W-fZ-A5V" secondAttribute="trailing" constant="60" id="Q3r-fR-Qrn"/>
                                 <constraint firstItem="H2W-fZ-A5V" firstAttribute="centerX" secondItem="Lln-Si-S6L" secondAttribute="centerX" id="T03-j4-dR5"/>
                                 <constraint firstItem="H2W-fZ-A5V" firstAttribute="top" secondItem="38I-9i-D4f" secondAttribute="bottom" constant="40" id="YA7-n8-Wg7"/>
                                 <constraint firstItem="38I-9i-D4f" firstAttribute="centerX" secondItem="Lln-Si-S6L" secondAttribute="centerX" id="n8u-RS-RH0"/>
                                 <constraint firstAttribute="width" secondItem="Lln-Si-S6L" secondAttribute="height" multiplier="1:1" id="oWV-Jn-mxL"/>
+                                <constraint firstItem="vze-FI-pTv" firstAttribute="width" secondItem="Lln-Si-S6L" secondAttribute="width" multiplier="1:2" id="qBF-YJ-7NZ"/>
                                 <constraint firstItem="vze-FI-pTv" firstAttribute="top" secondItem="H2W-fZ-A5V" secondAttribute="bottom" constant="60" id="sd9-y2-F4q"/>
                             </constraints>
                         </view>

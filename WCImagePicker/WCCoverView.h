@@ -16,10 +16,8 @@ typedef NS_ENUM(NSInteger, WCImagePickerCoverViewState) {
 
 @interface WCCoverView : UIView
 
-@property (nonatomic, assign) WCImagePickerCoverViewState currentState;
+@property (nonatomic, assign) WCImagePickerCoverViewState coverViewState;
 
 + (WCCoverView *)coverView;
-- (void)willRemoveFromSuperView;
-- (void)didRemoveFromSuperView;
 
 @end
