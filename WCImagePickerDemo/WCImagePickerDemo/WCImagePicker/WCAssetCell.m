@@ -33,6 +33,7 @@
     self.shouldAnimationWhenSelectedOrderNumberUpdate = YES;
     self.representedAssetIdentifier = nil;
     self.assetImageView.image = nil;
+    self.assetTimeLabel.hidden = YES;
     self.assetCoverView.hidden = YES;
     [self assetCheckButtonNormalAppearance];
 }

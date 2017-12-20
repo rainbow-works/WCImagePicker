@@ -60,6 +60,7 @@ static NSString * const kWCImagePickerCoverViewState = @"com.meetday.WCImagePick
 - (void)wc_removeCoverView {
     [self.coverView willRemoveFromSuperView];
     [self.coverView removeFromSuperview];
+    [self.coverView didRemoveFromSuperView];
 }
 
 - (WCCoverView *)coverView {

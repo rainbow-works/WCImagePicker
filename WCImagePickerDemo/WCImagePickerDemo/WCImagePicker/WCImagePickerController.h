@@ -22,6 +22,12 @@
 
 @end
 
+@interface NSIndexSet (WCExtension)
+
+- (NSArray<NSIndexPath *> *)wc_indexPathsFromIndexes;
+
+@end
+
 @protocol WCImagePickerControllerDelegate <NSObject>
 
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingAssets:(NSArray<PHAsset *> *)assets;

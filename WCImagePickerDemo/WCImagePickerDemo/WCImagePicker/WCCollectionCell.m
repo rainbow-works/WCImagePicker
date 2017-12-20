@@ -27,11 +27,7 @@
     if (bundlePath) {
         assetBundle = [NSBundle bundleWithPath:bundlePath];
     }
-    
     [self.arrowImageView setImage:[UIImage imageNamed:@"imagepicker_arrow_right"]];
-    
-//    NSString *collectionCountFormat = NSLocalizedStringFromTableInBundle(@"imagepicker.collectionpicker.collectioncount", @"WCImagePicker", assetBundle, nil);
-//    [self.assetCollectionCount setText:[NSString stringWithFormat:collectionCountFormat, 120]];
 }
 
 - (void)prepareForReuse {

@@ -29,9 +29,21 @@
 
 @end
 
+@implementation NSIndexSet (WCExtension)
+
+- (NSArray<NSIndexPath *> *)wc_indexPathsFromIndexes {
+    NSMutableArray<NSIndexPath *> *indexPaths = [NSMutableArray<NSIndexPath *> arrayWithCapacity:self.count];
+    [self enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+        [indexPaths addObject:[NSIndexPath indexPathForItem:idx inSection:0]];
+    }];
+    return [indexPaths copy];
+}
+
+@end
+
 static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImagePickerAssetCell";
 
-@interface WCImagePickerController () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
+@interface WCImagePickerController () <PHPhotoLibraryChangeObserver, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
 
 @property(nonatomic, strong) PHCachingImageManager *imageManager;
 @property (nonatomic, assign) CGRect previousPreheatRect;
@@ -74,7 +86,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         _showWarningAlertWhenMaximumLimitReached = YES;
         _showPhotoAlbumWithoutAssetResources = YES;
         
-        _shouldRemoveAllSelectedAssetWhenAlbumChanged = NO;
+        _shouldRemoveAllSelectedAssetWhenAlbumChanged = YES;
         _isCollectionPickerVisible = NO;
     }
     return self;
@@ -86,13 +98,17 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self handleAssetPath];
     [self setupNavigationBarView];
     [self setupCollectionView];
-    
     [self requestUserAuthorization];
+    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -245,6 +261,11 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (void)showImagePickerWarningAlertWhenMaximumLimitReached {
     if (self.showWarningAlertWhenMaximumLimitReached) {
         NSString *title = [NSString stringWithFormat:@"你最多只能选择 %td 张图片", self.maximumNumberOfSelectionAsset];
+        if (self.mediaType == WCImagePickerImageTypeVideo) {
+            title = [NSString stringWithFormat:@"你最多只能选择 %td 个视频", self.maximumNumberOfSelectionAsset];
+        } else if (self.mediaType == WCImagePickerImageTypeAny) {
+            title = [NSString stringWithFormat:@"你最多只能选择 %td 个资源", self.maximumNumberOfSelectionAsset];
+        }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *action = [UIAlertAction actionWithTitle:@"我知道了" style:UIAlertActionStyleCancel handler:nil];;
         [alertController addAction:action];
@@ -256,6 +277,36 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
             }];
         }
     }
+}
+
+#pragma mark - Photo Library Change Observer
+
+- (void)photoLibraryDidChange:(PHChange *)changeInstance {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        PHFetchResultChangeDetails *fetchChangeDetails = [changeInstance changeDetailsForFetchResult:self.fetchResult];
+        if (fetchChangeDetails) {
+            self.fetchResult = [fetchChangeDetails fetchResultAfterChanges];
+            if (![fetchChangeDetails hasIncrementalChanges] || [fetchChangeDetails hasMoves]) {
+                [self.collectionView reloadData];
+            } else {
+                [self.collectionView performBatchUpdates:^{
+                    NSIndexSet *removedIndexes= [fetchChangeDetails removedIndexes];
+                    if ([removedIndexes count] > 0) {
+                        [self.collectionView deleteItemsAtIndexPaths:[removedIndexes wc_indexPathsFromIndexes]];
+                    }
+                    NSIndexSet *insertedIndexes = [fetchChangeDetails insertedIndexes];
+                    if ([insertedIndexes count] > 0) {
+                        [self.collectionView insertItemsAtIndexPaths:[insertedIndexes wc_indexPathsFromIndexes]];
+                    }
+                    NSIndexSet *changedIndexes = [fetchChangeDetails changedIndexes];
+                    if ([changedIndexes count] > 0) {
+                        [self.collectionView reloadItemsAtIndexPaths:[changedIndexes wc_indexPathsFromIndexes]];
+                    }
+                } completion: nil];
+            }
+            [self resetCachedAssets];
+        }
+    });
 }
 
 #pragma mark - Collection View Data Source
@@ -273,6 +324,12 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
             assetCell.assetImageView.image = result;
         }
     }];
+    if (asset.mediaType == PHAssetMediaTypeVideo) {
+        NSInteger minutes = (NSInteger)floor((asset.duration / 60.0));
+        NSInteger seconds = (NSInteger)ceil(asset.duration - (double)minutes*60.0);
+        assetCell.assetTimeLabel.hidden = NO;
+        assetCell.assetTimeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", minutes, seconds];
+    }
     return assetCell;
 }
 
@@ -453,6 +510,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
             NSMutableArray *images = [NSMutableArray array];
             PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
             options.synchronous = YES;
+            options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
             for (PHAsset *asset in self.selectedAssets) {
                 [self.imageManager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                     [images addObject:result];
@@ -474,6 +532,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         [sender setSelected:!willDismissCollectionPicker];
         weakSelf.isCollectionPickerVisible = NO;
     } completion:^(NSString *assetCollectionTitle, PHFetchResult *fetchResult) {
+        [weakSelf resetCachedAssets];
         if (weakSelf.shouldRemoveAllSelectedAssetWhenAlbumChanged) {
             [weakSelf.selectedAssets removeAllObjects];
         }

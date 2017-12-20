@@ -28,6 +28,7 @@
 
 - (IBAction)buttonDidClicked:(UIButton *)sender {
     WCImagePickerController *imagePicker = [[WCImagePickerController alloc] init];
+    imagePicker.mediaType = WCImagePickerImageTypeAny;
     imagePicker.maximumNumberOfSelectionAsset = 4;
     imagePicker.numberOfColumnsInPortrait = 4;
 //    imagePicker.navigationBarBackgroundColor = [UIColor whiteColor];

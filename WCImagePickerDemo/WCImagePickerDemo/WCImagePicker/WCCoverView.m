@@ -38,6 +38,10 @@
     }
 }
 
+- (void)didRemoveFromSuperView {
+    
+}
+
 - (IBAction)openAuthrizationButtonDidClicked:(UIButton *)sender {
     NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
     if ([[UIApplication sharedApplication] canOpenURL:url]) {
