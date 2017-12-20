@@ -36,15 +36,11 @@
 
 - (void)updateAssetImageViewAppearance {
     if (_album.fetchResult.count > 0) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            PHAsset *asset = [_album.fetchResult objectAtIndex:0];
-            CGFloat assetImageViewWidth = 60.0 * [UIScreen mainScreen].scale;
-            [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(assetImageViewWidth, assetImageViewWidth) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                if (result) {
-                    [self.assetImageView setImage:result ?: self.placeholderImage];
-                }
-            }];
-        });
+        PHAsset *asset = [_album.fetchResult objectAtIndex:0];
+        CGFloat assetImageViewWidth = 60.0 * [UIScreen mainScreen].scale;
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(assetImageViewWidth, assetImageViewWidth) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            [self.assetImageView setImage:result ?: self.placeholderImage];
+        }];
     } else {
         [self.assetImageView setImage:self.placeholderImage];
     }
