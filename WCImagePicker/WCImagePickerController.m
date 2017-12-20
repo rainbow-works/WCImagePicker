@@ -363,13 +363,13 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:shouldSelectAsset:)]) {
-        return [self.delegate wc_imagePickerController:self shouldSelectAsset:[self.fetchResult objectAtIndex:indexPath.item]];
-    }
     if ([self autoDeselectEnabled]) return YES;
     BOOL maxmumNumberOfSelectionReached = [self maximumNumberOfSelectionReached];
     if (maxmumNumberOfSelectionReached) {
         [self showImagePickerWarningAlertWhenMaximumLimitReached];
+    }
+    if (!maxmumNumberOfSelectionReached && [self.delegate respondsToSelector:@selector(wc_imagePickerController:shouldSelectAsset:)]) {
+        return [self.delegate wc_imagePickerController:self shouldSelectAsset:[self.fetchResult objectAtIndex:indexPath.item]];
     }
     return !maxmumNumberOfSelectionReached;
 }
