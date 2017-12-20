@@ -41,6 +41,27 @@
 
 @end
 
+@implementation NSBundle (WCExtension)
+
++ (NSBundle *)wc_defaultBundle {
+    return [NSBundle wc_bundleForClass:[WCImagePickerController class]];
+}
+
++ (NSBundle *)wc_bundleForClass:(Class)aclass {
+    NSBundle *bundle = [NSBundle bundleForClass:aclass];
+    NSString *bundlePath = [NSBundle wc_bundlePathForResource:@"WCImagePicker"];
+    if (bundlePath) {
+        bundle = [NSBundle bundleWithPath:bundlePath];
+    }
+    return bundle;
+}
+
++ (NSString *)wc_bundlePathForResource:(NSString *)name {
+    return [[NSBundle mainBundle] pathForResource:name ofType:@"bundle"];
+}
+
+@end
+
 static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImagePickerAssetCell";
 
 @interface WCImagePickerController () <PHPhotoLibraryChangeObserver, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
@@ -51,8 +72,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @property (nonatomic, strong) NSMutableOrderedSet<PHAsset *> *selectedAssets;
 @property (nonatomic, strong) NSIndexPath *previousSelectedItemIndexPath;
 @property(nonatomic, assign) CGSize thumbnailSize;
-
-@property (nonatomic, strong) NSBundle *assetBundle;
 
 @property (weak, nonatomic) IBOutlet UIView *navigationBarView;
 @property (weak, nonatomic) IBOutlet UIView *navigationBarBackgroundView;
@@ -71,31 +90,34 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @implementation WCImagePickerController
 
 - (instancetype)init {
-    if (self = [super init]) {
-        _previousSelectedItemIndexPath = nil;
-        _allowsMultipleSelection = YES;
-        _mediaType = WCImagePickerImageTypeImage;
-        _maximumNumberOfSelectionAsset = 1;
-        _maximumNumberOfSelectionAsset = 1;
-
-        _minimumItemSpacing = 2.0;
-        _numberOfColumnsInPortrait = 4;
-        _numberOfColumnsInLandscape = 6;
-        
-        _showAssetMaskWhenMaximumLimitReached = YES;
-        _showWarningAlertWhenMaximumLimitReached = YES;
-        _showPhotoAlbumWithoutAssetResources = YES;
-        
-        _shouldRemoveAllSelectedAssetWhenAlbumChanged = YES;
-        _isCollectionPickerVisible = NO;
+    if (self = [super initWithNibName:[NSString stringWithUTF8String:object_getClassName(self)] bundle:[NSBundle wc_defaultBundle]]) {
+        [self commonInit];
     }
     return self;
+}
+
+- (void)commonInit {
+    _previousSelectedItemIndexPath = nil;
+    _allowsMultipleSelection = YES;
+    _mediaType = WCImagePickerImageTypeImage;
+    _maximumNumberOfSelectionAsset = 1;
+    _maximumNumberOfSelectionAsset = 1;
+    
+    _minimumItemSpacing = 2.0;
+    _numberOfColumnsInPortrait = 4;
+    _numberOfColumnsInLandscape = 6;
+    
+    _showAssetMaskWhenMaximumLimitReached = YES;
+    _showWarningAlertWhenMaximumLimitReached = YES;
+    _showPhotoAlbumWithoutAssetResources = YES;
+    
+    _shouldRemoveAllSelectedAssetWhenAlbumChanged = YES;
+    _isCollectionPickerVisible = NO;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self handleAssetPath];
     [self setupNavigationBarView];
     [self setupCollectionView];
     [self requestUserAuthorization];
@@ -178,14 +200,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     }
 }
 
-- (void)handleAssetPath {
-    self.assetBundle = [NSBundle bundleForClass:[self class]];
-    NSString *bundlePath = [self.assetBundle pathForResource:@"WCImagePicker" ofType:@"bunlde"];
-    if (bundlePath) {
-        self.assetBundle = [NSBundle bundleWithPath:bundlePath];
-    }
-}
-
 - (void)setupNavigationBarView {
     WCImagePickerAppearance *imagePickerAppearance = [WCImagePickerAppearance sharedAppearance];
     if (imagePickerAppearance.navigationBarBackgroundColor) {
@@ -209,7 +223,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         [self.assetCollectionTitleButton.titleLabel setFont:imagePickerAppearance.albumButtonTextFont];
     }
     
-    UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:self.assetBundle compatibleWithTraitCollection:nil];
+    UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:[NSBundle wc_defaultBundle] compatibleWithTraitCollection:nil];
     [self.assetCollectionTitleButton wc_setImage:triangle];
     
     self.finishedButton.enabled = (self.selectedAssets.count > 0);
@@ -220,7 +234,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (void)setupCollectionView {
     self.collectionView.contentInset = UIEdgeInsetsMake(44.0, 0, 0, 0);
-    [self.collectionView registerNib:[UINib nibWithNibName:@"WCAssetCell" bundle:nil] forCellWithReuseIdentifier:WCImagePickerAssetsCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"WCAssetCell" bundle:[NSBundle wc_defaultBundle]] forCellWithReuseIdentifier:WCImagePickerAssetsCellIdentifier];
     self.collectionView.allowsMultipleSelection = self.allowsMultipleSelection;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
 }
@@ -328,7 +342,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         NSInteger minutes = (NSInteger)floor((asset.duration / 60.0));
         NSInteger seconds = (NSInteger)ceil(asset.duration - (double)minutes*60.0);
         assetCell.assetTimeLabel.hidden = NO;
-        assetCell.assetTimeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", minutes, seconds];
+        assetCell.assetTimeLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", (long)minutes, (long)seconds];
     }
     return assetCell;
 }

@@ -27,10 +27,16 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
 
 @implementation WCCollectionPickerController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        _isAnimating = NO;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.isAnimating = NO;
     self.albums = [NSMutableArray<WCAlbum *> array];
     self.view.clipsToBounds = YES;
     self.view.backgroundColor = [UIColor clearColor];
@@ -62,7 +68,7 @@ static NSString * const WCImagePickerCollectionCellIdentifier = @"com.meetday.WC
 - (void)setupTableView {
     CGRect initialTableViewFrame = CGRectMake(0, -PICKER_HEIGHT, PICKER_WIDTH, PICKER_HEIGHT);
     self.tableView = [[UITableView alloc] initWithFrame:initialTableViewFrame style:UITableViewStylePlain];
-    [self.tableView registerNib:[UINib nibWithNibName:@"WCCollectionCell" bundle:nil] forCellReuseIdentifier:WCImagePickerCollectionCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"WCCollectionCell" bundle:[NSBundle wc_defaultBundle]] forCellReuseIdentifier:WCImagePickerCollectionCellIdentifier];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;

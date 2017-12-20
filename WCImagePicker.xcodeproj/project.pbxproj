@@ -6,13 +6,65 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		7F2310A31FEA2D7D00F069F6 /* WCImagePickerAggregate */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7F2310A61FEA2D7D00F069F6 /* Build configuration list for PBXAggregateTarget "WCImagePickerAggregate" */;
+			buildPhases = (
+				7F2310A71FEA2D8600F069F6 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = WCImagePickerAggregate;
+			productName = WCImagePickerAggregate;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
+		7F0D27521FEA1091001A54B4 /* WCCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0D27401FEA1090001A54B4 /* WCCollectionCell.m */; };
+		7F0D27531FEA1091001A54B4 /* UIView+WCExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0D27411FEA1090001A54B4 /* UIView+WCExtension.m */; };
+		7F0D27541FEA1091001A54B4 /* WCCoverView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F0D27421FEA1090001A54B4 /* WCCoverView.h */; };
+		7F0D27551FEA1091001A54B4 /* WCCollectionCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F0D27431FEA1090001A54B4 /* WCCollectionCell.h */; };
+		7F0D27561FEA1091001A54B4 /* WCCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0D27441FEA1090001A54B4 /* WCCoverView.m */; };
+		7F0D27571FEA1091001A54B4 /* WCCustomButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F0D27451FEA1090001A54B4 /* WCCustomButton.h */; };
+		7F0D27581FEA1091001A54B4 /* WCImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0D27461FEA1090001A54B4 /* WCImagePickerController.m */; };
+		7F0D27591FEA1091001A54B4 /* UIView+WCExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F0D27471FEA1090001A54B4 /* UIView+WCExtension.h */; };
+		7F0D275A1FEA1091001A54B4 /* WCCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F0D27481FEA1091001A54B4 /* WCCollectionCell.xib */; };
+		7F0D275B1FEA1091001A54B4 /* WCCollectionPickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F0D27491FEA1091001A54B4 /* WCCollectionPickerController.h */; };
+		7F0D275C1FEA1091001A54B4 /* WCAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0D274A1FEA1091001A54B4 /* WCAssetCell.m */; };
+		7F0D275D1FEA1091001A54B4 /* WCCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0D274B1FEA1091001A54B4 /* WCCustomButton.m */; };
+		7F0D275E1FEA1091001A54B4 /* WCImagePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F0D274C1FEA1091001A54B4 /* WCImagePickerController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7F0D275F1FEA1091001A54B4 /* WCAssetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F0D274D1FEA1091001A54B4 /* WCAssetCell.xib */; };
+		7F0D27601FEA1091001A54B4 /* WCCoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F0D274E1FEA1091001A54B4 /* WCCoverView.xib */; };
+		7F0D27611FEA1091001A54B4 /* WCImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F0D274F1FEA1091001A54B4 /* WCImagePickerController.xib */; };
+		7F0D27621FEA1091001A54B4 /* WCCollectionPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F0D27501FEA1091001A54B4 /* WCCollectionPickerController.m */; };
+		7F0D27631FEA1091001A54B4 /* WCAssetCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F0D27511FEA1091001A54B4 /* WCAssetCell.h */; };
+		7F0D27651FEA10A7001A54B4 /* ImagePicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0D27641FEA10A7001A54B4 /* ImagePicker.xcassets */; };
 		7F7B9DAF1FE112A8004AC945 /* WCImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F7B9DAD1FE112A8004AC945 /* WCImagePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7F7B9DEB1FE11AB1004AC945 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7B9DE91FE11A07004AC945 /* Photos.framework */; };
 		7F7B9DED1FE11AB7004AC945 /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7B9DEC1FE11AB7004AC945 /* PhotosUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F0D27401FEA1090001A54B4 /* WCCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCCollectionCell.m; sourceTree = "<group>"; };
+		7F0D27411FEA1090001A54B4 /* UIView+WCExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WCExtension.m"; sourceTree = "<group>"; };
+		7F0D27421FEA1090001A54B4 /* WCCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCCoverView.h; sourceTree = "<group>"; };
+		7F0D27431FEA1090001A54B4 /* WCCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCCollectionCell.h; sourceTree = "<group>"; };
+		7F0D27441FEA1090001A54B4 /* WCCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCCoverView.m; sourceTree = "<group>"; };
+		7F0D27451FEA1090001A54B4 /* WCCustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCCustomButton.h; sourceTree = "<group>"; };
+		7F0D27461FEA1090001A54B4 /* WCImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCImagePickerController.m; sourceTree = "<group>"; };
+		7F0D27471FEA1090001A54B4 /* UIView+WCExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WCExtension.h"; sourceTree = "<group>"; };
+		7F0D27481FEA1091001A54B4 /* WCCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WCCollectionCell.xib; sourceTree = "<group>"; };
+		7F0D27491FEA1091001A54B4 /* WCCollectionPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCCollectionPickerController.h; sourceTree = "<group>"; };
+		7F0D274A1FEA1091001A54B4 /* WCAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCAssetCell.m; sourceTree = "<group>"; };
+		7F0D274B1FEA1091001A54B4 /* WCCustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCCustomButton.m; sourceTree = "<group>"; };
+		7F0D274C1FEA1091001A54B4 /* WCImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCImagePickerController.h; sourceTree = "<group>"; };
+		7F0D274D1FEA1091001A54B4 /* WCAssetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WCAssetCell.xib; sourceTree = "<group>"; };
+		7F0D274E1FEA1091001A54B4 /* WCCoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WCCoverView.xib; sourceTree = "<group>"; };
+		7F0D274F1FEA1091001A54B4 /* WCImagePickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WCImagePickerController.xib; sourceTree = "<group>"; };
+		7F0D27501FEA1091001A54B4 /* WCCollectionPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCCollectionPickerController.m; sourceTree = "<group>"; };
+		7F0D27511FEA1091001A54B4 /* WCAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCAssetCell.h; sourceTree = "<group>"; };
+		7F0D27641FEA10A7001A54B4 /* ImagePicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagePicker.xcassets; sourceTree = "<group>"; };
 		7F7B9DAA1FE112A8004AC945 /* WCImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WCImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F7B9DAD1FE112A8004AC945 /* WCImagePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCImagePicker.h; sourceTree = "<group>"; };
 		7F7B9DAE1FE112A8004AC945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,6 +106,24 @@
 			isa = PBXGroup;
 			children = (
 				7F7B9DAD1FE112A8004AC945 /* WCImagePicker.h */,
+				7F0D274C1FEA1091001A54B4 /* WCImagePickerController.h */,
+				7F0D27461FEA1090001A54B4 /* WCImagePickerController.m */,
+				7F0D274F1FEA1091001A54B4 /* WCImagePickerController.xib */,
+				7F0D27511FEA1091001A54B4 /* WCAssetCell.h */,
+				7F0D274A1FEA1091001A54B4 /* WCAssetCell.m */,
+				7F0D274D1FEA1091001A54B4 /* WCAssetCell.xib */,
+				7F0D27491FEA1091001A54B4 /* WCCollectionPickerController.h */,
+				7F0D27501FEA1091001A54B4 /* WCCollectionPickerController.m */,
+				7F0D27431FEA1090001A54B4 /* WCCollectionCell.h */,
+				7F0D27401FEA1090001A54B4 /* WCCollectionCell.m */,
+				7F0D27481FEA1091001A54B4 /* WCCollectionCell.xib */,
+				7F0D27451FEA1090001A54B4 /* WCCustomButton.h */,
+				7F0D274B1FEA1091001A54B4 /* WCCustomButton.m */,
+				7F0D27471FEA1090001A54B4 /* UIView+WCExtension.h */,
+				7F0D27411FEA1090001A54B4 /* UIView+WCExtension.m */,
+				7F0D27421FEA1090001A54B4 /* WCCoverView.h */,
+				7F0D27441FEA1090001A54B4 /* WCCoverView.m */,
+				7F0D274E1FEA1091001A54B4 /* WCCoverView.xib */,
 				7F7B9DE31FE1144C004AC945 /* Support Files */,
 			);
 			path = WCImagePicker;
@@ -62,6 +132,7 @@
 		7F7B9DE31FE1144C004AC945 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				7F0D27641FEA10A7001A54B4 /* ImagePicker.xcassets */,
 				7F7B9DAE1FE112A8004AC945 /* Info.plist */,
 			);
 			name = "Support Files";
@@ -83,7 +154,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F0D275E1FEA1091001A54B4 /* WCImagePickerController.h in Headers */,
 				7F7B9DAF1FE112A8004AC945 /* WCImagePicker.h in Headers */,
+				7F0D27541FEA1091001A54B4 /* WCCoverView.h in Headers */,
+				7F0D275B1FEA1091001A54B4 /* WCCollectionPickerController.h in Headers */,
+				7F0D27591FEA1091001A54B4 /* UIView+WCExtension.h in Headers */,
+				7F0D27631FEA1091001A54B4 /* WCAssetCell.h in Headers */,
+				7F0D27551FEA1091001A54B4 /* WCCollectionCell.h in Headers */,
+				7F0D27571FEA1091001A54B4 /* WCCustomButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +195,10 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "王超";
 				TargetAttributes = {
+					7F2310A31FEA2D7D00F069F6 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					7F7B9DA91FE112A8004AC945 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -136,6 +218,7 @@
 			projectRoot = "";
 			targets = (
 				7F7B9DA91FE112A8004AC945 /* WCImagePicker */,
+				7F2310A31FEA2D7D00F069F6 /* WCImagePickerAggregate */,
 			);
 		};
 /* End PBXProject section */
@@ -145,22 +228,68 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F0D275F1FEA1091001A54B4 /* WCAssetCell.xib in Resources */,
+				7F0D27601FEA1091001A54B4 /* WCCoverView.xib in Resources */,
+				7F0D275A1FEA1091001A54B4 /* WCCollectionCell.xib in Resources */,
+				7F0D27611FEA1091001A54B4 /* WCImagePickerController.xib in Resources */,
+				7F0D27651FEA10A7001A54B4 /* ImagePicker.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7F2310A71FEA2D8600F069F6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "et -e\n\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n\nxcodebuild -target \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -arch x86_64 -arch i386 -target \"${PROJECT_NAME}\" -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${PROJECT_DIR}\"\n\n\nopen \"${PROJECT_DIR}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7F7B9DA51FE112A8004AC945 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F0D275D1FEA1091001A54B4 /* WCCustomButton.m in Sources */,
+				7F0D27531FEA1091001A54B4 /* UIView+WCExtension.m in Sources */,
+				7F0D27621FEA1091001A54B4 /* WCCollectionPickerController.m in Sources */,
+				7F0D27561FEA1091001A54B4 /* WCCoverView.m in Sources */,
+				7F0D27521FEA1091001A54B4 /* WCCollectionCell.m in Sources */,
+				7F0D27581FEA1091001A54B4 /* WCImagePickerController.m in Sources */,
+				7F0D275C1FEA1091001A54B4 /* WCAssetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		7F2310A41FEA2D7D00F069F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 96PFYKQ596;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7F2310A51FEA2D7D00F069F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 96PFYKQ596;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		7F7B9DB01FE112A8004AC945 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -286,6 +415,10 @@
 				INFOPLIST_FILE = WCImagePicker/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = WangChao.WCImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -306,6 +439,10 @@
 				INFOPLIST_FILE = WCImagePicker/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = WangChao.WCImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -316,6 +453,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7F2310A61FEA2D7D00F069F6 /* Build configuration list for PBXAggregateTarget "WCImagePickerAggregate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F2310A41FEA2D7D00F069F6 /* Debug */,
+				7F2310A51FEA2D7D00F069F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7F7B9DA41FE112A8004AC945 /* Build configuration list for PBXProject "WCImagePicker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

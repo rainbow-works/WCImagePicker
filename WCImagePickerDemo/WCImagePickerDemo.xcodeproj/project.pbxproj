@@ -7,27 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7F2EA1B61FE76D5300E6C03A /* ImagePicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F2EA1B51FE76D5300E6C03A /* ImagePicker.xcassets */; };
+		7F0D27AE1FEA176D001A54B4 /* WCImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7B9DE21FE11398004AC945 /* WCImagePicker.framework */; };
+		7F0D27AF1FEA176D001A54B4 /* WCImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7B9DE21FE11398004AC945 /* WCImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7F7B9DC31FE112F1004AC945 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DC21FE112F1004AC945 /* AppDelegate.m */; };
 		7F7B9DC61FE112F1004AC945 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DC51FE112F1004AC945 /* ViewController.m */; };
 		7F7B9DC91FE112F1004AC945 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F7B9DC71FE112F1004AC945 /* Main.storyboard */; };
 		7F7B9DCB1FE112F1004AC945 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F7B9DCA1FE112F1004AC945 /* Assets.xcassets */; };
 		7F7B9DCE1FE112F1004AC945 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F7B9DCC1FE112F1004AC945 /* LaunchScreen.storyboard */; };
 		7F7B9DD11FE112F2004AC945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DD01FE112F2004AC945 /* main.m */; };
-		7F7B9DF41FE11B3C004AC945 /* WCImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */; };
-		7FA9438B1FE25F1400E807DD /* WCAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943891FE25F1400E807DD /* WCAssetCell.m */; };
-		7FA9438C1FE25F1400E807DD /* WCAssetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA9438A1FE25F1400E807DD /* WCAssetCell.xib */; };
-		7FA943941FE2C64C00E807DD /* WCCustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943931FE2C64C00E807DD /* WCCustomButton.m */; };
-		7FA9439F1FE351A000E807DD /* WCCollectionPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA9439E1FE351A000E807DD /* WCCollectionPickerController.m */; };
-		7FA943A31FE35F3500E807DD /* WCCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943A11FE35F3500E807DD /* WCCollectionCell.m */; };
-		7FA943A41FE35F3500E807DD /* WCCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA943A21FE35F3500E807DD /* WCCollectionCell.xib */; };
-		7FA943AA1FE5157600E807DD /* WCCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943A91FE5157600E807DD /* WCCoverView.m */; };
-		7FA943AC1FE5158E00E807DD /* WCCoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FA943AB1FE5158E00E807DD /* WCCoverView.xib */; };
-		7FA943B01FE546A100E807DD /* UIView+WCExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA943AF1FE546A100E807DD /* UIView+WCExtension.m */; };
-		7FBCD0831FE1710100D1E51F /* WCImagePickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7F0D27B01FEA176D001A54B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7F7B9DA91FE112A8004AC945;
+			remoteInfo = WCImagePicker;
+		};
 		7F7B9DE11FE11398004AC945 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */;
@@ -37,8 +34,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7F0D27B21FEA176D001A54B4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7F0D27AF1FEA176D001A54B4 /* WCImagePicker.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		7F2EA1B51FE76D5300E6C03A /* ImagePicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagePicker.xcassets; sourceTree = "<group>"; };
 		7F7B9DBE1FE112F1004AC945 /* WCImagePickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WCImagePickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F7B9DC11FE112F1004AC945 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7F7B9DC21FE112F1004AC945 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -50,24 +60,6 @@
 		7F7B9DCF1FE112F2004AC945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F7B9DD01FE112F2004AC945 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WCImagePicker.xcodeproj; path = ../WCImagePicker.xcodeproj; sourceTree = "<group>"; };
-		7F7B9DF21FE11B3C004AC945 /* WCImagePickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCImagePickerController.h; sourceTree = "<group>"; };
-		7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCImagePickerController.m; sourceTree = "<group>"; };
-		7FA943881FE25F1400E807DD /* WCAssetCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCAssetCell.h; sourceTree = "<group>"; };
-		7FA943891FE25F1400E807DD /* WCAssetCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCAssetCell.m; sourceTree = "<group>"; };
-		7FA9438A1FE25F1400E807DD /* WCAssetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCAssetCell.xib; sourceTree = "<group>"; };
-		7FA943921FE2C64C00E807DD /* WCCustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCCustomButton.h; sourceTree = "<group>"; };
-		7FA943931FE2C64C00E807DD /* WCCustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCCustomButton.m; sourceTree = "<group>"; };
-		7FA9439D1FE351A000E807DD /* WCCollectionPickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCCollectionPickerController.h; sourceTree = "<group>"; };
-		7FA9439E1FE351A000E807DD /* WCCollectionPickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCCollectionPickerController.m; sourceTree = "<group>"; };
-		7FA943A01FE35F3500E807DD /* WCCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCCollectionCell.h; sourceTree = "<group>"; };
-		7FA943A11FE35F3500E807DD /* WCCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCCollectionCell.m; sourceTree = "<group>"; };
-		7FA943A21FE35F3500E807DD /* WCCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCCollectionCell.xib; sourceTree = "<group>"; };
-		7FA943A81FE5157600E807DD /* WCCoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCCoverView.h; sourceTree = "<group>"; };
-		7FA943A91FE5157600E807DD /* WCCoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCCoverView.m; sourceTree = "<group>"; };
-		7FA943AB1FE5158E00E807DD /* WCCoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCCoverView.xib; sourceTree = "<group>"; };
-		7FA943AE1FE546A100E807DD /* UIView+WCExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+WCExtension.h"; sourceTree = "<group>"; };
-		7FA943AF1FE546A100E807DD /* UIView+WCExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+WCExtension.m"; sourceTree = "<group>"; };
-		7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WCImagePickerController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,18 +67,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F0D27AE1FEA176D001A54B4 /* WCImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F0D27691FEA10DE001A54B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7F7B9DB51FE112F1004AC945 = {
 			isa = PBXGroup;
 			children = (
 				7F7B9DDD1FE11397004AC945 /* WCImagePicker.xcodeproj */,
 				7F7B9DC01FE112F1004AC945 /* WCImagePickerDemo */,
 				7F7B9DBF1FE112F1004AC945 /* Products */,
+				7F0D27691FEA10DE001A54B4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,7 +102,6 @@
 		7F7B9DC01FE112F1004AC945 /* WCImagePickerDemo */ = {
 			isa = PBXGroup;
 			children = (
-				7F7B9DEE1FE11AFC004AC945 /* WCImagePicker */,
 				7F7B9DC11FE112F1004AC945 /* AppDelegate.h */,
 				7F7B9DC21FE112F1004AC945 /* AppDelegate.m */,
 				7F7B9DC41FE112F1004AC945 /* ViewController.h */,
@@ -123,32 +123,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7F7B9DEE1FE11AFC004AC945 /* WCImagePicker */ = {
-			isa = PBXGroup;
-			children = (
-				7F2EA1B51FE76D5300E6C03A /* ImagePicker.xcassets */,
-				7F7B9DF21FE11B3C004AC945 /* WCImagePickerController.h */,
-				7F7B9DF31FE11B3C004AC945 /* WCImagePickerController.m */,
-				7FBCD0821FE1710100D1E51F /* WCImagePickerController.xib */,
-				7FA943881FE25F1400E807DD /* WCAssetCell.h */,
-				7FA943891FE25F1400E807DD /* WCAssetCell.m */,
-				7FA9438A1FE25F1400E807DD /* WCAssetCell.xib */,
-				7FA9439D1FE351A000E807DD /* WCCollectionPickerController.h */,
-				7FA9439E1FE351A000E807DD /* WCCollectionPickerController.m */,
-				7FA943A01FE35F3500E807DD /* WCCollectionCell.h */,
-				7FA943A11FE35F3500E807DD /* WCCollectionCell.m */,
-				7FA943A21FE35F3500E807DD /* WCCollectionCell.xib */,
-				7FA943921FE2C64C00E807DD /* WCCustomButton.h */,
-				7FA943931FE2C64C00E807DD /* WCCustomButton.m */,
-				7FA943A81FE5157600E807DD /* WCCoverView.h */,
-				7FA943A91FE5157600E807DD /* WCCoverView.m */,
-				7FA943AB1FE5158E00E807DD /* WCCoverView.xib */,
-				7FA943AE1FE546A100E807DD /* UIView+WCExtension.h */,
-				7FA943AF1FE546A100E807DD /* UIView+WCExtension.m */,
-			);
-			path = WCImagePicker;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -159,10 +133,12 @@
 				7F7B9DBA1FE112F1004AC945 /* Sources */,
 				7F7B9DBB1FE112F1004AC945 /* Frameworks */,
 				7F7B9DBC1FE112F1004AC945 /* Resources */,
+				7F0D27B21FEA176D001A54B4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7F0D27B11FEA176D001A54B4 /* PBXTargetDependency */,
 			);
 			name = WCImagePickerDemo;
 			productName = WCImagePickerDemo;
@@ -225,13 +201,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F7B9DCE1FE112F1004AC945 /* LaunchScreen.storyboard in Resources */,
-				7F2EA1B61FE76D5300E6C03A /* ImagePicker.xcassets in Resources */,
-				7FA9438C1FE25F1400E807DD /* WCAssetCell.xib in Resources */,
 				7F7B9DCB1FE112F1004AC945 /* Assets.xcassets in Resources */,
 				7F7B9DC91FE112F1004AC945 /* Main.storyboard in Resources */,
-				7FA943AC1FE5158E00E807DD /* WCCoverView.xib in Resources */,
-				7FA943A41FE35F3500E807DD /* WCCollectionCell.xib in Resources */,
-				7FBCD0831FE1710100D1E51F /* WCImagePickerController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,20 +213,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FA943941FE2C64C00E807DD /* WCCustomButton.m in Sources */,
 				7F7B9DC61FE112F1004AC945 /* ViewController.m in Sources */,
-				7FA9439F1FE351A000E807DD /* WCCollectionPickerController.m in Sources */,
-				7FA943A31FE35F3500E807DD /* WCCollectionCell.m in Sources */,
-				7F7B9DF41FE11B3C004AC945 /* WCImagePickerController.m in Sources */,
 				7F7B9DD11FE112F2004AC945 /* main.m in Sources */,
-				7FA943B01FE546A100E807DD /* UIView+WCExtension.m in Sources */,
-				7FA943AA1FE5157600E807DD /* WCCoverView.m in Sources */,
 				7F7B9DC31FE112F1004AC945 /* AppDelegate.m in Sources */,
-				7FA9438B1FE25F1400E807DD /* WCAssetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F0D27B11FEA176D001A54B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WCImagePicker;
+			targetProxy = 7F0D27B01FEA176D001A54B4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7F7B9DC71FE112F1004AC945 /* Main.storyboard */ = {

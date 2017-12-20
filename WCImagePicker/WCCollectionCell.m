@@ -7,6 +7,7 @@
 //
 
 #import "WCCollectionCell.h"
+#import "WCImagePickerController.h"
 #import "WCCollectionPickerController.h"
 
 @interface WCCollectionCell ()
@@ -22,12 +23,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    NSBundle *assetBundle = [NSBundle bundleForClass:[self class]];
-    NSString *bundlePath = [assetBundle pathForResource:@"WCImagePicker" ofType:@"bunlde"];
-    if (bundlePath) {
-        assetBundle = [NSBundle bundleWithPath:bundlePath];
-    }
-    [self.arrowImageView setImage:[UIImage imageNamed:@"imagepicker_arrow_right"]];
+    UIImage *arrowImage = [UIImage imageNamed:@"imagepicker_arrow_right"
+                                     inBundle:[NSBundle wc_defaultBundle]
+                compatibleWithTraitCollection:nil];
+    [self.arrowImageView setImage:arrowImage];
 }
 
 - (void)prepareForReuse {
@@ -51,7 +50,10 @@
                 }];
             } else {
                 self.assetImageView.contentMode = UIViewContentModeScaleAspectFit;
-                [self.assetImageView setImage:[UIImage imageNamed:@"imagepicker_image_placeholder"]];
+                UIImage *placeholderImage = [UIImage imageNamed:@"imagepicker_image_placeholder"
+                                                 inBundle:[NSBundle wc_defaultBundle]
+                            compatibleWithTraitCollection:nil];
+                [self.assetImageView setImage:placeholderImage];
             }
         });
     }

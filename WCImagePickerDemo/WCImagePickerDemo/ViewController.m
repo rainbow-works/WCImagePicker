@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-#import "WCImagePickerController.h"
+//#import "WCImagePickerController.h"
+#import <WCImagePicker/WCImagePicker.h>
 
 @interface ViewController ()
 

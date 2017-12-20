@@ -32,6 +32,10 @@
     self.coverAuthrizationView.hidden = YES;
 }
 
++ (WCCoverView *)coverView {
+    return (WCCoverView *)[[[NSBundle bundleForClass:[self class]] loadNibNamed:@"WCCoverView" owner:nil options:nil] firstObject];
+}
+
 - (void)willRemoveFromSuperView {
     if (!self.coverLoadingView.hidden && self.coverActivityIndicator.isAnimating) {
         [self.coverActivityIndicator stopAnimating];

@@ -41,13 +41,19 @@
 - (void)assetCheckButtonNormalAppearance {
     self.assetCheckButton.backgroundColor = [UIColor clearColor];
     [self.assetCheckButton setBackgroundImage:nil forState:UIControlStateNormal];
-    [self.assetCheckButton setImage:[UIImage imageNamed:@"imagepicker_asset_check"] forState:UIControlStateNormal];
+    UIImage *assetCheckImage = [UIImage imageNamed:@"imagepicker_asset_check"
+                                            inBundle:[NSBundle wc_defaultBundle]
+                       compatibleWithTraitCollection:nil];
+    [self.assetCheckButton setImage:assetCheckImage forState:UIControlStateNormal];
     [self.assetCheckButton setTitle:nil forState:UIControlStateNormal];
 }
 
 - (void)assetCheckButtonSelectedAppearance {
     [self.assetCheckButton setImage:nil forState:UIControlStateNormal];
-    [self.assetCheckButton setBackgroundImage:[UIImage imageNamed:@"imagepicker_asset_button_background"] forState:UIControlStateNormal];
+    UIImage *assetCheckButtonBackgroundImage = [UIImage imageNamed:@"imagepicker_asset_button_background"
+                                          inBundle:[NSBundle wc_defaultBundle]
+                     compatibleWithTraitCollection:nil];
+    [self.assetCheckButton setBackgroundImage:assetCheckButtonBackgroundImage forState:UIControlStateNormal];
     [self.assetCheckButton setTitle:[NSString stringWithFormat:@"%td", self.selectedOrderNumber] forState:UIControlStateNormal];
 }
 

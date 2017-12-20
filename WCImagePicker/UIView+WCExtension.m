@@ -66,7 +66,7 @@ static NSString * const kWCImagePickerCoverViewState = @"com.meetday.WCImagePick
 - (WCCoverView *)coverView {
     WCCoverView *coverView = objc_getAssociatedObject(self, &kWCImagePickerCoverView);
     if (!coverView) {
-        WCCoverView *coverView = [[[NSBundle mainBundle] loadNibNamed:@"WCCoverView" owner:nil options:nil] firstObject];
+        WCCoverView *coverView = [WCCoverView coverView];
         coverView.backgroundColor = [UIColor whiteColor];
         objc_setAssociatedObject(self, &kWCImagePickerCoverView, coverView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }

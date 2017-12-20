@@ -1,0 +1,6 @@
+framework module WCImagePicker {
+  umbrella header "WCImagePicker.h"
+
+  export *
+  module * { export * }
+}
