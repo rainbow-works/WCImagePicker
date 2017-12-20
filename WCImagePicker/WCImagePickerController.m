@@ -425,9 +425,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 #pragma mark - ScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.authrizationStatus == PHAuthorizationStatusAuthorized) {
-        [self updateCachedAssets];
-    }
+    [self updateCachedAssets];
 }
 
 #pragma mark Assets
@@ -448,7 +446,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)updateCachedAssets {
-    if (!self.isViewLoaded || self.view == nil) return;
+    if (!self.isViewLoaded || self.view == nil || self.authrizationStatus != PHAuthorizationStatusAuthorized) return;
     CGFloat collectionViewWidth = self.collectionView.bounds.size.width;
     CGFloat collectionViewHeight = self.collectionView.bounds.size.height;
     CGFloat offsetX = self.collectionView.contentOffset.x;

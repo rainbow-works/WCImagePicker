@@ -7,7 +7,6 @@
 //
 
 #import "WCCoverView.h"
-#import "WCImagePickerController.h"
 
 @interface WCCoverView ()
 
@@ -31,9 +30,11 @@
     self.coverLoadingView.hidden = YES;
     self.coverActivityIndicator.hidesWhenStopped = YES;
     self.coverAuthrizationView.hidden = YES;
-    [self.coverOpenAuthrization setTitleColor:WCUIColorFromHexValue(0x1EB400) forState:UIControlStateNormal];
+    
+    UIColor *titleColor = [UIColor colorWithRed:30/255.0 green:180/255.0 blue:0.0 alpha:1.0];
+    [self.coverOpenAuthrization setTitleColor:titleColor forState:UIControlStateNormal];
+    self.coverOpenAuthrization.layer.borderColor = titleColor.CGColor;
     self.coverOpenAuthrization.layer.borderWidth = 1.0f;
-    self.coverOpenAuthrization.layer.borderColor = WCUIColorFromHexValue(0x1EB400).CGColor;
 }
 
 + (WCCoverView *)coverView {
