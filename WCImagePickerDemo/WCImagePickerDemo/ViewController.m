@@ -38,11 +38,15 @@
 #pragma mark - ImagePicker Delegate
 
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingAssets:(NSArray<PHAsset *> *)assets {
-    
-}
-
-- (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingImages:(NSArray<UIImage *> *)images {
-    
+    NSMutableArray *images = [NSMutableArray array];
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.synchronous = NO;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    for (PHAsset *asset in assets) {
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            [images addObject:result];
+        }];
+    }
 }
 
 - (void)wc_imagePickerControllerDidCancel:(WCImagePickerController *)imagePicker {

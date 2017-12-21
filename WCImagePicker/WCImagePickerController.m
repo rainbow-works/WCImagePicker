@@ -583,18 +583,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingAssets:)]) {
             [self.delegate wc_imagePickerController:self didFinishPickingAssets:[self.selectedAssets array]];
         }
-        if (self.mediaType == WCImagePickerImageTypeImage && [self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingImages:)]) {
-            NSMutableArray *images = [NSMutableArray array];
-            PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-            options.synchronous = YES;
-            options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-            for (PHAsset *asset in self.selectedAssets) {
-                [self.imageManager requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                    [images addObject:result];
-                }];
-            }
-            [self.delegate wc_imagePickerController:self didFinishPickingImages:[images copy]];
-        }
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

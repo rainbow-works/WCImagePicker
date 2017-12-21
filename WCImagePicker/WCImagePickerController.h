@@ -39,8 +39,8 @@
 
 @protocol WCImagePickerControllerDelegate <NSObject>
 
+@optional
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingAssets:(NSArray<PHAsset *> *)assets;
-- (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingImages:(NSArray<UIImage *> *)images;
 - (void)wc_imagePickerControllerDidCancel:(WCImagePickerController *)imagePicker;
 - (BOOL)wc_imagePickerController:(WCImagePickerController *)imagePicker shouldSelectAsset:(PHAsset *)asset;
 
