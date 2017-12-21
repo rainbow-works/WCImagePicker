@@ -426,10 +426,9 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     assetCell.selectedOrderNumber = self.selectedAssets.count;
     [assetCell updateAssetCellAppearanceIfNeeded];
     selected ?: [self updateAllSelectedAssetCellAppearance];
-    
     if (self.showAssetMaskWhenMaximumLimitReached) {
-        BOOL shouldUpdateNonSelectedCellWhenDeselect = (!selected && (self.maximumNumberOfSelectionAsset - self.selectedAssets.count) == 1);
-        if ([self maximumNumberOfSelectionReached] || shouldUpdateNonSelectedCellWhenDeselect) {
+        BOOL shouldUpdateNonSelectCell = (!selected && (self.maximumNumberOfSelectionAsset - self.selectedAssets.count) == 1);
+        if ([self maximumNumberOfSelectionReached] || shouldUpdateNonSelectCell) {
             [self updateAllNonSelectedAssetCellAppearance];
         }
     }
@@ -449,9 +448,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (void)updateAllNonSelectedAssetCellAppearance {
     dispatch_async(dispatch_get_main_queue(), ^{
         for (WCAssetCell *assetCell in self.collectionView.visibleCells) {
-            if (!assetCell.selected) {
-                [assetCell shouldShowAssetCoverView:([self maximumNumberOfSelectionReached] && ![self autoDeselectEnabled])];
-            }
+            assetCell.selected ?: [assetCell shouldShowAssetCoverView:([self maximumNumberOfSelectionReached] && ![self autoDeselectEnabled])];
         }
     });
 }
