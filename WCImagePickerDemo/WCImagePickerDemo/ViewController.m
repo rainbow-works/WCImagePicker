@@ -30,10 +30,9 @@
     WCImagePickerController *imagePicker = [[WCImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.mediaType = WCImagePickerImageTypeImage;
-    imagePicker.maximumNumberOfSelectionAsset = 4;
-    imagePicker.numberOfColumnsInPortrait = 4;
+    imagePicker.maximumNumberOfSelectionAsset = 10;
+    imagePicker.fingerMovingToAssetForSelectionEnable = YES;
     [self presentViewController:imagePicker animated:YES completion:nil];
-    
 }
 
 #pragma mark - ImagePicker Delegate

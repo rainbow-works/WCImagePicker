@@ -69,7 +69,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @property (nonatomic, strong) PHFetchResult *fetchResult;
 @property (nonatomic, strong) NSMutableOrderedSet<PHAsset *> *selectedAssets;
 @property (nonatomic, strong) NSIndexPath *previousSelectedItemIndexPath;
-@property(nonatomic, assign) CGSize thumbnailSize;
+@property (nonatomic, strong) NSIndexPath *previousTouchingItemIndexPath;
 
 @property (weak, nonatomic) IBOutlet UIView *navigationBarView;
 @property (weak, nonatomic) IBOutlet UIView *navigationBarBackgroundView;
@@ -79,6 +79,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 @property (weak, nonatomic) IBOutlet UIView *collectionBaseView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property(nonatomic, assign) CGSize thumbnailSize;
 
 @property (nonatomic, strong) WCCollectionPickerController *collectionPicker;
 @property(nonatomic, assign) BOOL isCollectionPickerVisible;
@@ -96,6 +97,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (void)commonInit {
     _previousSelectedItemIndexPath = nil;
+    _previousTouchingItemIndexPath = nil;
     _allowsMultipleSelection = YES;
     _mediaType = WCImagePickerImageTypeImage;
     _maximumNumberOfSelectionAsset = 1;
@@ -107,8 +109,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     
     _showAssetMaskWhenMaximumLimitReached = YES;
     _showWarningAlertWhenMaximumLimitReached = YES;
-    _showPhotoAlbumWithoutAssetResources = YES;
-    
+    _showPhotoAlbumWithoutAssetResources = NO;
+    _fingerMovingToAssetForSelectionEnable = NO;
     _shouldRemoveAllSelectedAssetWhenAlbumChanged = YES;
     _isCollectionPickerVisible = NO;
 }
@@ -116,6 +118,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self addPanGestureRecognizer];
     [self setupNavigationBarView];
     [self setupCollectionView];
     [self requestUserAuthorization];
@@ -257,20 +260,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self.finishedButton setTitle:[NSString stringWithFormat:@"完成(%td)", self.selectedAssets.count] forState:UIControlStateNormal];
 }
 
-- (void)updateSelectedAssetCellAppearanceAtIndexpath:(NSIndexPath *)indexPath {
-    WCAssetCell *assetCell = (WCAssetCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    assetCell.selectedOrderNumber = self.selectedAssets.count;
-    assetCell.shouldAnimationWhenSelectedOrderNumberUpdate = YES;
-    [assetCell updateAssetCellAppearanceIfNeeded];
-    
-    if ([self maximumNumberOfSelectionReached]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-            [self.collectionView layoutIfNeeded];
-        });
-    }
-}
-
 - (void)showImagePickerWarningAlertWhenMaximumLimitReached {
     if (self.showWarningAlertWhenMaximumLimitReached) {
         NSString *title = [NSString stringWithFormat:@"你最多只能选择 %td 张图片", self.maximumNumberOfSelectionAsset];
@@ -322,6 +311,40 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     });
 }
 
+#pragma mark - PanGesture
+
+- (void)addPanGestureRecognizer {
+    if (self.fingerMovingToAssetForSelectionEnable && self.allowsMultipleSelection) {
+        UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+        [self.view addGestureRecognizer:panGesture];
+    }
+}
+
+- (void)handlePanGesture:(UIGestureRecognizer *)gestureRecognizer {
+    if ([self maximumNumberOfSelectionReached]) return;
+    CGPoint fingerPoint = [gestureRecognizer locationInView:self.collectionView];
+    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+        if (CGRectContainsPoint(cell.frame, fingerPoint)) {
+            NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+            if (self.previousTouchingItemIndexPath != indexPath) {
+                if ([self.collectionView.indexPathsForSelectedItems containsObject:indexPath]) {
+                    [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+                    [self collectionView:self.collectionView didDeselectItemAtIndexPath:indexPath];
+                } else {
+                    if ([self collectionView:self.collectionView shouldSelectItemAtIndexPath:indexPath]) {
+                        [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+                        [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
+                    }
+                }
+            }
+            self.previousTouchingItemIndexPath = indexPath;
+        }
+    }
+    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        self.previousTouchingItemIndexPath = nil;
+    }
+}
+
 #pragma mark - Collection View Data Source
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -348,16 +371,13 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     WCAssetCell *assetCell = (WCAssetCell *)cell;
-    PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
-    if ([self.selectedAssets containsObject:asset]) {
-        [assetCell setSelected:YES];
-        [collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-        assetCell.selectedOrderNumber = [self.selectedAssets indexOfObject:asset] + 1;
+    if (assetCell.selected) {
         assetCell.shouldAnimationWhenSelectedOrderNumberUpdate = NO;
+        assetCell.selectedOrderNumber = [self.selectedAssets indexOfObject:[self.fetchResult objectAtIndex:indexPath.item]] + 1;
         [assetCell updateAssetCellAppearanceIfNeeded];
     } else {
-        if (self.showAssetMaskWhenMaximumLimitReached && ![self autoDeselectEnabled]) {
-            [assetCell shouldShowAssetCoverView:[self maximumNumberOfSelectionReached]];
+        if (self.showAssetMaskWhenMaximumLimitReached) {
+            [assetCell shouldShowAssetCoverView:([self maximumNumberOfSelectionReached] && ![self autoDeselectEnabled])];
         }
     }
 }
@@ -380,13 +400,14 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
             [self.selectedAssets removeObjectAtIndex:0];
             if (self.previousSelectedItemIndexPath) {
                 [collectionView deselectItemAtIndexPath:self.previousSelectedItemIndexPath animated:NO];
+                [self collectionView:collectionView didDeselectItemAtIndexPath:self.previousSelectedItemIndexPath ];
             }
         }
         PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
         [self.selectedAssets addObject:asset];
         self.previousSelectedItemIndexPath = indexPath;
         [self updateFinishedButtonAppearance];
-        [self updateSelectedAssetCellAppearanceAtIndexpath:indexPath];
+        [self updateAssetCellAppearanceAtIndexpath:indexPath selected:YES];
     }
 }
 
@@ -396,7 +417,43 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [self.selectedAssets removeObject:asset];
     self.previousSelectedItemIndexPath = nil;
     [self updateFinishedButtonAppearance];
-    [collectionView reloadItemsAtIndexPaths:collectionView.indexPathsForVisibleItems];
+    [self updateAssetCellAppearanceAtIndexpath:indexPath selected:NO];
+}
+
+- (void)updateAssetCellAppearanceAtIndexpath:(NSIndexPath *)indexPath selected:(BOOL)selected {
+    WCAssetCell *assetCell = (WCAssetCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    assetCell.shouldAnimationWhenSelectedOrderNumberUpdate = selected;
+    assetCell.selectedOrderNumber = self.selectedAssets.count;
+    [assetCell updateAssetCellAppearanceIfNeeded];
+    selected ?: [self updateAllSelectedAssetCellAppearance];
+    
+    if (self.showAssetMaskWhenMaximumLimitReached) {
+        BOOL shouldUpdateNonSelectedCellWhenDeselect = (!selected && (self.maximumNumberOfSelectionAsset - self.selectedAssets.count) == 1);
+        if ([self maximumNumberOfSelectionReached] || shouldUpdateNonSelectedCellWhenDeselect) {
+            [self updateAllNonSelectedAssetCellAppearance];
+        }
+    }
+}
+
+- (void)updateAllSelectedAssetCellAppearance {
+    __weak typeof(self) weakSelf = self;
+    [self.selectedAssets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger index, BOOL * _Nonnull stop) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[weakSelf.fetchResult indexOfObject:obj] inSection:0];
+        WCAssetCell *assetCell = (WCAssetCell *)[weakSelf.collectionView cellForItemAtIndexPath:indexPath];
+        assetCell.shouldAnimationWhenSelectedOrderNumberUpdate = NO;
+        assetCell.selectedOrderNumber = index + 1;
+        [assetCell updateAssetCellAppearanceIfNeeded];
+    }];
+}
+
+- (void)updateAllNonSelectedAssetCellAppearance {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (WCAssetCell *assetCell in self.collectionView.visibleCells) {
+            if (!assetCell.selected) {
+                [assetCell shouldShowAssetCoverView:([self maximumNumberOfSelectionReached] && ![self autoDeselectEnabled])];
+            }
+        }
+    });
 }
 
 #pragma mark -

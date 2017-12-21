@@ -67,8 +67,8 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) BOOL showAssetMaskWhenMaximumLimitReached;
 @property (nonatomic, assign) BOOL showWarningAlertWhenMaximumLimitReached;
 @property (nonatomic, assign) BOOL showPhotoAlbumWithoutAssetResources;
-
-@property(nonatomic, assign) BOOL shouldRemoveAllSelectedAssetWhenAlbumChanged;
+@property (nonatomic, assign) BOOL fingerMovingToAssetForSelectionEnable;
+@property (nonatomic, assign) BOOL shouldRemoveAllSelectedAssetWhenAlbumChanged;
 
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance;
 
