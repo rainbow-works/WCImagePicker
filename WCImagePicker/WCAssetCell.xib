@@ -31,6 +31,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iEK-QR-qll" userLabel="Asset Image View">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aKV-hT-MD6" userLabel="Live Photo Badge Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="aKV-hT-MD6" secondAttribute="height" multiplier="1:1" id="666-Pz-OZu"/>
+                                    <constraint firstAttribute="width" constant="28" id="jeQ-cw-OQb"/>
+                                </constraints>
+                            </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euI-Ef-B0H" userLabel="Asset Time Label">
                                 <rect key="frame" x="165" y="180" width="32" height="17"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
@@ -54,6 +61,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="euI-Ef-B0H" secondAttribute="bottom" constant="3" id="1Gr-pr-Mlu"/>
+                            <constraint firstItem="aKV-hT-MD6" firstAttribute="top" secondItem="iEK-QR-qll" secondAttribute="top" id="3O1-bN-HM6"/>
                             <constraint firstAttribute="trailing" secondItem="euI-Ef-B0H" secondAttribute="trailing" constant="3" id="5TW-QM-EZh"/>
                             <constraint firstAttribute="bottom" secondItem="k3f-Gh-7Vp" secondAttribute="bottom" id="HcI-nU-EhO"/>
                             <constraint firstItem="k3f-Gh-7Vp" firstAttribute="leading" secondItem="T3Y-qI-bMQ" secondAttribute="leading" id="I2p-Tt-JFC"/>
@@ -65,6 +73,7 @@
                             <constraint firstAttribute="trailing" secondItem="k3f-Gh-7Vp" secondAttribute="trailing" id="nrJ-JB-315"/>
                             <constraint firstAttribute="trailing" secondItem="iEK-QR-qll" secondAttribute="trailing" id="pyV-fG-KmW"/>
                             <constraint firstItem="98C-G4-fm7" firstAttribute="top" secondItem="T3Y-qI-bMQ" secondAttribute="top" constant="2" id="ua4-Pu-z9v"/>
+                            <constraint firstItem="aKV-hT-MD6" firstAttribute="leading" secondItem="iEK-QR-qll" secondAttribute="leading" id="vPW-eu-fB2"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -81,6 +90,7 @@
                 <outlet property="assetCoverView" destination="k3f-Gh-7Vp" id="L8m-jA-iOR"/>
                 <outlet property="assetImageView" destination="iEK-QR-qll" id="lAy-u7-hR0"/>
                 <outlet property="assetTimeLabel" destination="euI-Ef-B0H" id="sft-eZ-0L2"/>
+                <outlet property="livePhotoBadgeImageView" destination="aKV-hT-MD6" id="oO9-d5-PIY"/>
             </connections>
             <point key="canvasLocation" x="43" y="-17"/>
         </collectionViewCell>

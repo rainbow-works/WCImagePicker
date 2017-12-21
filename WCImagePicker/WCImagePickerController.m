@@ -133,6 +133,10 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self updateItemSize];
@@ -354,6 +358,12 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     WCAssetCell *assetCell = [collectionView dequeueReusableCellWithReuseIdentifier:WCImagePickerAssetsCellIdentifier forIndexPath:indexPath];
     PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.row];
+    
+    if (@available(iOS 9.1, *)) {
+        if (asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive) {
+            assetCell.livePhotoBadgeImageView.image = [PHLivePhotoView livePhotoBadgeImageWithOptions:PHLivePhotoBadgeOptionsOverContent];
+        }
+    }
     assetCell.representedAssetIdentifier = asset.localIdentifier;
     [self.imageManager requestImageForAsset:asset targetSize:self.thumbnailSize contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if ([assetCell.representedAssetIdentifier isEqualToString:asset.localIdentifier]) {

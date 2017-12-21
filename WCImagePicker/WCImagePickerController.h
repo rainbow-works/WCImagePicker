@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
+#import <PhotosUI/PhotosUI.h>
 @class WCImagePickerController, WCImagePickerAppearance;
 
 #define WCUIColorFromHexValue(hexValue) \

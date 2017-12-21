@@ -15,6 +15,8 @@
 @property (nonatomic, assign) BOOL shouldAnimationWhenSelectedOrderNumberUpdate;
 
 @property (weak, nonatomic) IBOutlet UIImageView *assetImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *livePhotoBadgeImageView;
+
 @property (weak, nonatomic) IBOutlet UILabel *assetTimeLabel;
 
 - (void)updateAssetCellAppearanceIfNeeded;
