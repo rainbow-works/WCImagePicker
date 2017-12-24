@@ -101,7 +101,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     _allowsMultipleSelection = YES;
     _mediaType = WCImagePickerImageTypeImage;
     _maximumNumberOfSelectionAsset = 1;
-    _maximumNumberOfSelectionAsset = 1;
+    _maximumNumberOfSelectionAsset = 9;
     
     _minimumItemSpacing = 2.0;
     _numberOfColumnsInPortrait = 4;
