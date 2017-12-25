@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <WCImagePicker/WCImagePicker.h>
+#import "WCDisplayImageViewController.h"
 
 @interface ViewController () <WCImagePickerControllerDelegate>
 
@@ -30,8 +31,6 @@
     WCImagePickerController *imagePicker = [[WCImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.mediaType = WCImagePickerImageTypeImage;
-    imagePicker.maximumNumberOfSelectionAsset = 100;
-    imagePicker.fingerMovingToAssetForSelectionEnable = YES;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
@@ -40,13 +39,16 @@
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didFinishPickingAssets:(NSArray<PHAsset *> *)assets {
     NSMutableArray *images = [NSMutableArray array];
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    options.synchronous = NO;
+    options.synchronous = YES;
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     for (PHAsset *asset in assets) {
         [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             [images addObject:result];
         }];
     }
+    WCDisplayImageViewController *displayImageVC = [[WCDisplayImageViewController alloc] initWithImages:[images copy]];
+//    [self presentViewController:displayImageVC animated:YES completion:nil];
+    [self.navigationController pushViewController:displayImageVC animated:YES];
 }
 
 - (void)wc_imagePickerControllerDidCancel:(WCImagePickerController *)imagePicker {
