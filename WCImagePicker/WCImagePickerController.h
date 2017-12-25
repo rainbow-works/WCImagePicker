@@ -140,6 +140,11 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
  */
 @property (nonatomic, assign) BOOL fingerMovingToAssetForSelectionEnable;
 
+/**
+ 设置ImagePicker的外观
+
+ @param imagePickerAppearance imagePickerAppearance
+ */
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance;
 
 @end
@@ -191,6 +196,11 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
  */
 @property (nonatomic, strong) UIFont *albumButtonTextFont;
 
+/**
+ WCImagePickerAppearance的单例方法
+
+ @return WCImagePickerAppearance的单例
+ */
 + (instancetype)sharedAppearance;
 
 @end
