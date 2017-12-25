@@ -15,6 +15,7 @@
 
 @interface WCDisplayImageViewController () <WCPhotoBrowserAnimatorDelegate>
 
+@property (nonatomic, strong) WCPhotoBrowserAnimator *animator;
 @property (nonatomic, strong) NSArray<UIImage *> *images;
 @property (weak, nonatomic) IBOutlet UIView *imagesView;
 
@@ -54,6 +55,7 @@
         CGRect frame = CGRectMake(imageX, imageY, imageWidth, imageWidth);
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[self.images objectAtIndex:index]];
         imageView.userInteractionEnabled = YES;
+        imageView.clipsToBounds = YES;
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.frame = frame;
         imageView.tag = index;
@@ -68,8 +70,9 @@
     photoBrowser.displayPhotoOrderInfo = YES;
     photoBrowser.firstDisplayPhotoIndex = gestureRecognizer.view.tag;
     WCPhotoBrowserAnimator *animator = [[WCPhotoBrowserAnimator alloc] init];
-    animator.animatorDelegate = self;
-    photoBrowser.transitioningDelegate = animator;
+    self.animator = animator;
+    self.animator.animatorDelegate = self;
+    photoBrowser.transitioningDelegate = self.animator;
     [photoBrowser show];
 }
 

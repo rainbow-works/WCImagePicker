@@ -10,7 +10,9 @@
 #import "WCPhotoModel.h"
 #import "WCPhotoBrowserView.h"
 #import "UIImage+Bundle.h"
+#if __has_include(<SDWebImage/UIImageView+WebCache.h>)
 #import <SDWebImage/UIImageView+WebCache.h>
+#endif
 
 static const CGFloat kMaximumZoomScaleForPhotoScrollView = 3.0;
 static const CGFloat kMinimumZoomScaleForPhotoScrollView = 1.0;
@@ -82,8 +84,9 @@ static const CGFloat kTresholdPanLengthForScrollView = 200.0f;
 - (void)setPhotoModel:(WCPhotoModel *)photoModel {
     _photoModel = photoModel;
     if (photoModel.imageURL.length > 0) {
-        __weak typeof(self) weakSelf = self;
         [self.activityIndicatorView startAnimating];
+#if __has_include(<SDWebImage/UIImageView+WebCache.h>)
+        __weak typeof(self) weakSelf = self;
         [self.photoImageView sd_setImageWithURL:[NSURL URLWithString:photoModel.imageURL] placeholderImage:self.placeholderImage completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             [weakSelf.activityIndicatorView stopAnimating];
             // 当图片加载完回调，否则currentDisplayImage为空
@@ -91,6 +94,7 @@ static const CGFloat kTresholdPanLengthForScrollView = 200.0f;
                 [weakSelf.photoBrowserView.delegate photoBrowser:weakSelf.photoBrowserView currentDisplayPhoto:image currentDisplayPhotoIndex:weakSelf.photoIndex];
             }
         }];
+#endif
     } else if (photoModel.localImage) {
         [self.photoImageView setImage:photoModel.localImage];
     }

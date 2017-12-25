@@ -76,7 +76,7 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @interface WCImagePickerController : UIViewController
 
 /**
- ImagePicker 代理方法
+ ImagePicker 代理
  */
 @property (nonatomic, weak) id<WCImagePickerControllerDelegate> delegate;
 
@@ -136,7 +136,7 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) BOOL shouldRemoveAllSelectedAssetWhenAlbumChanged;
 
 /**
- 手指划过资源时选中，默认：YES。
+ 手指划过资源时选中，默认：NO。
  */
 @property (nonatomic, assign) BOOL fingerMovingToAssetForSelectionEnable;
 

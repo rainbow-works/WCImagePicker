@@ -31,6 +31,7 @@
     WCImagePickerController *imagePicker = [[WCImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.mediaType = WCImagePickerImageTypeImage;
+    imagePicker.fingerMovingToAssetForSelectionEnable = YES;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
@@ -47,16 +48,7 @@
         }];
     }
     WCDisplayImageViewController *displayImageVC = [[WCDisplayImageViewController alloc] initWithImages:[images copy]];
-//    [self presentViewController:displayImageVC animated:YES completion:nil];
     [self.navigationController pushViewController:displayImageVC animated:YES];
-}
-
-- (void)wc_imagePickerControllerDidCancel:(WCImagePickerController *)imagePicker {
-    
-}
-
-- (BOOL)wc_imagePickerController:(WCImagePickerController *)imagePicker shouldSelectAsset:(PHAsset *)asset {
-    return YES;
 }
 
 @end
