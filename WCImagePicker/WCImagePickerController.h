@@ -61,9 +61,25 @@
 
  @param imagePicker 资源选择器
  @param asset 是否选中的资源
- @return 是否选中，YES:选中该资源，NO:不选中该资源
+ @return 是否应该选中
  */
 - (BOOL)wc_imagePickerController:(WCImagePickerController *)imagePicker shouldSelectAsset:(PHAsset *)asset;
+
+/**
+ asset选中时回调
+
+ @param imagePicker 资源选择器
+ @param asset 资源(图片或视频)
+ */
+- (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didSelectAsset:(PHAsset *)asset;
+
+/**
+ asset取消选中时回调
+
+ @param imagePicker 资源选择器
+ @param asset 资源(图片或视频)
+ */
+- (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didDeselectAsset:(PHAsset *)asset;
 
 @end
 
@@ -116,12 +132,12 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 @property (nonatomic, assign) NSUInteger numberOfColumnsInLandscape;
 
 /**
- 选中数量达到最大数量时未选中资源是否显示遮罩，默认：YES。
+ 选中资源达到最大数量时未选中资源是否显示遮罩，默认：YES。
  */
 @property (nonatomic, assign) BOOL showAssetMaskWhenMaximumLimitReached;
 
 /**
- 选中数量达到最大数量时是否显示警示弹窗，默认：YES。
+ 选中资源达到最大数量时是否显示警示弹窗，默认：YES。
  */
 @property (nonatomic, assign) BOOL showWarningAlertWhenMaximumLimitReached;
 
@@ -148,6 +164,9 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance;
 
 @end
+
+
+
 
 @interface WCImagePickerAppearance : NSObject
 
@@ -195,6 +214,11 @@ typedef NS_ENUM(NSUInteger, WCImagePickerImageType) {
  选中相册名称的字体
  */
 @property (nonatomic, strong) UIFont *albumButtonTextFont;
+
+/**
+ 显示相册名称按钮的图片(即小三角)
+ */
+@property (nonatomic, assign) BOOL albumButtonImageForBlackTriangleEnabled;
 
 /**
  WCImagePickerAppearance的单例方法

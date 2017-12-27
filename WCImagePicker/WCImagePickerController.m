@@ -213,6 +213,19 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     } else {
         self.navigationBarBackgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:.85];
     }
+    // cancel button appearance
+    if (imagePickerAppearance.cancelButtonText) {
+        [self.cancelButton setTitle:imagePickerAppearance.cancelButtonText forState:UIControlStateNormal];
+        [self.cancelButton setTitle:imagePickerAppearance.cancelButtonText forState:UIControlStateHighlighted];
+    }
+    if (imagePickerAppearance.cancelButtonTextColor) {
+        [self.cancelButton setTitleColor:imagePickerAppearance.cancelButtonTextColor forState:UIControlStateNormal];
+        [self.cancelButton setTitleColor:WCUIColorFromHexValue(0x1EB400) forState:UIControlStateHighlighted];
+    }
+    if (imagePickerAppearance.cancelButtonBackgroundColor) {
+        self.cancelButton.backgroundColor = imagePickerAppearance.cancelButtonBackgroundColor;
+    }
+    // finished button appearance
     if (imagePickerAppearance.finishedButtonDisableBackgroundColor) {
         self.finishedButton.backgroundColor = imagePickerAppearance.finishedButtonDisableBackgroundColor;
     } else {
@@ -221,7 +234,11 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     if (imagePickerAppearance.finishedButtonTextColor) {
         [self.finishedButton.titleLabel setTextColor:imagePickerAppearance.finishedButtonTextColor];
     }
+    self.finishedButton.enabled = (self.selectedAssets.count > 0);
+    self.finishedButton.layer.cornerRadius = 5.0f;
+    self.finishedButton.layer.masksToBounds = YES;
     
+    // album button appearance
     if (imagePickerAppearance.albumButtonTextColor) {
         [self.assetCollectionTitleButton.titleLabel setTextColor:imagePickerAppearance.albumButtonTextColor];
     }
@@ -230,12 +247,10 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     }
     
     UIImage *triangle  = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_white" inBundle:[NSBundle wc_defaultBundle] compatibleWithTraitCollection:nil];
+    if (imagePickerAppearance.albumButtonImageForBlackTriangleEnabled) {
+        triangle = [UIImage imageNamed:@"imagepicker_navigationbar_triangle_black" inBundle:[NSBundle wc_defaultBundle] compatibleWithTraitCollection:nil];
+    }
     [self.assetCollectionTitleButton wc_setImage:triangle];
-    
-    self.finishedButton.enabled = (self.selectedAssets.count > 0);
-    self.finishedButton.layer.cornerRadius = 5.0f;
-    self.finishedButton.layer.masksToBounds = YES;
-    [self.finishedButton setTitle:@"完成(0)" forState:UIControlStateNormal];
 }
 
 - (void)setupCollectionView {
@@ -405,6 +420,7 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
     if (self.allowsMultipleSelection) {
         if ([self autoDeselectEnabled] && self.selectedAssets.count > 0) {
             [self.selectedAssets removeObjectAtIndex:0];
@@ -413,11 +429,17 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
                 [self collectionView:collectionView didDeselectItemAtIndexPath:self.previousSelectedItemIndexPath ];
             }
         }
-        PHAsset *asset = [self.fetchResult objectAtIndex:indexPath.item];
         [self.selectedAssets addObject:asset];
         self.previousSelectedItemIndexPath = indexPath;
         [self updateFinishedButtonAppearance];
         [self updateAssetCellAppearanceAtIndexpath:indexPath selected:YES];
+        if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didSelectAsset:)]) {
+            [self.delegate wc_imagePickerController:self didSelectAsset:asset];
+        }
+    } else {
+        if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingAssets:)]) {
+            [self.delegate wc_imagePickerController:self didFinishPickingAssets:@[asset]];
+        }
     }
 }
 
@@ -428,6 +450,9 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     self.previousSelectedItemIndexPath = nil;
     [self updateFinishedButtonAppearance];
     [self updateAssetCellAppearanceAtIndexpath:indexPath selected:NO];
+    if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didDeselectAsset:)]) {
+        [self.delegate wc_imagePickerController:self didDeselectAsset:asset];
+    }
 }
 
 - (void)updateAssetCellAppearanceAtIndexpath:(NSIndexPath *)indexPath selected:(BOOL)selected {
@@ -572,7 +597,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         if ([self.delegate respondsToSelector:@selector(wc_imagePickerControllerDidCancel:)]) {
             [self.delegate wc_imagePickerControllerDidCancel:self];
         }
-        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -583,7 +607,6 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
         if ([self.delegate respondsToSelector:@selector(wc_imagePickerController:didFinishPickingAssets:)]) {
             [self.delegate wc_imagePickerController:self didFinishPickingAssets:[self.selectedAssets array]];
         }
-        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

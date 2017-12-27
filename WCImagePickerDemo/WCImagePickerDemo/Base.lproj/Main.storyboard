@@ -18,18 +18,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7JK-2a-WxX">
-                                <rect key="frame" x="156.5" y="318.5" width="62" height="30"/>
-                                <state key="normal" title="选择图片"/>
+                            <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciF-Tr-4E7">
+                                <rect key="frame" x="141" y="244.5" width="92" height="30"/>
+                                <state key="normal" title="选择单张图片"/>
+                                <connections>
+                                    <action selector="buttonDidClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2xa-Hq-SOm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7JK-2a-WxX">
+                                <rect key="frame" x="141.5" y="318.5" width="92" height="30"/>
+                                <state key="normal" title="选择多张图片"/>
                                 <connections>
                                     <action selector="buttonDidClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="piY-Mg-nxA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Scb-4t-ekh">
+                                <rect key="frame" x="156" y="392.5" width="62" height="30"/>
+                                <state key="normal" title="选择视频"/>
+                                <connections>
+                                    <action selector="buttonDidClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0vL-C5-zDA"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="7JK-2a-WxX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2xh-nd-osq"/>
+                            <constraint firstItem="Scb-4t-ekh" firstAttribute="centerX" secondItem="7JK-2a-WxX" secondAttribute="centerX" id="ICs-dG-NWk"/>
+                            <constraint firstItem="Scb-4t-ekh" firstAttribute="top" secondItem="7JK-2a-WxX" secondAttribute="bottom" constant="44" id="Ujs-Bp-CUl"/>
+                            <constraint firstItem="ciF-Tr-4E7" firstAttribute="centerX" secondItem="7JK-2a-WxX" secondAttribute="centerX" id="Wx0-qU-AvD"/>
                             <constraint firstItem="7JK-2a-WxX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nWr-3L-QhF"/>
+                            <constraint firstItem="7JK-2a-WxX" firstAttribute="top" secondItem="ciF-Tr-4E7" secondAttribute="bottom" constant="44" id="p0d-5s-wxX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -37,7 +55,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="866" y="-99"/>
+            <point key="canvasLocation" x="834" y="-300"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2FB-Xv-7JE">
