@@ -211,8 +211,6 @@ imagePicker.fingerMovingToAssetForSelectionEnable = NO;
 
 # Change Log
 
-待完善
-
 - V0.0.3 - 修复了发布至CocoaPods后没有xib的问题。
 
 # Contact
