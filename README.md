@@ -8,7 +8,7 @@
 
 <div align=center>
 
-![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG = 375*667)
+![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG)
 
 ![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_fullfill.PNG)
 
