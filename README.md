@@ -6,7 +6,7 @@
 
 
 
-<div align=center>
+<div align="center">
 
 ![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG)
 
