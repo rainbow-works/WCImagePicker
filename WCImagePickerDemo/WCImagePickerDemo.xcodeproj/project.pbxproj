@@ -10,6 +10,8 @@
 		7F0D27AE1FEA176D001A54B4 /* WCImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7B9DE21FE11398004AC945 /* WCImagePicker.framework */; };
 		7F0D27AF1FEA176D001A54B4 /* WCImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F7B9DE21FE11398004AC945 /* WCImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7F499D081FF24FF20029126D /* WCPlayVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F499D071FF24FF20029126D /* WCPlayVideoViewController.m */; };
+		7F499D0D1FF33B370029126D /* imagepicker_selection.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 7F499D0B1FF33B370029126D /* imagepicker_selection.PNG */; };
+		7F499D0E1FF33B370029126D /* imagepicker_fullfill.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 7F499D0C1FF33B370029126D /* imagepicker_fullfill.PNG */; };
 		7F71AD141FF0EB520063AD43 /* WCPhotoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F71ACFA1FF0EB520063AD43 /* WCPhotoView.xib */; };
 		7F71AD151FF0EB520063AD43 /* UIImage+Bundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F71ACFC1FF0EB520063AD43 /* UIImage+Bundle.m */; };
 		7F71AD161FF0EB520063AD43 /* UIViewController+TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F71ACFE1FF0EB520063AD43 /* UIViewController+TopViewController.m */; };
@@ -66,6 +68,8 @@
 /* Begin PBXFileReference section */
 		7F499D061FF24FF20029126D /* WCPlayVideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCPlayVideoViewController.h; sourceTree = "<group>"; };
 		7F499D071FF24FF20029126D /* WCPlayVideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WCPlayVideoViewController.m; sourceTree = "<group>"; };
+		7F499D0B1FF33B370029126D /* imagepicker_selection.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imagepicker_selection.PNG; sourceTree = "<group>"; };
+		7F499D0C1FF33B370029126D /* imagepicker_fullfill.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imagepicker_fullfill.PNG; sourceTree = "<group>"; };
 		7F71ACF91FF0EB520063AD43 /* WCPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCPhotoView.h; sourceTree = "<group>"; };
 		7F71ACFA1FF0EB520063AD43 /* WCPhotoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WCPhotoView.xib; sourceTree = "<group>"; };
 		7F71ACFC1FF0EB520063AD43 /* UIImage+Bundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Bundle.m"; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 		7F499D0A1FF33AB30029126D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				7F499D0C1FF33B370029126D /* imagepicker_fullfill.PNG */,
+				7F499D0B1FF33B370029126D /* imagepicker_selection.PNG */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -319,6 +325,8 @@
 			files = (
 				7F7B9DCE1FE112F1004AC945 /* LaunchScreen.storyboard in Resources */,
 				7F71AD1A1FF0EB520063AD43 /* WCPhotoBrowserViewController.xib in Resources */,
+				7F499D0D1FF33B370029126D /* imagepicker_selection.PNG in Resources */,
+				7F499D0E1FF33B370029126D /* imagepicker_fullfill.PNG in Resources */,
 				7F7B9DCB1FE112F1004AC945 /* Assets.xcassets in Resources */,
 				7F7B9DC91FE112F1004AC945 /* Main.storyboard in Resources */,
 				7F71AD141FF0EB520063AD43 /* WCPhotoView.xib in Resources */,
