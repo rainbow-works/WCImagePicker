@@ -8,9 +8,11 @@
 
 <div align="center">
 
-<img  src="https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG"  width="33%"/>
+<img src="https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG"  width="33%"/>
 
-![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG) ![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_fullfill.PNG)
+<img src="https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_fullfill.PNG"  width="33%"/>
+
+<img src="" width="33%"/>
 
 </div>
 
