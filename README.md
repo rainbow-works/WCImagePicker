@@ -19,7 +19,7 @@
 
 # Usage
 
-### WCImagePicker使用：
+#### WCImagePicker使用：
 
 ``` objective-c
 WCImagePickerController *imagePicker = [[WCImagePickerController alloc] init];
@@ -33,7 +33,7 @@ imagePicker.maximumNumberOfSelectionAsset = 9;
 
 
 
-### 自定义WCImagePickerController样式：
+#### 自定义WCImagePickerController样式：
 
 如果想自定义WCImagePickerController的样式，你可以创建WCImagePickerAppearance实例，给其属性赋值。在实例化`WCImagePickerController`之前调用`setupImagePickerAppearance:`。
 
@@ -54,7 +54,7 @@ imagePickerAppearance.finishedButtonDisableBackgroundColor = [UIColor grayColor]
 
 
 
-### WCImagePickerController的代理方法 (WCImagePickerControllerDelegate)
+#### WCImagePickerController的代理方法 (WCImagePickerControllerDelegate)
 
 实现了`wc_imagePickerController:didFinishPickingAssets:`代理方法。当用户点击 “完成” (即完成图片选择)时，此代理方法被调用。
 
@@ -87,7 +87,7 @@ imagePickerAppearance.finishedButtonDisableBackgroundColor = [UIColor grayColor]
 }
 ```
 
-### 实现以下代理方法，能处理用户选择Asset的选中状态。
+实现以下代理方法，能处理用户选择Asset的选中状态。
 
 ``` objective-c
 /**
@@ -118,7 +118,7 @@ imagePickerAppearance.finishedButtonDisableBackgroundColor = [UIColor grayColor]
 
 
 
-### WCImagePickerController filter option
+#### WCImagePickerController filter option
 
 **只选择图片**
 
@@ -194,10 +194,6 @@ imagePicker.shouldRemoveAllSelectedAssetWhenAlbumChanged = YES;
 // 默认：NO
 imagePicker.fingerMovingToAssetForSelectionEnable = NO;
 ```
-
-
-
-
 
 # Change Log
 
