@@ -123,6 +123,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7F499D0A1FF33AB30029126D /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		7F71ACF71FF0EB520063AD43 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +212,7 @@
 		7F7B9DC01FE112F1004AC945 /* WCImagePickerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				7F499D0A1FF33AB30029126D /* Assets */,
 				7F71ACF71FF0EB520063AD43 /* Vendor */,
 				7F7B9DC11FE112F1004AC945 /* AppDelegate.h */,
 				7F7B9DC21FE112F1004AC945 /* AppDelegate.m */,
