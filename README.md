@@ -19,7 +19,7 @@
 
 # Usage
 
-#### WCImagePicker使用：
+### WCImagePicker使用：
 
 ``` objective-c
 WCImagePickerController *imagePicker = [[WCImagePickerController alloc] init];
@@ -33,15 +33,15 @@ imagePicker.maximumNumberOfSelectionAsset = 9;
 
 
 
-#### 自定义WCImagePickerController样式：
+### 自定义WCImagePickerController样式：
 
-**如果想自定义WCImagePickerController的样式，你可以创建WCImagePickerAppearance实例，给其属性赋值。在实例化`WCImagePickerController`之前调用`setupImagePickerAppearance:`。**
+如果想自定义WCImagePickerController的样式，你可以创建WCImagePickerAppearance实例，给其属性赋值。在实例化`WCImagePickerController`之前调用`setupImagePickerAppearance:`。
 
 ``` objective-c
 + (void)setupImagePickerAppearance:(WCImagePickerAppearance *)imagePickerAppearance;
 ```
 
-**WCImagePickerAppearance简单使用：**
+WCImagePickerAppearance简单使用：
 
 ``` objective-c
 WCImagePickerAppearance *imagePickerAppearance = [[WCImagePickerAppearance alloc] init];
@@ -50,13 +50,13 @@ imagePickerAppearance.finishedButtonDisableBackgroundColor = [UIColor grayColor]
 [WCImagePickerController setupImagePickerAppearance:imagePickerAppearance];
 ```
 
-**设置更多可配置的属性，请查阅`WCImagePickerAppearance`。**
+设置更多可配置的属性，请查阅`WCImagePickerAppearance`。
 
 
 
-#### WCImagePickerController的代理方法 (WCImagePickerControllerDelegate)
+### WCImagePickerController的代理方法 (WCImagePickerControllerDelegate)
 
-**实现了`wc_imagePickerController:didFinishPickingAssets:`代理方法。当用户点击 “完成” (即完成图片选择)时，此代理方法被调用。**
+实现了`wc_imagePickerController:didFinishPickingAssets:`代理方法。当用户点击 “完成” (即完成图片选择)时，此代理方法被调用。
 
 ``` objective-c
 /**
@@ -73,7 +73,7 @@ imagePickerAppearance.finishedButtonDisableBackgroundColor = [UIColor grayColor]
 }
 ```
 
-**实现了`wc_imagePickerControllerDidCancel:`代理方法。当用户点击 “取消” 时，此代理方法被调用。**
+实现了`wc_imagePickerControllerDidCancel:`代理方法。当用户点击 “取消” 时，此代理方法被调用。
 
 ``` objective-c
 /**
@@ -87,7 +87,7 @@ imagePickerAppearance.finishedButtonDisableBackgroundColor = [UIColor grayColor]
 }
 ```
 
-**实现以下代理方法，能处理用户选择Asset的选中状态。**
+### 实现以下代理方法，能处理用户选择Asset的选中状态。
 
 ``` objective-c
 /**
@@ -118,7 +118,7 @@ imagePickerAppearance.finishedButtonDisableBackgroundColor = [UIColor grayColor]
 
 
 
-#### WCImagePickerController filter option
+### WCImagePickerController filter option
 
 **只选择图片**
 
