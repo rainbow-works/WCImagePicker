@@ -4,19 +4,15 @@
 
 简易好用的图片选择器
 
-
-
 <div align="center">
 
 <img src="https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG"  width="33%"/>
 
 <img src="https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_fullfill.PNG"  width="33%"/>
 
-<img src="" width="33%"/>
+<img src="https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_collection_select.PNG" width="33%"/>
 
 </div>
-
-
 
 # Installation
 
