@@ -1,6 +1,6 @@
 # WCImagePicker
 
-[![WCImagePicker](https://img.shields.io/badge/build-passing-green.svg)]() [![WCImagePicker](https://img.shields.io/badge/pod-0.0.1-orange.svg)]() [![WCImagePicker](https://img.shields.io/badge/License-MIT-blue.svg)]() [![WCImagePicker](https://img.shields.io/badge/platform-iOS-lightgrey.svg)]() [![WCImagePicker](https://img.shields.io/badge/support-iOS%208%2B-blue.svg)]() [![WCImagePicker](https://img.shields.io/badge/github-MeetDay-yellowgreen.svg)]()
+[![WCImagePicker](https://img.shields.io/badge/build-passing-green.svg)]() [![WCImagePicker](https://img.shields.io/badge/pod-0.0.3-orange.svg)]() [![WCImagePicker](https://img.shields.io/badge/License-MIT-blue.svg)]() [![WCImagePicker](https://img.shields.io/badge/platform-iOS-lightgrey.svg)]() [![WCImagePicker](https://img.shields.io/badge/support-iOS%208%2B-blue.svg)]() [![WCImagePicker](https://img.shields.io/badge/github-MeetDay-yellowgreen.svg)]()
 
 简易好用的图片选择器
 
@@ -17,15 +17,19 @@
 # Installation
 
 - #### CocoaPods
-  
-  ​暂时没有，待完善后发布至CocoaPods
+
+
+1. 在Podfile中添加`pod 'WCImagePicker'`
+2. 执行 `pod install`或`pod update`
+3. 导入 `#import <WCImagePicker/WCImagePicker.h>`
 
 
 - #### 手动安装
-  
-  1. 下载WCImagePickerDemo。
-  2. 将WCImagePicker文件夹中的源代码添加(拖放)到你的工程。
-  3. 导入WCImagePicker.h都文件即可。
+
+
+1. ​下载WCImagePickerDemo。
+2. 将WCImagePicker文件夹中的源代码添加(拖放)到你的工程。
+3. 导入`#import "WCImagePicker.h"`头文件即可。
 
 # Usage
 
@@ -208,6 +212,8 @@ imagePicker.fingerMovingToAssetForSelectionEnable = NO;
 # Change Log
 
 待完善
+
+- V0.0.3 - 修复了发布至CocoaPods后没有xib的问题。
 
 # Contact
 
