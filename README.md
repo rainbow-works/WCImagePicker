@@ -8,9 +8,9 @@
 
 <div align=center>
 
-![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG){:width=“375px"}
+![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_selection.PNG = 375*667)
 
-![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_fullfill.PNG){:width:375px}
+![](https://github.com/MeetDay/WCImagePicker/blob/master/WCImagePickerDemo/WCImagePickerDemo/Assets/imagepicker_fullfill.PNG)
 
 </div>
 
