@@ -254,7 +254,13 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
 }
 
 - (void)setupCollectionView {
-    self.collectionView.contentInset = UIEdgeInsetsMake(44.0, 0, 0, 0);
+    if (@available(iOS 11.0, *)) {
+        self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    CGFloat stausBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    self.collectionView.contentInset = UIEdgeInsetsMake(stausBarHeight + 44, 0, 0, 0);
     [self.collectionView registerNib:[UINib nibWithNibName:@"WCAssetCell" bundle:[NSBundle wc_defaultBundle]] forCellWithReuseIdentifier:WCImagePickerAssetsCellIdentifier];
     self.collectionView.allowsMultipleSelection = self.allowsMultipleSelection;
     [self.collectionView setCollectionViewLayout:self.flowLayout];
@@ -596,6 +602,8 @@ static NSString * const WCImagePickerAssetsCellIdentifier = @"com.meetday.WCImag
     } else {
         if ([self.delegate respondsToSelector:@selector(wc_imagePickerControllerDidCancel:)]) {
             [self.delegate wc_imagePickerControllerDidCancel:self];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     }
 }

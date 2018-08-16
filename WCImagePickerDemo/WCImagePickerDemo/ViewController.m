@@ -83,9 +83,9 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)wc_imagePickerControllerDidCancel:(WCImagePickerController *)imagePicker {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+//- (void)wc_imagePickerControllerDidCancel:(WCImagePickerController *)imagePicker {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 - (void)wc_imagePickerController:(WCImagePickerController *)imagePicker didSelectAsset:(PHAsset *)asset {
     NSLog(@"%s ---- %td", __func__, asset.mediaType);

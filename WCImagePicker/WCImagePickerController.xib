@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -86,7 +86,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rco-3I-gS8" userLabel="Asset Collection Title" customClass="WCCustomButton">
-                            <rect key="frame" x="112" y="4.6666666666666643" width="150" height="35"/>
+                            <rect key="frame" x="112" y="4.6666666666666643" width="150" height="35.000000000000007"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="PingFangSC-Medium" family="PingFang SC" pointSize="16"/>
                             <state key="normal" title="相机胶卷">
@@ -117,13 +117,14 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="mpX-a7-mSi" secondAttribute="bottom" id="31I-hW-bhI"/>
                 <constraint firstItem="zp6-wk-wap" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="3fr-Lp-SFV"/>
                 <constraint firstItem="mpX-a7-mSi" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8EE-1R-YKb"/>
-                <constraint firstItem="zp6-wk-wap" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="8yT-ST-voq"/>
+                <constraint firstItem="zp6-wk-wap" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" priority="750" id="8yT-ST-voq"/>
                 <constraint firstItem="a9F-aB-eU7" firstAttribute="leading" secondItem="zp6-wk-wap" secondAttribute="leading" id="DP3-go-bsr"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="mpX-a7-mSi" secondAttribute="trailing" id="M5w-q1-jRZ"/>
                 <constraint firstItem="a9F-aB-eU7" firstAttribute="trailing" secondItem="zp6-wk-wap" secondAttribute="trailing" id="Pdj-6H-El8"/>
                 <constraint firstItem="a9F-aB-eU7" firstAttribute="bottom" secondItem="zp6-wk-wap" secondAttribute="bottom" id="Wsa-HS-6F6"/>
                 <constraint firstItem="a9F-aB-eU7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oaS-D4-5VJ"/>
                 <constraint firstItem="mpX-a7-mSi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tfO-V4-RYi"/>
+                <constraint firstItem="zp6-wk-wap" firstAttribute="top" relation="greaterThanOrEqual" secondItem="a9F-aB-eU7" secondAttribute="top" constant="20" id="ugP-Wi-OJ3"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zp6-wk-wap" secondAttribute="trailing" id="zhM-4D-ZLf"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
